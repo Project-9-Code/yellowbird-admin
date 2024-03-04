@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import clsx from "clsx";
+import { whitney } from "@/utils/fonts";
 
 export const metadata: Metadata = {
   title: "Yellowbird Dashboard",
@@ -15,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={clsx("w-full h-full", whitney.variable)}>
+      <body className="w-full h-full text-bodyText">
+        {children}
+      </body>
     </html>
   );
 }
