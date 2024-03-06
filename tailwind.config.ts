@@ -18,12 +18,14 @@ const config: Config = {
         ginto: ["var(--font-ginto)"]
       },
       colors: {
+        brand: "#FEE57E",
         snowGrey: "#F8F8F8",
         success: "#86D190",
         bodyText: "#6A536B",
         headlineText: "#4B2E4C",
         actionLink: "#5C5CF2",
         subtext: "#856E83",
+        displayText: "#0E0E25",
       }
     },
   },

@@ -52,3 +52,5 @@ export const commonAuthOptions = {
     privateKey: process.env.FIREBASE_PRIVATE_KEY as string,
   },
 };
+
+export const GRAPHQL_API_URL = "https://us-central1-yellowbird-4e1b8.cloudfunctions.net/graphql";

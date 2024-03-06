@@ -22,8 +22,9 @@ export default function CreateAccountForm() {
   
     try {
       setIsLoading(true);
-      const user = await createUserWithEmailAndPassword(getAuth(), email, password);
-      await updateProfile(user.user, { displayName: name });
+      const { user } = await createUserWithEmailAndPassword(getAuth(), email, password);
+      await updateProfile(user, { displayName: name });
+      await user.reload();
     } catch (error) {
       console.error(error);
       setError("Error creating user");
