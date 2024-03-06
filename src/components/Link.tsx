@@ -8,7 +8,10 @@ type StyledLinkProps = LinkProps & {
 
 export default function StyledLink(props: PropsWithChildren<StyledLinkProps>) {
   return (
-    <Link href={props.href} className={clsx("text-actionLink text-base font-medium", props.className)}>
+    <Link
+      href={props.href}
+      className={clsx("text-actionLink text-base font-medium", props.className)}
+    >
       {props.children}
     </Link>
   );
