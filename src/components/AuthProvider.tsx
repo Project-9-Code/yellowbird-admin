@@ -21,6 +21,7 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (props) 
   const handleIdTokenChanged =  React.useCallback(async (firebaseUser: FirebaseUser | null) => {
     if (firebaseUser) {
       const idTokenResult = await firebaseUser.getIdTokenResult();
+      const redirect = searchParams.get("redirect");
  
       // Sets authenticated user cookies
       await fetch("/api/login", {
@@ -32,7 +33,7 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (props) 
         customClaims: filterStandardClaims(idTokenResult.claims),
       } as User);
 
-      router.replace(searchParams.get("redirect") ?? "/");
+      if (redirect) router.replace(redirect);
       return;
     }
  

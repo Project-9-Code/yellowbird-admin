@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import ErrorContainer from "@/components/ErrorContainer";
 import InputField from "@/components/InputField";
 import StyledLink from "@/components/Link";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -66,11 +67,9 @@ export default function SignInForm() {
       />
       
       {error && (
-        <div className="mt-4 bg-red-500 p-2 rounded-sm flex justify-center mb-6">
-          <span className="text-white">
-            {error}
-          </span>
-        </div>
+        <ErrorContainer>
+          <span>{error}</span>
+        </ErrorContainer>
       )}
 
       <Button label="Sign In" type="submit" />

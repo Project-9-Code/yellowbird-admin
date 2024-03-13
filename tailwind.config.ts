@@ -26,6 +26,9 @@ const config: Config = {
         actionLink: "#5C5CF2",
         subtext: "#856E83",
         displayText: "#0E0E25",
+        borderBg: "#E0E0E0",
+        checkboxUnselected: "#DFD1FA",
+        checkboxSelected: "#884EF9",
       }
     },
   },

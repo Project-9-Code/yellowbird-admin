@@ -1,11 +1,17 @@
 import * as admin from "firebase-admin";
 import {Request, Response, NextFunction} from "express";
 
+const credential = admin.credential.applicationDefault();
+
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential,
+  storageBucket: "yellowbird-4e1b8.appspot.com",
 });
 
 const db = admin.firestore();
+const storage = admin.storage();
+const bucket = storage.bucket();
+const auth = admin.auth();
 
 /**
  * Autho
@@ -18,7 +24,7 @@ export async function authorizeEndpoint(
 ): Promise<void> {
   const tokenId = req?.get?.("Authorization")?.split("Bearer ")[1] ?? "";
   try {
-    await admin.auth().verifyIdToken(tokenId);
+    await auth.verifyIdToken(tokenId);
     next();
   } catch (e) {
     res.status(404).send();
@@ -26,4 +32,4 @@ export async function authorizeEndpoint(
   }
 }
 
-export {admin, db};
+export {admin, db, storage, bucket, auth};

@@ -2,6 +2,8 @@ import * as db from "../../utils/database";
 import {Resolvers, Course, Lesson, UserProfile} from "../../../graphql_types";
 import {lessonCollectionName} from "./lesson";
 import {userCollectionName} from "./user";
+import {bucket} from "../../utils/firebase";
+import {getDownloadURL} from "firebase-admin/storage";
 
 export const courseCollectionName = "courses";
 
@@ -66,7 +68,30 @@ export const resolvers: Resolvers = {
   },
   Query: {
     courses: async () => {
-      return await db.getList(courseCollectionName) as [Course];
+      const courses = await db.getList(courseCollectionName) as [Course];
+      const images: {[key: string]: string} = {};
+
+      // Fetch cover photos from storage and return download URLs
+      await Promise.all(courses.map(async (course) => {
+        if (
+          !course.coverPhoto || course.coverPhoto.length === 0 ||
+          course.coverPhoto.startsWith("http")
+        ) {
+          return Promise.resolve(undefined);
+        }
+
+        return getDownloadURL(bucket.file(course.coverPhoto as string))
+          .then((url) => images[course.id] = url);
+      }));
+
+      // Replace cover photo paths with download URLs
+      courses.forEach((course) => {
+        if (images[course.id]) {
+          course.coverPhoto = images[course.id];
+        }
+      });
+
+      return courses;
     },
     course: async (_, args) => {
       return await db.getItem(courseCollectionName, args.courseId) as Course;

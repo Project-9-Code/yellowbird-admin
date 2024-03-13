@@ -1,11 +1,10 @@
-import { cache } from "react";
-import { Course } from "@/graphql/graphql";
+import { Course, CourseInput } from "@/graphql/graphql";
 import { getClient } from "../apolloClient";
 import { gql } from "@apollo/client";
 
 const client = getClient();
 
-export const fetchCourses = cache(async function fetchCoursesAPI() {
+export const fetchCourses = async function fetchCoursesAPI() {
   const { data } = await client.query({
     query: gql`
       query GetCourses {
@@ -16,7 +15,12 @@ export const fetchCourses = cache(async function fetchCoursesAPI() {
           coverPhoto
         }
       }
-    `
+    `,
+    context: {
+      fetchOptions: {
+        next: { revalidate: 1 },
+      },
+    },
   });
 
   if (data) {
@@ -31,4 +35,22 @@ export const fetchCourses = cache(async function fetchCoursesAPI() {
   }
 
   return [] as Course[];
-});
+};
+
+export const addCourse = async function addCourseAPI(course: CourseInput) {
+  const { data } = await client.mutate({
+    mutation: gql`
+      mutation AddCourse($course: CourseInput!) {
+        addCourse(course: $course) {
+          id
+          name
+          description
+          coverPhoto
+        }
+      }
+    `,
+    variables: { course }
+  });
+  
+  return data as Course;
+};

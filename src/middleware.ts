@@ -1,4 +1,4 @@
-import { authMiddleware, redirectToHome, redirectToLogin } from "next-firebase-auth-edge";
+import { authMiddleware, redirectToLogin } from "next-firebase-auth-edge";
 import { NextRequest, NextResponse } from "next/server";
 import { commonAuthOptions } from "@/utils/auth/common";
 
@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
     handleValidToken: async ({ token, decodedToken }, headers) => {
       // Authenticated user should not be able to access authentication routes
       if (AUTH_ROUTES.includes(request.nextUrl.pathname)) {
-        return redirectToHome(request);
+        //return redirectToHome(request);
       }
  
       return NextResponse.next({ request: { headers } });

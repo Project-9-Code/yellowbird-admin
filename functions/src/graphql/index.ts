@@ -31,4 +31,6 @@ server.start().then(() => {
   console.log("Server started");
 });
 
-export default functions.https.onRequest(app);
+export default functions.runWith({
+  secrets: ["PROJECT_ID", "CLIENT_EMAIL", "PRIVATE_KEY"],
+}).https.onRequest(app);

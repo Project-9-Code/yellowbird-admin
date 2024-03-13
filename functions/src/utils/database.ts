@@ -1,8 +1,9 @@
-import * as admin from "firebase-admin";
 import {
   CollectionReference, DocumentSnapshot, Query, Timestamp,
 } from "firebase-admin/firestore";
-import {db} from "./firebase";
+import {admin} from "./firebase";
+
+const db = admin.firestore();
 
 type DocumentData = admin.firestore.DocumentData;
 
