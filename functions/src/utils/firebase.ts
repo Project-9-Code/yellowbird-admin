@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin";
 import {Request, Response, NextFunction} from "express";
+import {getDownloadURL} from "firebase-admin/storage";
 
 const credential = admin.credential.applicationDefault();
 
@@ -30,6 +31,22 @@ export async function authorizeEndpoint(
     res.status(404).send();
     next(e);
   }
+}
+
+/**
+ * Fetch download URLs
+ * @param {string[]} keys
+ * @return {Promise<string[]>}
+ */
+export async function fetchDownloadURLs(keys: string[]): Promise<string[]> {
+  const urls = await Promise.all(keys.map(async (key) => {
+    if (!key || key.length === 0 || key.startsWith("http")) {
+      return Promise.resolve(undefined);
+    }
+    return await getDownloadURL(bucket.file(key));
+  }));
+
+  return urls.filter((url) => url !== undefined) as string[];
 }
 
 export {admin, db, storage, bucket, auth};

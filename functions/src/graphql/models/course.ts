@@ -86,15 +86,27 @@ export const resolvers: Resolvers = {
 
       // Replace cover photo paths with download URLs
       courses.forEach((course) => {
-        if (images[course.id]) {
-          course.coverPhoto = images[course.id];
-        }
+        if (images[course.id]) course.coverPhoto = images[course.id];
       });
 
       return courses;
     },
     course: async (_, args) => {
-      return await db.getItem(courseCollectionName, args.courseId) as Course;
+      const course = await db.getItem(
+        courseCollectionName, args.courseId
+      ) as Course;
+
+      if (
+        course.coverPhoto &&
+        course.coverPhoto.length > 0 &&
+        !course.coverPhoto.startsWith("http")
+      ) {
+        course.coverPhoto = await getDownloadURL(
+          bucket.file(course.coverPhoto)
+        );
+      }
+
+      return course;
     },
   },
   Mutation: {
