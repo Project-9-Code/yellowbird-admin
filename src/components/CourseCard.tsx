@@ -21,6 +21,7 @@ export default function CourseCard(props: CourseCardProps) {
   const { selectedCourseIds, setSelectedCourses } = useSelectedCourseIds();
   const selected = selectedCourseIds.includes(props.course.id);
   const showCheckbox = selectedCourseIds.length > 0 || props.selected || isHovered;
+  const href = `/course/${props.course.id}`;
 
   const onCourseSelect = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.checked;
@@ -29,9 +30,12 @@ export default function CourseCard(props: CourseCardProps) {
       setSelectedCourses(selectedCourseIds.filter((id) => id !== props.course.id));
   }, [props.course.id, selectedCourseIds, setSelectedCourses]);
 
+  console.log(props.course.name, props.course.coverPhoto)
+
   return (
     <div className="w-[234px] h-[252px] flex flex-col relative">
-      <div
+      <Link
+        href={href}
         className="w-[234px] h-[168px] bg-brand mb-4 rounded-md"
         onMouseEnter={onHover}
         onMouseLeave={onHoverOut}
@@ -43,7 +47,7 @@ export default function CourseCard(props: CourseCardProps) {
           onChange={onCourseSelect}
           disabled={!showCheckbox}
         />
-        {props.course.coverPhoto && (
+        {props.course.coverPhoto && props.course.coverPhoto.length > 0 && (
           <Image
             src={props.course.coverPhoto}
             alt="Picture of course"
@@ -53,9 +57,9 @@ export default function CourseCard(props: CourseCardProps) {
             priority
           />
         )}
-      </div>
+      </Link>
       
-      <Link href="" className="flex flex-col">
+      <Link href={href} className="flex flex-col">
         <span className="font-bold text-headlineText mb-1">
           {props.course.name}
         </span>

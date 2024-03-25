@@ -14,12 +14,18 @@ const Query = `
   }
   type Course {
     _empty: String
+    lastUpdated: String
+    createdAt: String
   }
   type Lesson {
     _empty: String
+    lastUpdated: String
+    createdAt: String
   }
   type UserProfile {
     _empty: String
+    lastUpdated: String
+    createdAt: String
   }
 `;
 

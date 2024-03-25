@@ -22,6 +22,7 @@ export type Course = {
   author?: Maybe<UserProfile>;
   authorId?: Maybe<Scalars['String']['output']>;
   coverPhoto?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isSponsored?: Maybe<Scalars['Boolean']['output']>;
@@ -56,6 +57,7 @@ export type Lesson = {
   blocks?: Maybe<Array<Maybe<LessonBlock>>>;
   course?: Maybe<Course>;
   courseId?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastUpdated?: Maybe<Scalars['String']['output']>;
@@ -256,9 +258,11 @@ export type UserProfile = {
   __typename?: 'UserProfile';
   _empty?: Maybe<Scalars['String']['output']>;
   businessName?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isEmailVerified?: Maybe<Scalars['Boolean']['output']>;
+  lastUpdated?: Maybe<Scalars['String']['output']>;
   monthlyMetricsUpdates?: Maybe<Scalars['Boolean']['output']>;
   monthlyProductUpdates?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -398,6 +402,7 @@ export type CourseResolvers<ContextType = any, ParentType extends ResolversParen
   author?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   coverPhoto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isSponsored?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
@@ -415,6 +420,7 @@ export type LessonResolvers<ContextType = any, ParentType extends ResolversParen
   blocks?: Resolver<Maybe<Array<Maybe<ResolversTypes['LessonBlock']>>>, ParentType, ContextType>;
   course?: Resolver<Maybe<ResolversTypes['Course']>, ParentType, ContextType>;
   courseId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastUpdated?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -475,9 +481,11 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type UserProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserProfile'] = ResolversParentTypes['UserProfile']> = ResolversObject<{
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   businessName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isEmailVerified?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  lastUpdated?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   monthlyMetricsUpdates?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   monthlyProductUpdates?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

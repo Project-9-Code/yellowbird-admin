@@ -32,7 +32,6 @@ export const typeDef = `
     coverPhoto: String
     authorId: String
     author: UserProfile
-    lastUpdated: String
   }
 
   input CourseInput {
@@ -113,13 +112,21 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     addCourse: async (_, args) => {
-      return await db.createItem(courseCollectionName, args.course) as Course;
+      const data = {
+        ...args.course,
+        createdAt: db.Timestamp.now(),
+      };
+      return await db.createItem(courseCollectionName, data) as Course;
     },
     updateCourse: async (_, args) => {
+      const data = {
+        ...args.course,
+        lastUpdated: db.Timestamp.now(),
+      };
       return db.setItem(
         courseCollectionName,
         args.course.id,
-        args.course
+        data,
       ) as unknown as Course;
     },
     deleteCourse: async (_, args) => {
@@ -129,13 +136,13 @@ export const resolvers: Resolvers = {
     bulkAddCourses: async (_, args) => {
       return await db.addBatch(args.courses.map((course) => ({
         collection: courseCollectionName,
-        data: course,
+        data: {...course, createdAt: db.Timestamp.now()},
       } as db.BatchItem))) as Course[];
     },
     bulkUpdateCourses: async (_, args) => {
       return await db.updateBatch(args.courses.map((course) => ({
         collection: courseCollectionName,
-        data: course,
+        data: {...course, lastUpdated: db.Timestamp.now()},
       } as db.BatchItem))) as Course[];
     },
     bulkDeleteCourses: async (_, args) => {

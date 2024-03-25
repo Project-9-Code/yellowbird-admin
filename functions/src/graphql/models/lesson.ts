@@ -141,6 +141,7 @@ export const resolvers: Resolvers = {
             if (block) block.id = uuidV4();
             return block;
           }),
+          createdAt: db.Timestamp.now(),
           lastUpdated: db.Timestamp.now(),
         }
       ) as Lesson;

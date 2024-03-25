@@ -30,7 +30,7 @@ export const addCourse = async function addCourseAPI(course: FormData) {
         description
       }
     }
-  `), { course: { id, name, description, coverPhoto: coverPhotoKey } });
+  `), { course: { id, name, description, coverPhoto: (coverPhoto) ? coverPhotoKey : undefined } });
 
   const data = addCourse as Course;
 
@@ -46,7 +46,11 @@ export const archiveCourses = async function archiveCoursesAPI(courseIds: string
   `), { courseIds });
 
   courseIds.forEach((courseId) => {
-    deleteObject(ref(storage, `public/course/${courseId}/cover`));
+    try {
+      deleteObject(ref(storage, `public/course/${courseId}/cover`));
+    } catch (error) {
+      console.error("Error deleting cover photo", error);
+    }
   });
 
   revalidatePath("/");

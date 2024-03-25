@@ -30,3 +30,27 @@ export const fetchCourses = cache(async function fetchCoursesAPI() {
 
   return [] as Course[];
 });
+
+export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
+  const data = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
+    query GetCourse($courseId: String!) {
+      course(courseId: $courseId) {
+        id
+        name
+        description
+        coverPhoto
+        lessons {
+          id
+          title
+          order
+          author {
+            name
+            id
+          }
+        }
+      }
+    }
+  `), { courseId: id });
+
+  return data.course as Course;
+});

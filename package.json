@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@auth/firebase-adapter": "^1.5.0",
+    "@tanstack/react-table": "^8.15.0",
     "clsx": "^2.1.0",
     "firebase": "^10.8.1",
     "graphql": "^16.8.1",
@@ -21,6 +22,7 @@
     "next-firebase-auth-edge": "^1.4.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-draggable": "^4.4.6",
     "react-spinners": "^0.13.8",
     "uuid": "^9.0.1"
   },

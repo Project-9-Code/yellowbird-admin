@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { whitney } from "@/utils/fonts";
 import { getUser } from "@/utils/auth/server";
 import AppProviders from "@/components/Providers";
+import AppHeader from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Yellowbird Dashboard",
@@ -21,7 +22,10 @@ export default async function RootLayout({
     <html lang="en" className={clsx("w-full h-full", whitney.variable)}>
       <body className="w-full h-full text-bodyText flex flex-col">
         <AppProviders>
-          {children}
+          <main className="flex flex-col grow bg-snowGrey">
+            <AppHeader />
+            {children}
+          </main>
         </AppProviders>
       </body>
     </html>
