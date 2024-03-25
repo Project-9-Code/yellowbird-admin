@@ -5,6 +5,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
+import useSelectedCourseIds from "./hooks/useSelectedCourseIds";
 
 interface CourseCardProps {
   course: Course;
@@ -14,12 +15,19 @@ interface CourseCardProps {
 };
 
 export default function CourseCard(props: CourseCardProps) {
-  const { onSelect } = props;
   const [isHovered, setIsHovered] = useState(false);
   const onHover = useCallback((e: MouseEvent<HTMLElement>) => setIsHovered(true), []);
   const onHoverOut = useCallback(() => setIsHovered(false), []);
-  const onCourseSelect = useCallback((e: ChangeEvent<HTMLInputElement>) => onSelect?.(e.target.checked), [onSelect]);
-  const showCheckbox = props.showCheckbox || props.selected || isHovered;
+  const { selectedCourseIds, setSelectedCourses } = useSelectedCourseIds();
+  const selected = selectedCourseIds.includes(props.course.id);
+  const showCheckbox = selectedCourseIds.length > 0 || props.selected || isHovered;
+
+  const onCourseSelect = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.checked;
+    return (selected && !selectedCourseIds.includes(props.course.id)) ?
+      setSelectedCourses([...selectedCourseIds, props.course.id]) :
+      setSelectedCourses(selectedCourseIds.filter((id) => id !== props.course.id));
+  }, [props.course.id, selectedCourseIds, setSelectedCourses]);
 
   return (
     <div className="w-[234px] h-[252px] flex flex-col relative">
@@ -31,7 +39,7 @@ export default function CourseCard(props: CourseCardProps) {
         <input
           type="checkbox"
           className={clsx("absolute top-4 right-4 w-4 h-4 cursor-pointer", !showCheckbox && "hidden")}
-          checked={props.selected}
+          checked={selected}
           onChange={onCourseSelect}
           disabled={!showCheckbox}
         />

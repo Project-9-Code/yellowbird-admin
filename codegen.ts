@@ -1,5 +1,5 @@
+import { GRAPHQL_API_URL } from './src/utils/common';
 import { CodegenConfig } from '@graphql-codegen/cli';
-import { GRAPHQL_API_URL } from './src/utils/auth/common';
 
 const config: CodegenConfig = {
   schema: GRAPHQL_API_URL,
@@ -10,6 +10,7 @@ const config: CodegenConfig = {
       plugins: [],
       presetConfig: {
         gqlTagName: 'gql',
+        dedupeFragments: true,
       }
     }
   },

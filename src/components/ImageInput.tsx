@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import UploadImage from "@/../public/svgs/uploadImage.svg";
+import UploadImage from "@/svgs/uploadImage.svg";
 import { ChangeEvent, useCallback, useRef, useState } from "react";
 
 interface ImageInputProps {
@@ -10,9 +10,9 @@ interface ImageInputProps {
 }
 
 export default function ImageInput(props: ImageInputProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState<string | undefined>();
   const ref = useRef<HTMLInputElement | null>(null);
+  const { onChange } = props;
   const onFileChange = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -20,15 +20,11 @@ export default function ImageInput(props: ImageInputProps) {
       reader.onload = (e) => {
         const base64Str = e.target?.result as string;
         setImage(base64Str);
-        props.onChange?.(base64Str);
-        if (ref.current) {
-          ref.current.type = "text";
-          ref.current.value = base64Str;
-        }
+        onChange?.(base64Str);
       };
       reader.readAsDataURL(file);
     }
-  }, []);
+  }, [onChange]);
 
   return (
     <label
@@ -52,7 +48,6 @@ export default function ImageInput(props: ImageInputProps) {
       )}
 
       <input
-        ref={ref}
         type="file"
         id={props.id}
         name={props.id}

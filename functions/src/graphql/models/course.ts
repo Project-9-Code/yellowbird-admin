@@ -36,6 +36,7 @@ export const typeDef = `
   }
 
   input CourseInput {
+    id: ID
     name: String
     description: String
     isSponsored: Boolean
@@ -81,7 +82,8 @@ export const resolvers: Resolvers = {
         }
 
         return getDownloadURL(bucket.file(course.coverPhoto as string))
-          .then((url) => images[course.id] = url);
+          .then((url) => images[course.id] = url)
+          .catch((e) => console.error(e));
       }));
 
       // Replace cover photo paths with download URLs
@@ -121,6 +123,7 @@ export const resolvers: Resolvers = {
       ) as unknown as Course;
     },
     deleteCourse: async (_, args) => {
+      await bucket.deleteFiles({prefix: `public/course/${args.courseId}`});
       return db.deleteItem(courseCollectionName, args.courseId);
     },
     bulkAddCourses: async (_, args) => {

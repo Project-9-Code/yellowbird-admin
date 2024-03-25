@@ -1,4 +1,9 @@
-import AddCourseForm from "./components/AddCourseForm";
+import ImageInput from "@/components/ImageInput";
+import InputField from "@/components/InputField";
+import TextAreaField from "@/components/TextAreaField";
+import Link from "next/link";
+import Button from "@/components/Button";
+import { addCourse } from "@/actions/course";
 
 export default async function AddCourse() {
   return (
@@ -8,7 +13,47 @@ export default async function AddCourse() {
           Create Course
         </h1>
 
-        <AddCourseForm />
+        <form action={addCourse} className="flex flex-col grow">
+          <div className="flex flex-row px-10 grow">
+            <div className="flex flex-col mr-[50px] cursor-pointer">
+              <h4 className="text-[##9B9B9B] text-xs mb-1">Cover Photo</h4>
+
+              <ImageInput id="coverPhoto" />
+            </div>
+
+            <div className="flex flex-col grow">
+              <InputField
+                id="name"
+                label="Course Name"
+                placeholder="What should we call this course?"
+                containerClass="mb-5"
+              />
+
+              <TextAreaField
+                id="description"
+                label="Description"
+                placeholder="What's the course about?"
+              />
+            </div>
+          </div>
+
+          <div className="bg-[#FAFAFA] px-10 py-6 flex flex-row justify-between items-center rounded-b-2xl">
+            <Link href="/" className="w-[78px]">
+              <Button
+                label="Cancel"
+                buttonClassName="!bg-white border-[1px] border-borderBg"
+                textClassName="!text-bodyText"
+                showLoader={false}
+              />
+            </Link>
+
+            <Button
+              label="Create Course"
+              buttonClassName="!w-[142px]"
+              type="submit"
+            />
+          </div>
+        </form>
       </div>
     </div>
   );

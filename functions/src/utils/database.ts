@@ -164,7 +164,7 @@ export async function setItem(
 
   if (!result.exists) return null; // Record not found
 
-  await doc.set(document);
+  await doc.update(document);
 
   document.id = id;
   return document;

@@ -1,10 +1,8 @@
+import { fetchCourses } from "@/api/course";
 import Button from "@/components/Button";
 import CourseCardList from "@/components/CourseCardList";
 import AppHeader from "@/components/Header";
-import { fetchCourses } from "@/utils/api/course";
 import Link from "next/link";
-
-export const revalidate = 1;
 
 export default async function Home() {
   const courses = await fetchCourses();
@@ -13,7 +11,7 @@ export default async function Home() {
     <main className="flex flex-col grow bg-snowGrey">
       <AppHeader />
 
-      <div className="max-w-[1032px] mx-auto w-full mb-7 flex flex-col grow">
+      <div className="max-w-[1032px] mx-auto w-full mb-7 flex flex-col grow relative">
         <div className="flex flex-row mt-12 items-center mb-7">
           <span className="font-bold text-headlineText text-3xl">
             Courses
@@ -25,7 +23,7 @@ export default async function Home() {
             <Button label="Create New Course"/>
           </Link>
         </div>
-
+        
         <CourseCardList courses={courses} />
       </div>
     </main>

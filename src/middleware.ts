@@ -15,11 +15,6 @@ export async function middleware(request: NextRequest) {
     checkRevoked: true,
 
     handleValidToken: async ({ token, decodedToken }, headers) => {
-      // Authenticated user should not be able to access authentication routes
-      if (AUTH_ROUTES.includes(request.nextUrl.pathname)) {
-        //return redirectToHome(request);
-      }
- 
       return NextResponse.next({ request: { headers } });
     },
 

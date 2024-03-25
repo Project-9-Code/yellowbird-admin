@@ -4,13 +4,6 @@ import clsx from "clsx";
 import { whitney } from "@/utils/fonts";
 import { getUser } from "@/utils/auth/server";
 import AppProviders from "@/components/Providers";
-import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
-
-if (process.env.NODE_ENV === "development") {
-  // Adds Apollo messages only in a dev environment
-  loadDevMessages();
-  loadErrorMessages();
-}
 
 export const metadata: Metadata = {
   title: "Yellowbird Dashboard",
