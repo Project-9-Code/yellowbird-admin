@@ -11,12 +11,15 @@ interface InputFieldProps {
   containerClass?: string;
   min?: string | number;
   max?: string | number;
+  defaultValue?: string | number | readonly string[];
   required?: boolean;
   readonly?: boolean;
+  disabled?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function InputField(props: InputFieldProps) {
+  const disabled = props.disabled ? "bg-black/[0.12]" : "";
   return (
     <div className={clsx("flex flex-col", props.containerClass)}>
       <div className="flex flex-row justify-between mb-1 items-center">
@@ -34,10 +37,12 @@ export default function InputField(props: InputFieldProps) {
         type={props.type}
         min={props.min}
         max={props.max}
+        defaultValue={props.defaultValue}
         required={props.required}
         readOnly={props.readonly}
+        disabled={props.disabled}
         onChange={props.onChange}
-        className="p-2 rounded ring-1 ring-black/[0.12]"
+        className={clsx("p-2 rounded ring-1 ring-black/[0.12]", disabled)}
       />
     </div>
   );

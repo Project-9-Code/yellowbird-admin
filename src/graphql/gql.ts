@@ -16,7 +16,8 @@ const documents = {
     "\n    mutation AddCourse($course: CourseInput!) {\n      addCourse(course: $course) {\n        id\n        name\n        description\n      }\n    }\n  ": types.AddCourseDocument,
     "\n    mutation Mutation($courseIds: [String]!) {\n      bulkDeleteCourses(courseIds: $courseIds)\n    }\n  ": types.MutationDocument,
     "\n    query GetCourses {\n      courses {\n        id\n        name\n        description\n        coverPhoto\n      }\n    }\n  ": types.GetCoursesDocument,
-    "\n    query GetCourse($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n        description\n        coverPhoto\n        lessons {\n          id\n          title\n          order\n          author {\n            name\n            id\n          }\n        }\n      }\n    }\n  ": types.GetCourseDocument,
+    "\n    query GetCourse($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n        description\n        coverPhoto\n        lessons {\n          __typename\n          _empty\n          id\n          title\n          order\n          author {\n            name\n            id\n          }\n        }\n      }\n    }\n  ": types.GetCourseDocument,
+    "\n    query GetCourseMeta($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n      }\n    }\n  ": types.GetCourseMetaDocument,
 };
 
 /**
@@ -48,7 +49,11 @@ export function gql(source: "\n    query GetCourses {\n      courses {\n        
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    query GetCourse($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n        description\n        coverPhoto\n        lessons {\n          id\n          title\n          order\n          author {\n            name\n            id\n          }\n        }\n      }\n    }\n  "): (typeof documents)["\n    query GetCourse($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n        description\n        coverPhoto\n        lessons {\n          id\n          title\n          order\n          author {\n            name\n            id\n          }\n        }\n      }\n    }\n  "];
+export function gql(source: "\n    query GetCourse($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n        description\n        coverPhoto\n        lessons {\n          __typename\n          _empty\n          id\n          title\n          order\n          author {\n            name\n            id\n          }\n        }\n      }\n    }\n  "): (typeof documents)["\n    query GetCourse($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n        description\n        coverPhoto\n        lessons {\n          __typename\n          _empty\n          id\n          title\n          order\n          author {\n            name\n            id\n          }\n        }\n      }\n    }\n  "];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query GetCourseMeta($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n      }\n    }\n  "): (typeof documents)["\n    query GetCourseMeta($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n      }\n    }\n  "];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

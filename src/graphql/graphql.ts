@@ -16,6 +16,24 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Bookmark = {
+  __typename?: 'Bookmark';
+  _empty?: Maybe<Scalars['String']['output']>;
+  courseId?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lastUpdated?: Maybe<Scalars['String']['output']>;
+  lessonId?: Maybe<Scalars['String']['output']>;
+  userId: Scalars['String']['output'];
+};
+
+export type BookmarkInput = {
+  courseId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  lessonId?: InputMaybe<Scalars['String']['input']>;
+  userId: Scalars['String']['input'];
+};
+
 export type Course = {
   __typename?: 'Course';
   _empty?: Maybe<Scalars['String']['output']>;
@@ -63,6 +81,7 @@ export type Lesson = {
   lastUpdated?: Maybe<Scalars['String']['output']>;
   order?: Maybe<Scalars['Int']['output']>;
   recapDescription?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<LessonStatus>;
   tags?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
@@ -123,9 +142,16 @@ export type LessonInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<Scalars['Int']['input']>;
   recapDescription?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<LessonStatus>;
   tags?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
+
+export enum LessonStatus {
+  Archived = 'ARCHIVED',
+  Draft = 'DRAFT',
+  Published = 'PUBLISHED'
+}
 
 export type LessonUpdateInput = {
   authorId?: InputMaybe<Scalars['String']['input']>;
@@ -135,6 +161,7 @@ export type LessonUpdateInput = {
   id: Scalars['ID']['input'];
   order?: InputMaybe<Scalars['Int']['input']>;
   recapDescription?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<LessonStatus>;
   tags?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -142,6 +169,7 @@ export type LessonUpdateInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']['output']>;
+  addBookmark?: Maybe<Bookmark>;
   addCourse?: Maybe<Course>;
   addLesson?: Maybe<Lesson>;
   bulkAddCourses?: Maybe<Array<Maybe<Course>>>;
@@ -150,11 +178,18 @@ export type Mutation = {
   bulkDeleteLessons?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   bulkUpdateCourses?: Maybe<Array<Maybe<Course>>>;
   bulkUpdateLessons?: Maybe<Array<Maybe<Lesson>>>;
+  deleteBookmark?: Maybe<Bookmark>;
   deleteCourse?: Maybe<Scalars['String']['output']>;
   deleteLesson?: Maybe<Scalars['String']['output']>;
+  updateBookmark?: Maybe<Bookmark>;
   updateCourse?: Maybe<Course>;
   updateLesson?: Maybe<Lesson>;
   updateProfile?: Maybe<UserProfile>;
+};
+
+
+export type MutationAddBookmarkArgs = {
+  bookmark: BookmarkInput;
 };
 
 
@@ -198,6 +233,11 @@ export type MutationBulkUpdateLessonsArgs = {
 };
 
 
+export type MutationDeleteBookmarkArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationDeleteCourseArgs = {
   courseId: Scalars['String']['input'];
 };
@@ -205,6 +245,11 @@ export type MutationDeleteCourseArgs = {
 
 export type MutationDeleteLessonArgs = {
   lessonId: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateBookmarkArgs = {
+  bookmark: BookmarkInput;
 };
 
 
@@ -225,13 +270,21 @@ export type MutationUpdateProfileArgs = {
 export type Query = {
   __typename?: 'Query';
   _empty?: Maybe<Scalars['String']['output']>;
+  bookmark?: Maybe<Bookmark>;
+  bookmarks?: Maybe<Array<Maybe<Bookmark>>>;
   course?: Maybe<Course>;
   courses?: Maybe<Array<Maybe<Course>>>;
   lesson?: Maybe<Lesson>;
   lessons?: Maybe<Array<Maybe<Lesson>>>;
   user?: Maybe<UserProfile>;
+  userBookmarks?: Maybe<Array<Maybe<Bookmark>>>;
   userExist?: Maybe<Scalars['Boolean']['output']>;
   users?: Maybe<Array<Maybe<UserProfile>>>;
+};
+
+
+export type QueryBookmarkArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -246,6 +299,11 @@ export type QueryLessonArgs = {
 
 
 export type QueryUserArgs = {
+  userId: Scalars['String']['input'];
+};
+
+
+export type QueryUserBookmarksArgs = {
   userId: Scalars['String']['input'];
 };
 
@@ -310,10 +368,18 @@ export type GetCourseQueryVariables = Exact<{
 }>;
 
 
-export type GetCourseQuery = { __typename?: 'Query', course?: { __typename?: 'Course', id: string, name?: string | null, description?: string | null, coverPhoto?: string | null, lessons?: Array<{ __typename?: 'Lesson', id: string, title?: string | null, order?: number | null, author?: { __typename?: 'UserProfile', name?: string | null, id: string } | null } | null> | null } | null };
+export type GetCourseQuery = { __typename?: 'Query', course?: { __typename?: 'Course', id: string, name?: string | null, description?: string | null, coverPhoto?: string | null, lessons?: Array<{ __typename: 'Lesson', _empty?: string | null, id: string, title?: string | null, order?: number | null, author?: { __typename?: 'UserProfile', name?: string | null, id: string } | null } | null> | null } | null };
+
+export type GetCourseMetaQueryVariables = Exact<{
+  courseId: Scalars['String']['input'];
+}>;
+
+
+export type GetCourseMetaQuery = { __typename?: 'Query', course?: { __typename?: 'Course', id: string, name?: string | null } | null };
 
 
 export const AddCourseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddCourse"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"course"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CourseInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCourse"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"course"},"value":{"kind":"Variable","name":{"kind":"Name","value":"course"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]} as unknown as DocumentNode<AddCourseMutation, AddCourseMutationVariables>;
 export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"courseIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"bulkDeleteCourses"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"courseIds"},"value":{"kind":"Variable","name":{"kind":"Name","value":"courseIds"}}}]}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
 export const GetCoursesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCourses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"courses"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"coverPhoto"}}]}}]}}]} as unknown as DocumentNode<GetCoursesQuery, GetCoursesQueryVariables>;
-export const GetCourseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCourse"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"courseId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"course"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"courseId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"courseId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"coverPhoto"}},{"kind":"Field","name":{"kind":"Name","value":"lessons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCourseQuery, GetCourseQueryVariables>;
+export const GetCourseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCourse"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"courseId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"course"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"courseId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"courseId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"coverPhoto"}},{"kind":"Field","name":{"kind":"Name","value":"lessons"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"_empty"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCourseQuery, GetCourseQueryVariables>;
+export const GetCourseMetaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCourseMeta"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"courseId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"course"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"courseId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"courseId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetCourseMetaQuery, GetCourseMetaQueryVariables>;

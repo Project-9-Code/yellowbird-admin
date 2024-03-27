@@ -29,6 +29,8 @@ const config: Config = {
         borderBg: "#E0E0E0",
         checkboxUnselected: "#DFD1FA",
         checkboxSelected: "#884EF9",
+        disabledText: "#BDBDBD",
+        focused: "#92D5F2",
       }
     },
   },

@@ -35,6 +35,7 @@ export const typeDef = `
     author: UserProfile
     lastUpdated: String
     tags: String
+    status: LessonStatus
     blocks: [LessonBlock]
   }
 
@@ -56,6 +57,12 @@ export const typeDef = `
     points: Int
   }
 
+  enum LessonStatus {
+    DRAFT
+    PUBLISHED
+    ARCHIVED
+  }
+
   enum LessonBlockTypes {
     TEXT
     MEDIA
@@ -74,6 +81,7 @@ export const typeDef = `
     authorId: String
     order: Int
     tags: String
+    status: LessonStatus
     blocks: [LessonBlockInput]
   }
   
@@ -86,6 +94,7 @@ export const typeDef = `
     authorId: String
     order: Int
     tags: String
+    status: LessonStatus
     blocks: [LessonBlockInput]
   }
 
@@ -141,6 +150,7 @@ export const resolvers: Resolvers = {
             if (block) block.id = uuidV4();
             return block;
           }),
+          status: args.lesson.status ?? "DRAFT",
           createdAt: db.Timestamp.now(),
           lastUpdated: db.Timestamp.now(),
         }
@@ -150,7 +160,11 @@ export const resolvers: Resolvers = {
       return db.setItem(
         lessonCollectionName,
         args.lesson.id,
-        {...args.lesson, lastUpdated: Date.now().toString()},
+        {
+          ...args.lesson,
+          status: args.lesson.status ?? "DRAFT",
+          lastUpdated: Date.now().toString(),
+        },
       ) as unknown as Lesson;
     },
     deleteLesson: async (_, args) => {
@@ -160,7 +174,11 @@ export const resolvers: Resolvers = {
       const result = await db.updateBatch(args.lessons.map((lesson) => ({
         collection: lessonCollectionName,
         id: lesson?.id,
-        data: {...lesson, lastUpdated: db.Timestamp.now()},
+        data: {
+          ...lesson,
+          status: lesson?.status ?? "DRAFT",
+          lastUpdated: db.Timestamp.now(),
+        },
       } as db.BatchItem))) as Lesson[];
 
       return result;
@@ -168,7 +186,11 @@ export const resolvers: Resolvers = {
     bulkAddLessons: async (_, args) => {
       return await db.addBatch(args.lessons.map((lesson) => ({
         collection: lessonCollectionName,
-        data: {...lesson, lastUpdated: db.Timestamp.now()},
+        data: {
+          ...lesson,
+          status: lesson?.status ?? "DRAFT",
+          lastUpdated: db.Timestamp.now(),
+        },
       } as db.BatchItem))) as Lesson[];
     },
     bulkDeleteLessons: async (_, args) => {

@@ -12,6 +12,7 @@ interface TextAreaProps {
   required?: boolean;
   readonly?: boolean;
   rows?: number;
+  defaultValue?: string | number | readonly string[];
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
 
@@ -31,6 +32,7 @@ export default function TextAreaField(props: TextAreaProps) {
         value={props.value}
         placeholder={props.placeholder}
         rows={props.rows}
+        defaultValue={props.defaultValue}
         required={props.required}
         readOnly={props.readonly}
         onChange={props.onChange}

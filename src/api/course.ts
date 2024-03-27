@@ -40,6 +40,8 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
         description
         coverPhoto
         lessons {
+          __typename
+          _empty
           id
           title
           order
@@ -48,6 +50,19 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
             id
           }
         }
+      }
+    }
+  `), { courseId: id });
+
+  return data.course as Course;
+});
+
+export const fetchCourseMeta = cache(async function fetchCourseMetaAPI(id: string) {
+  const data = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
+    query GetCourseMeta($courseId: String!) {
+      course(courseId: $courseId) {
+        id
+        name
       }
     }
   `), { courseId: id });

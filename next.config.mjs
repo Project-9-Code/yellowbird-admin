@@ -1,3 +1,5 @@
+import removeImports from 'next-remove-imports';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -10,4 +12,4 @@ const nextConfig = {
   }
 };
 
-export default nextConfig;
+export default removeImports()(nextConfig);

@@ -4,11 +4,13 @@ import TextAreaField from "@/components/TextAreaField";
 import Link from "next/link";
 import Button from "@/components/Button";
 import { addCourse } from "@/actions/course";
+import AppHeader from "@/components/Header";
 
 export default async function AddCourse() {
   return (
-    <div className="w-full h-full bg-snowGrey">
-      <div className="flex flex-col grow mt-16 bg-white border-borderBg border-[1px] w-[700px] h-[500px] mx-auto rounded-2xl">
+    <div className="w-full h-full bg-snowGrey overflow-hidden">
+      <AppHeader />
+      <div className="flex flex-col grow mt-16 bg-white border-borderBg border-[1px] w-[700px] h-[500px] mx-auto rounded-2xl overflow-auto">
         <h1 className="text-headlineText text-[32px] font-bold py-6 px-10">
           Create Course
         </h1>
@@ -38,14 +40,14 @@ export default async function AddCourse() {
           </div>
 
           <div className="bg-[#FAFAFA] px-10 py-6 flex flex-row justify-between items-center rounded-b-2xl">
-            <Link href="/" className="w-[78px]">
-              <Button
-                label="Cancel"
-                buttonClassName="!bg-white border-[1px] border-borderBg"
-                textClassName="!text-bodyText"
-                showLoader={false}
-              />
-            </Link>
+            <Button
+              label="Cancel"
+              buttonClassName="!bg-white border-[1px] border-borderBg !w-[142px]"
+              textClassName="!text-bodyText"
+              showLoader={false}
+              isLink
+              href="/"
+            />
 
             <Button
               label="Create Course"

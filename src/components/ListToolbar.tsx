@@ -6,7 +6,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { useCallback, useTransition } from "react";
 import { Course } from "@/graphql/graphql";
-import useSelectedCourseIds from "./hooks/useSelectedCourseIds";
+import useSelectedCourseIds from "./hooks/useSelectedIds";
 import { archiveCourses } from "@/actions/course";
 
 interface ListToolbarProps {
@@ -19,21 +19,21 @@ interface ListToolbarProps {
 }
 
 export default function ListToolbar(props: ListToolbarProps) {
-  const { setSelectedCourses, selectedCourseIds } = useSelectedCourseIds();
-  const visible = selectedCourseIds.length > 0;
-  const allSelected = selectedCourseIds.length > 0 && props.courses?.length === selectedCourseIds.length;
-  const archiveCoursesWithIds = archiveCourses.bind(null, selectedCourseIds);
+  const { setSelectedIds, selectedIds } = useSelectedCourseIds();
+  const visible = selectedIds.length > 0;
+  const allSelected = selectedIds.length > 0 && props.courses?.length === selectedIds.length;
+  const archiveCoursesWithIds = archiveCourses.bind(null, selectedIds);
   const [isPending, startTransition] = useTransition();
 
   const selectAll = useCallback(() => {
     const courses = (allSelected) ? [] : props.courses?.map((course) => course.id) ?? [];
-    setSelectedCourses(courses);
-  }, [props.courses, allSelected, setSelectedCourses]);
+    setSelectedIds(courses);
+  }, [props.courses, allSelected, setSelectedIds]);
 
   const onArchive = useCallback(async () => {
    startTransition(archiveCoursesWithIds);
-   setSelectedCourses(selectedCourseIds.filter((id) => !selectedCourseIds.includes(id)));
-  }, [archiveCoursesWithIds, selectedCourseIds, setSelectedCourses]);
+   setSelectedIds(selectedIds.filter((id) => !selectedIds.includes(id)));
+  }, [archiveCoursesWithIds, selectedIds, setSelectedIds]);
 
   return (
     <div className={clsx("absolute top-5 left-0 w-full flex items-center justify-center", !visible && "hidden")}>
@@ -43,7 +43,7 @@ export default function ListToolbar(props: ListToolbarProps) {
             type="checkbox"
             checked={allSelected}
             className="h-4 w-4 cursor-pointer mr-2"
-            onChange={() => (allSelected) ? setSelectedCourses([]) : selectAll()}
+            onChange={() => (allSelected) ? setSelectedIds([]) : selectAll()}
           />
           <span className="text-white text-base">
             Select all
