@@ -10,15 +10,24 @@ export default function useUrlParam(key: string, defaultValue?: string) {
   const setValue = useCallback((value: any) => {
     const newUrl = new URLSearchParams(searchParams.toString());
     newUrl.set(key, value);
-    history.replaceState(null, "", `${pathname}?${newUrl.toString()}`);
+    const path = `${pathname}?${newUrl.toString()}`;
+    history.replaceState(null, "", path);
+    return path
   }, [searchParams, key, pathname]);
 
-  const setValueOnChange = useCallback((time=300) => 
-    debounce((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const newUrl = new URLSearchParams(searchParams.toString());
-      newUrl.set(key, e.target.value);
-      history.replaceState(null, "", `${pathname}?${newUrl.toString()}`);
-    }, time), [key, pathname, searchParams]);
+  const setValues = useCallback((values: [string, any][]) => {
+    const newUrl = new URLSearchParams(searchParams.toString());
+    values.forEach(([key, value]) => newUrl.set(key, value));
+    const path = `${pathname}?${newUrl.toString()}`;
+    history.replaceState(null, "", path);
+    return path;
+  }, [pathname, searchParams]);
 
-  return { value, setValue, setValueOnChange };
+  const setValueOnChange = useCallback((time=300) => 
+    debounce((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setValue(e.target.value), time),
+      [setValue]
+    );
+
+  return { value, setValue, setValues, setValueOnChange };
 }

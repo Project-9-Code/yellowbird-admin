@@ -31,6 +31,7 @@ const config: Config = {
         checkboxSelected: "#884EF9",
         disabledText: "#BDBDBD",
         focused: "#92D5F2",
+        placeholder: "#DBDBDB"
       }
     },
   },

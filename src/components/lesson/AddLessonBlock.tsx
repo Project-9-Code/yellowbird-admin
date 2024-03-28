@@ -1,13 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import Plus from "@/svgs/grey-plus.svg";
-import useUrlParam from "../hooks/useUrlParam";
-import { useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
+import { LessonBlockTypes } from "@/graphql/graphql";
+import { v4 as uuid } from "uuid";
+import useLessonBlocks from "../hooks/useLessonBlocks";
 
 export default function AddLessonBlock() {
-  const { value, setValue } = useUrlParam("showAddLessonBlock", "false");
-  const showAddLessonBlock = value === "true";
-  const onMouseEnter = useCallback(() => setValue("true"), [setValue]);
-  const onMouseLeave = useCallback(() => setValue("false"), [setValue]);
+  const { addLessonBlock } = useLessonBlocks();
+  const ref = useRef(false);
+  const [showAddLessonBlock, setShowAddLessonBlock] = useState(false);
+
+  const onMouseEnter = useCallback(() => setShowAddLessonBlock(true), []);
+  const onMouseLeave = useCallback(() => setShowAddLessonBlock(false), []);
+
+  const onClick = useCallback(() => {
+    addLessonBlock({
+      id: uuid(),
+      type: LessonBlockTypes.Text,
+      textValue: "",
+    }, true);
+  }, [addLessonBlock]);
 
   return (
     <div
@@ -18,7 +32,12 @@ export default function AddLessonBlock() {
       {showAddLessonBlock && (
         <>
           <hr className="grow" />
-          <Image src={Plus} alt="Add Lesson" className="w-6 h-6 cursor-pointer" />
+          <Image
+            src={Plus}
+            alt="Add Lesson"
+            className="w-6 h-6 cursor-pointer"
+            onClick={onClick}
+          />
           <hr className="grow" />
         </>
       )}

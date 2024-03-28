@@ -30,7 +30,7 @@
     "next-remove-imports": "^1.0.12",
     "react": "^18",
     "react-dom": "^18",
-    "react-draggable": "^4.4.6",
+    "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
     "rehype-sanitize": "^6.0.0",
     "uuid": "^9.0.1"

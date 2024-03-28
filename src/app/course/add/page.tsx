@@ -1,7 +1,6 @@
 import ImageInput from "@/components/ImageInput";
 import InputField from "@/components/InputField";
 import TextAreaField from "@/components/TextAreaField";
-import Link from "next/link";
 import Button from "@/components/Button";
 import { addCourse } from "@/actions/course";
 import AppHeader from "@/components/Header";
