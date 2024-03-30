@@ -2,7 +2,6 @@ import { fetchCourses } from "@/api/course";
 import Button from "@/components/Button";
 import CourseCardList from "@/components/CourseCardList";
 import AppHeader from "@/components/Header";
-import { Suspense } from "react";
 
 export default async function Home() {
   const courses = await fetchCourses();
@@ -25,10 +24,8 @@ export default async function Home() {
             buttonClassName="!w-[163px]"
           />
         </div>
-        
-        <Suspense fallback={<div>Loading...</div>}>
-          <CourseCardList courses={courses} />
-        </Suspense>
+
+        <CourseCardList courses={courses} />
       </div>
     </div>
   );

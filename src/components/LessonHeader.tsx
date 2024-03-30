@@ -44,7 +44,7 @@ export default function LessonHeader({ course }: { course: Course }) {
           buttonClassName="!w-[87px] !h-[40px] bg-white px-1 py-2 border border-bordeerBg rounded-[6px] mr-[12px]"
           textClassName="text-black"
         />
-        <Button label="Submit Lesson" buttonClassName="!w-[130px] !h-[40px]" />
+        <Button label="Submit Lesson" type="submit" buttonClassName="!w-[130px] !h-[40px]" preventDefault={false} />
       </div>
     </div>
   );

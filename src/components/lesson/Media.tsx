@@ -28,6 +28,7 @@ export default function MediaBlock(
           <BlockHeader block={block} />
           <div className="flex flex-col">
             <ImageInput
+              id={`${urlKey}-${block.id}`}
               width={500}
               height={220}
               containerClass="w-full h-[220] my-[16px]"

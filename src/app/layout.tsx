@@ -4,8 +4,9 @@ import clsx from "clsx";
 import { whitney } from "@/utils/fonts";
 import { getUser } from "@/utils/auth/server";
 import AppProviders from "@/components/Providers";
-import { Suspense } from "react";
+import { ToastContainer } from 'react-toastify';
 import "@szhsin/react-menu/dist/index.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
   title: "Yellowbird Dashboard",
@@ -24,10 +25,9 @@ export default async function RootLayout({
       <body className="w-full h-full text-bodyText flex flex-col">
         <AppProviders>
           <main className="flex flex-col grow bg-snowGrey overflow-hidden">
-            <Suspense fallback={<div className="w-full h-full flex items-center justify-center">Loading...</div>}>
-              {children}
-            </Suspense>
+            {children}
           </main>
+          <ToastContainer />
         </AppProviders>
       </body>
     </html>

@@ -15,19 +15,22 @@ interface ButtonProps {
   showLoader?: boolean;
   isLink?: boolean;
   href?: string;
+  preventDefault?: boolean;
   onClick?: (MouseEventHandler<HTMLButtonElement>);
 }
 
 export default function Button(props: PropsWithChildren<ButtonProps>) {
   const { pending } = useFormStatus();
-  const { showLoader=true, loading=false, isLink=false, href="", onClick } = props;
+  const { showLoader=true, loading=false, isLink=false, href="", preventDefault=true, onClick } = props;
   const isLoading = showLoader && (loading || pending);
 
   const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+    if (preventDefault) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     onClick?.(e);
-  }, [onClick]);
+  }, [onClick, preventDefault]);
 
   return (
     (isLink) ? (

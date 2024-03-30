@@ -4,12 +4,12 @@ import TextAreaField from "@/components/TextAreaField";
 import Button from "@/components/Button";
 import { addCourse } from "@/actions/course";
 import AppHeader from "@/components/Header";
+import AppLayout from "@/components/AppLayout";
 
 export default async function AddCourse() {
   return (
-    <div className="w-full h-full bg-snowGrey overflow-hidden">
-      <AppHeader />
-      <div className="flex flex-col grow mt-16 bg-white border-borderBg border-[1px] w-[700px] h-[500px] mx-auto rounded-2xl overflow-auto">
+    <AppLayout header={<AppHeader />}>
+      <div className="flex flex-col mt-16 bg-white border-borderBg border-[1px] w-[700px] h-[500px] mx-auto rounded-2xl overflow-auto">
         <h1 className="text-headlineText text-[32px] font-bold py-6 px-10">
           Create Course
         </h1>
@@ -56,6 +56,6 @@ export default async function AddCourse() {
           </div>
         </form>
       </div>
-    </div>
+    </AppLayout>
   );
 }

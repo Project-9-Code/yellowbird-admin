@@ -27,6 +27,7 @@ export default function LessonIntro({ course }: { course: Course }) {
             placeholder="Debit Cards, Bitcoin, e.g."
             defaultValue={title}
             onChange={setTitle()}
+            required
           />
 
           <InputField
