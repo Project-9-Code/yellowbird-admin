@@ -33,7 +33,7 @@ export default function Button(props: PropsWithChildren<ButtonProps>) {
     (isLink) ? (
       <Link
         href={href}
-        className={clsx(`flex flex-row p-3 justify-center items-center bg-success w-full rounded`, props.buttonClassName)}
+        className={clsx(props.buttonClassName, `flex flex-row p-3 justify-center items-center bg-success w-full rounded`)}
       >
         <span className={clsx("text-white text-base font-medium", props.textClassName)}>
           {props.label}

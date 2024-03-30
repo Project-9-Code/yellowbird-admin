@@ -2,14 +2,13 @@
 
 import Image from "next/image";
 import Plus from "@/svgs/grey-plus.svg";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { LessonBlockTypes } from "@/graphql/graphql";
 import { v4 as uuid } from "uuid";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 
-export default function AddLessonBlock() {
+export default function AddLessonBlock({ index }: { index?: number }) {
   const { addLessonBlock } = useLessonBlocks();
-  const ref = useRef(false);
   const [showAddLessonBlock, setShowAddLessonBlock] = useState(false);
 
   const onMouseEnter = useCallback(() => setShowAddLessonBlock(true), []);
@@ -19,9 +18,9 @@ export default function AddLessonBlock() {
     addLessonBlock({
       id: uuid(),
       type: LessonBlockTypes.Text,
-      textValue: "",
-    }, true);
-  }, [addLessonBlock]);
+      screenContent: "",
+    }, index, true);
+  }, [addLessonBlock, index]);
 
   return (
     <div

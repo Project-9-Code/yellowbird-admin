@@ -20,12 +20,12 @@ export default function AddLessonForm({ course }: { course: Course }) {
 
         {lessonBlocks.map((block, index) => (
           <div key={`${block.id}-${index}`} className="flex flex-col w-full max-w-[680px]">
-            <AddLessonBlock />
+            <AddLessonBlock index={index} />
             <LessonBlockView block={block} />
           </div>
         ))}
 
-        <AddLessonBlock />
+        <AddLessonBlock index={lessonBlocks.length} />
         <LessonRecap />
       </div>
     </form>

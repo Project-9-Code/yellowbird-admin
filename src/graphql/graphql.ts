@@ -89,6 +89,7 @@ export type Lesson = {
 export type LessonBlock = {
   __typename?: 'LessonBlock';
   answer_options?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  answers?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   choice_answer?: Maybe<Scalars['Boolean']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -99,6 +100,7 @@ export type LessonBlock = {
   order?: Maybe<Scalars['Int']['output']>;
   points?: Maybe<Scalars['Int']['output']>;
   question?: Maybe<Scalars['String']['output']>;
+  screenContent?: Maybe<Scalars['String']['output']>;
   textValue?: Maybe<Scalars['String']['output']>;
   type: LessonBlockTypes;
   videoText?: Maybe<Scalars['String']['output']>;
@@ -107,6 +109,7 @@ export type LessonBlock = {
 
 export type LessonBlockInput = {
   answer_options?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  answers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   choice_answer?: InputMaybe<Scalars['Boolean']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -119,6 +122,7 @@ export type LessonBlockInput = {
   order?: InputMaybe<Scalars['Int']['input']>;
   points?: InputMaybe<Scalars['Int']['input']>;
   question?: InputMaybe<Scalars['String']['input']>;
+  screenContent?: InputMaybe<Scalars['String']['input']>;
   textValue?: InputMaybe<Scalars['String']['input']>;
   type: LessonBlockTypes;
   videoText?: InputMaybe<Scalars['String']['input']>;

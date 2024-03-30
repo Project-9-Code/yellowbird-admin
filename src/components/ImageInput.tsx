@@ -2,17 +2,21 @@
 
 import Image from "next/image";
 import UploadImage from "@/svgs/uploadImage.svg";
-import { ChangeEvent, useCallback, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
+import clsx from "clsx";
 
 interface ImageInputProps {
   id?: string;
+  containerClass?: string;
+  imageClass?: string;
+  width?: number;
+  height?: number;
   onChange?: (file: string) => void;
 }
 
 export default function ImageInput(props: ImageInputProps) {
   const [image, setImage] = useState<string | undefined>();
-  const ref = useRef<HTMLInputElement | null>(null);
-  const { onChange } = props;
+  const { containerClass, onChange, width=220, height=220, imageClass } = props;
   const onFileChange = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -29,10 +33,10 @@ export default function ImageInput(props: ImageInputProps) {
   return (
     <label
       htmlFor={props.id}
-      className="flex flex-col justify-center items-center w-56 h-56 rounded-lg border-[1px] border-[#DDD] cursor-pointer"
+      className={clsx(containerClass, "flex flex-col justify-center items-center w-56 h-56 rounded-lg border-[1px] border-[#DDD] cursor-pointer")}
     >
       {(image) ? (
-        <Image src={image} alt="Picture of course" width={220} height={220} className="rounded-lg" />
+        <Image src={image} alt="Picture of course" width={width} height={height} className={clsx(imageClass, "rounded-lg")} />
       ) : (
         <>
           <Image src={UploadImage} alt="Upload Image" className="mb-2.5" />

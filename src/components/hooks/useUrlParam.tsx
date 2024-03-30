@@ -7,18 +7,18 @@ export default function useUrlParam(key: string, defaultValue?: string) {
   const searchParams = useSearchParams();
   const value = searchParams.get(key) ?? defaultValue ?? "";
 
-  const setValue = useCallback((value: any) => {
+  const setValue = useCallback((value: any, hash?: string) => {
     const newUrl = new URLSearchParams(searchParams.toString());
     newUrl.set(key, value);
-    const path = `${pathname}?${newUrl.toString()}`;
+    const path = `${pathname}?${newUrl.toString()}${hash ? `#${hash}` : ""}`;
     history.replaceState(null, "", path);
     return path
   }, [searchParams, key, pathname]);
 
-  const setValues = useCallback((values: [string, any][]) => {
+  const setValues = useCallback((values: [string, any][], hash?: string) => {
     const newUrl = new URLSearchParams(searchParams.toString());
     values.forEach(([key, value]) => newUrl.set(key, value));
-    const path = `${pathname}?${newUrl.toString()}`;
+    const path = `${pathname}?${newUrl.toString()}${hash ? `#${hash}` : ""}`;
     history.replaceState(null, "", path);
     return path;
   }, [pathname, searchParams]);

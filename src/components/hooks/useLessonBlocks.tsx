@@ -3,8 +3,9 @@
 import { LessonBlock } from "@/graphql/graphql";
 import useUrlParam from "./useUrlParam";
 import { useCallback } from "react";
+import { insertAtIndex } from "@/utils/common";
 
-export default function useLessonBlocks() {
+export default function useLessonBlocks(block?: LessonBlock) {
   const { value, setValues } = useUrlParam("lessonBlocks", "");
   const lessonBlocks = value.split("$")
     .filter((str) => str.length > 0)
@@ -16,10 +17,11 @@ export default function useLessonBlocks() {
     return setValues(updates);
   }, [setValues]);
 
-  const addLessonBlock = useCallback((block: LessonBlock, focus=false) => {
+  const addLessonBlock = useCallback((block: LessonBlock, index?: number, focus=false) => {
     if (!lessonBlocks.find((b) => b.id === block.id)) {
+      const position = (index !== undefined) ? index : lessonBlocks.length;
       const focusBlock = (focus) ? block.id : undefined;
-      return setLessonBlocks([...lessonBlocks, block], focusBlock);
+      return setLessonBlocks(insertAtIndex(lessonBlocks, position, block), focusBlock);
     }
   }, [lessonBlocks, setLessonBlocks]);
 
@@ -36,5 +38,12 @@ export default function useLessonBlocks() {
     }
   }, [lessonBlocks, setLessonBlocks]);
 
-  return { lessonBlocks, addLessonBlock, updateLessonBlock, removeLessonBlock };
+  const updateBlock = useCallback((key: string) => (value?: any) => {
+    if (block) updateLessonBlock({ ...block, [key]: value } as LessonBlock);
+  }, [block, updateLessonBlock]);
+
+  return {
+    lessonBlocks,
+    addLessonBlock, updateLessonBlock, removeLessonBlock, updateBlock
+  };
 }

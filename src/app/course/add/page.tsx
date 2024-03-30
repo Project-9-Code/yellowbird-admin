@@ -17,7 +17,7 @@ export default async function AddCourse() {
         <form action={addCourse} className="flex flex-col grow">
           <div className="flex flex-row px-10 grow">
             <div className="flex flex-col mr-[50px] cursor-pointer">
-              <h4 className="text-[##9B9B9B] text-xs mb-1">Cover Photo</h4>
+              <h4 className="text-[#9B9B9B] text-xs mb-1">Cover Photo</h4>
 
               <ImageInput id="coverPhoto" />
             </div>

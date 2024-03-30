@@ -2,29 +2,44 @@
 
 import Image from "next/image";
 import { LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
-import AlignLeft from "@/svgs/align-left.svg";
-import Media from "@/svgs/image-icon.svg";
-import Video from "@/svgs/video.svg";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { useCallback } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 import dynamic from "next/dynamic";
+import AlignLeft from "@/svgs/align-left.svg";
+import Media from "@/svgs/image-icon.svg";
+import MultiChoice from "@/svgs/multi-choice.svg";
+import Choice from "@/svgs/choice.svg";
+import MultiSelect from "@/svgs/multi-select.svg";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
 const options = [
-  { value: LessonBlockTypes.Text, label: <Label icon={AlignLeft} text="Text" /> },
-  { value: LessonBlockTypes.Media, label: <Label icon={Media} text="Media" /> },
-  { value: LessonBlockTypes.Video, label: <Label icon={Video} text="Video" /> },
+  {
+    label: "",
+    options: [
+      { value: LessonBlockTypes.Text, label: <Label icon={AlignLeft} text="Text" /> },
+      { value: LessonBlockTypes.Media, label: <Label icon={Media} text="Media" /> },
+      // { value: LessonBlockTypes.Video, label: <Label icon={Video} text="Video" /> },
+    ]
+  },
+  {
+    lable:"",
+    options: [
+      { value: LessonBlockTypes.MultiChoice, label: <Label icon={MultiChoice} text="Multiple Choice" /> },
+      { value: LessonBlockTypes.Choice, label: <Label icon={Choice} text="True or False" /> },
+      { value: LessonBlockTypes.MultiSelect, label: <Label icon={MultiSelect} text="Multiple Select" /> },
+    ]
+  }
 ];
 
-export default function SelectLessonType({ onSelect, block }: { block: LessonBlock, onSelect?: (value: any) => void }) {
-  const { updateLessonBlock } = useLessonBlocks();
-  const selected = options.find((option) => option.value === block?.type);
-  const updateBlockType = useCallback((type: string) => 
-    updateLessonBlock({ ...block, type: type as LessonBlockTypes }),
-    [updateLessonBlock, block]
-  );
+export default function SelectLessonType(
+  { onSelect, block }:
+  { block: LessonBlock, onSelect?: (value: any) => void }
+) {
+  const { updateBlock } = useLessonBlocks(block);
+  const selected = options.find((option) => option.options.some((o) => o.value === block.type))?.options.find((o) => o.value === block.type) ?? options[0].options[0];
+  const updateBlockType = updateBlock("type");
   const onChange = useCallback((type: any) => {
     updateBlockType(type.value);
     onSelect?.(type.value);
@@ -37,6 +52,9 @@ export default function SelectLessonType({ onSelect, block }: { block: LessonBlo
       defaultValue={options[0]}
       value={selected}
       onChange={onChange}
+      classNames={{
+        menuList: (state) => "border-b border-borderBg"
+      }}
     />
   );
 }

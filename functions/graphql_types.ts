@@ -89,6 +89,7 @@ export type Lesson = {
 export type LessonBlock = {
   __typename?: 'LessonBlock';
   answer_options?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  answers?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   choice_answer?: Maybe<Scalars['Boolean']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -99,6 +100,7 @@ export type LessonBlock = {
   order?: Maybe<Scalars['Int']['output']>;
   points?: Maybe<Scalars['Int']['output']>;
   question?: Maybe<Scalars['String']['output']>;
+  screenContent?: Maybe<Scalars['String']['output']>;
   textValue?: Maybe<Scalars['String']['output']>;
   type: LessonBlockTypes;
   videoText?: Maybe<Scalars['String']['output']>;
@@ -107,6 +109,7 @@ export type LessonBlock = {
 
 export type LessonBlockInput = {
   answer_options?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  answers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   choice_answer?: InputMaybe<Scalars['Boolean']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
@@ -119,6 +122,7 @@ export type LessonBlockInput = {
   order?: InputMaybe<Scalars['Int']['input']>;
   points?: InputMaybe<Scalars['Int']['input']>;
   question?: InputMaybe<Scalars['String']['input']>;
+  screenContent?: InputMaybe<Scalars['String']['input']>;
   textValue?: InputMaybe<Scalars['String']['input']>;
   type: LessonBlockTypes;
   videoText?: InputMaybe<Scalars['String']['input']>;
@@ -508,6 +512,7 @@ export type LessonResolvers<ContextType = any, ParentType extends ResolversParen
 
 export type LessonBlockResolvers<ContextType = any, ParentType extends ResolversParentTypes['LessonBlock'] = ResolversParentTypes['LessonBlock']> = ResolversObject<{
   answer_options?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  answers?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   choice_answer?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -518,6 +523,7 @@ export type LessonBlockResolvers<ContextType = any, ParentType extends Resolvers
   order?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   points?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   question?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  screenContent?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   textValue?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['LessonBlockTypes'], ParentType, ContextType>;
   videoText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

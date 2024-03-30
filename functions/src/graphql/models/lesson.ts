@@ -44,6 +44,7 @@ export const typeDef = `
     id: ID!
     description: String
     question: String
+    screenContent: String
     textValue: String
     videoUrl: String
     videoText: String
@@ -53,6 +54,7 @@ export const typeDef = `
     choice_answer: Boolean
     multi_choice_answer: String
     multi_select_answers: [String]
+    answers: [String]
     order: Int
     points: Int
   }
@@ -103,6 +105,7 @@ export const typeDef = `
     id: ID
     description: String
     question: String
+    screenContent: String
     textValue: String
     videoUrl: String
     videoText: String
@@ -112,6 +115,7 @@ export const typeDef = `
     choice_answer: Boolean
     multi_choice_answer: String
     multi_select_answers: [String]
+    answers: [String]
     inputValue: String
     inputVariants: [String]
     order: Int

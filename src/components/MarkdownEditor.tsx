@@ -3,8 +3,6 @@
 import { PropsWithChildren, useCallback, useState } from "react";
 import dynamic from 'next/dynamic';
 import rehypeSanitize from "rehype-sanitize";
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
 
 const MDEditor = dynamic(
   () => import('@uiw/react-md-editor').then((mod) => mod.default),
