@@ -45,7 +45,7 @@ export default function ChoiceOption(
       />
       {!readOnly && (
         <Button
-          buttonClassName="!w-[10px] !h-[10px] bg-transparent p-0"
+          buttonClassName="!w-[10px] !h-[10px] !bg-transparent !p-0"
           onClick={handleRemove}
         >
           <Image src={CloseIcon} alt="Close" />

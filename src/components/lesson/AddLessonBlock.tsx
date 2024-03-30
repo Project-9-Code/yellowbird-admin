@@ -28,18 +28,16 @@ export default function AddLessonBlock({ index }: { index?: number }) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {showAddLessonBlock && (
-        <>
-          <hr className="grow" />
-          <Image
-            src={Plus}
-            alt="Add Lesson"
-            className="w-6 h-6 cursor-pointer"
-            onClick={onClick}
-          />
-          <hr className="grow" />
-        </>
-      )}
+      {showAddLessonBlock && (<>
+        <hr className="grow" />
+        <Image
+          src={Plus}
+          alt="Add Lesson"
+          className="w-6 h-6 cursor-pointer"
+          onClick={onClick}
+        />
+        <hr className="grow" />
+      </>)}
     </div>
   );
 }

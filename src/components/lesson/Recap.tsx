@@ -14,7 +14,7 @@ export default function LessonRecap() {
   const onChange = useCallback((value?: string) => setValue(value), [setValue]);
 
   return (
-    <Card className="flex flex-col mt-[12px] mb-8" focused={isFocused} onClick={enableFocus}>
+    <Card className="flex flex-col mt-[12px] mb-8" focused={isFocused} onClick={enableFocus} disableDrag>
       <Title title="Lesson Recap" />
       <h6 className="text-textBody text-[20px] mb-[16px]">A quick review of what was learned</h6>
       

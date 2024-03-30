@@ -44,6 +44,6 @@ export default function useLessonBlocks(block?: LessonBlock) {
 
   return {
     lessonBlocks,
-    addLessonBlock, updateLessonBlock, removeLessonBlock, updateBlock
+    addLessonBlock, updateLessonBlock, removeLessonBlock, updateBlock, setLessonBlocks
   };
 }
