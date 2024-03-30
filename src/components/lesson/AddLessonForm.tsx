@@ -1,7 +1,7 @@
 "use client";
 
 import LessonHeader from "@/components/LessonHeader";
-import { Course } from "@/graphql/graphql";
+import { Course, LessonBlock } from "@/graphql/graphql";
 import LessonIntro from "./Intro";
 import LessonRecap from "./Recap";
 import AddLessonBlock from "./AddLessonBlock";
@@ -15,6 +15,7 @@ export default function AddLessonForm({ course }: { course: Course }) {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const { lessonBlocks, setLessonBlocks } = useLessonBlocks();
   const blockIds = useMemo(() => lessonBlocks.map((block) => block.id), [lessonBlocks]);
+  const activeBlock = useMemo(() => lessonBlocks.find((block) => block.id === activeId), [activeId, lessonBlocks]);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(MouseSensor, {}),
@@ -55,7 +56,7 @@ export default function AddLessonForm({ course }: { course: Course }) {
             ))}
           </SortableContext>
           <DragOverlay>
-
+            {activeId && <LessonBlockView block={activeBlock ?? {} as LessonBlock} />}
           </DragOverlay>
         </DndContext>
 
