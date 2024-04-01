@@ -14,6 +14,7 @@ export default function TextBlock({ block }: { block: LessonBlock }) {
   return (
     <BlockContainer
       block={block}
+      isEmpty={!block.screenContent || block.screenContent === ""}
       unfocusedContent={<MDEditor.Markdown source={block.screenContent ?? ""} />}
       focusedContent={(
         <>

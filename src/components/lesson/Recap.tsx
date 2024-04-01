@@ -7,6 +7,7 @@ import useFocusParam from "../hooks/useFocusParam";
 import useUrlParam from "../hooks/useUrlParam";
 import MarkdownEditor from "../MarkdownEditor";
 import MDEditor from '@uiw/react-md-editor';
+import EmptyLessonBlock from "./EmptyLessonBlock";
 
 export default function LessonRecap() {
   const { isFocused, enableFocus } = useFocusParam("recap");
@@ -22,13 +23,7 @@ export default function LessonRecap() {
 
       {!isFocused && value && <MDEditor.Markdown source={value} />}
 
-      {!isFocused && !value && (
-        <div className="mt-[10px]">
-          <span className="text-[20px] text-disabledText">
-            Nothing has been added yet...
-          </span>
-        </div>
-      )}
+      {!isFocused && !value && <EmptyLessonBlock />}
     </Card>
   );
 }

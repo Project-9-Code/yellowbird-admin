@@ -23,6 +23,7 @@ export default function MediaBlock(
   return (
     <BlockContainer
       block={block}
+      isEmpty={(!block.screenContent || block.screenContent === "") && !block[urlKey]}
       focusedContent={(
         <>
           <BlockHeader block={block} />

@@ -8,7 +8,7 @@ import Title from "../Title";
 import useUrlParam from "../hooks/useUrlParam";
 import useFocusParam from "../hooks/useFocusParam";
 
-export default function LessonIntro({ course }: { course: Course }) {
+export default function LessonIntro({ course }: { course?: Course }) {
   const { isFocused, enableFocus } = useFocusParam("intro", "intro");
   const { value: title, setValueOnChange: setTitle } = useUrlParam("title", "");
   const { value: description, setValueOnChange: setDescription } = useUrlParam("description", "");
@@ -34,8 +34,8 @@ export default function LessonIntro({ course }: { course: Course }) {
             id="courseName"
             label="Parent Course*"
             containerClass="w-[300px]"
-            value={course.name as string}
-            disabled
+            value={course?.name as string}
+            disabled={course?.name !== undefined}
           />
         </div>
 

@@ -1,9 +1,10 @@
 "use client";
 
-import { LessonBlock } from "@/graphql/graphql";
+import { LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
 import useUrlParam from "./useUrlParam";
 import { useCallback } from "react";
-import { insertAtIndex } from "@/utils/common";
+import { capitalizeFirstLetter, insertAtIndex } from "@/utils/common";
+import { toast } from "react-toastify";
 
 export default function useLessonBlocks(block?: LessonBlock) {
   const { value, setValues } = useUrlParam("lessonBlocks", "");
@@ -21,6 +22,10 @@ export default function useLessonBlocks(block?: LessonBlock) {
     if (!lessonBlocks.find((b) => b.id === block.id)) {
       const position = (index !== undefined) ? index : lessonBlocks.length;
       const focusBlock = (focus) ? block.id : undefined;
+      toast.info(
+        `${capitalizeFirstLetter(LessonBlockTypes.Text.toLowerCase())} only card added.`,
+        { toastId: block.id }
+      );
       return setLessonBlocks(insertAtIndex(lessonBlocks, position, block), focusBlock);
     }
   }, [lessonBlocks, setLessonBlocks]);
@@ -35,6 +40,10 @@ export default function useLessonBlocks(block?: LessonBlock) {
   const removeLessonBlock = useCallback((block: LessonBlock) => {
     if (lessonBlocks.find((b) => b.id === block.id)) {
       setLessonBlocks(lessonBlocks.filter((b) => b.id !== block.id));
+      toast.warn(
+        `${capitalizeFirstLetter(block.type.toLowerCase())} was removed.`,
+        { toastId: block.id }
+      );
     }
   }, [lessonBlocks, setLessonBlocks]);
 

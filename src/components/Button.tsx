@@ -2,7 +2,8 @@
 
 import clsx from "clsx";
 import Link from "next/link";
-import { MouseEvent, MouseEventHandler, PropsWithChildren, ReactEventHandler, ReactNode, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { MouseEvent, MouseEventHandler, PropsWithChildren, ReactNode, forwardRef, useCallback } from "react";
 import { useFormStatus } from "react-dom";
 import { ClockLoader } from "react-spinners";
 
@@ -16,12 +17,14 @@ interface ButtonProps {
   isLink?: boolean;
   href?: string;
   preventDefault?: boolean;
+  goBack?: boolean;
   onClick?: (MouseEventHandler<HTMLButtonElement>);
 }
 
-export default function Button(props: PropsWithChildren<ButtonProps>) {
+export default forwardRef<any, PropsWithChildren<ButtonProps>>(function Button(props, ref) {
+  const router = useRouter();
   const { pending } = useFormStatus();
-  const { showLoader=true, loading=false, isLink=false, href="", preventDefault=true, onClick } = props;
+  const { showLoader=true, loading=false, isLink=false, href="", preventDefault=true, goBack, onClick } = props;
   const isLoading = showLoader && (loading || pending);
 
   const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
@@ -29,12 +32,14 @@ export default function Button(props: PropsWithChildren<ButtonProps>) {
       e.preventDefault();
       e.stopPropagation();
     }
+    if (goBack) router.back();
     onClick?.(e);
-  }, [onClick, preventDefault]);
+  }, [onClick, router, goBack, preventDefault]);
 
   return (
     (isLink) ? (
       <Link
+        ref={ref}
         href={href}
         className={clsx(props.buttonClassName, `flex flex-row p-3 justify-center items-center bg-success w-full rounded`)}
       >
@@ -45,6 +50,7 @@ export default function Button(props: PropsWithChildren<ButtonProps>) {
       </Link>
     ) : (
       <button
+        ref={ref}
         disabled={isLoading}
         className={clsx(`flex flex-row p-3 justify-center items-center bg-success w-full rounded`, props.buttonClassName)}
         type={props.type}
@@ -58,4 +64,4 @@ export default function Button(props: PropsWithChildren<ButtonProps>) {
       </button>
     )
   );
-}
+});

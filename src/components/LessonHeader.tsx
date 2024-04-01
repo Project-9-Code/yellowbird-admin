@@ -2,22 +2,27 @@
 
 import Image from "next/image";
 import Button from "./Button";
-import Info from "@/svgs/grey-info.svg";
 import CloseX from "@/svgs/closeX.svg";
 import Folder from "@/svgs/folder.svg";
-import { Course } from "@/graphql/graphql";
-import { useSearchParams } from "next/navigation";
+import { Course, Lesson } from "@/graphql/graphql";
+import { useRouter, useSearchParams } from "next/navigation";
+import LessonInfoOverlay from "./LessonInfoOverlay";
+import { useAuth } from "@/utils/auth/client";
+import useLessonBlocks from "./hooks/useLessonBlocks";
 
-export default function LessonHeader({ course }: { course: Course }) {
+export default function LessonHeader({ course }: { course?: Course }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const lessonTitle = searchParams.get("title") ?? "";
+  const lastUpdated = searchParams.get("lastUpdated");
+  const { user } = useAuth();
+  const { lessonBlocks } = useLessonBlocks();
 
   return (
     <div className="flex flex-row items-center bg-white shadow-[0_1px_0_0_rgba(0,0,0,0.10)] sticky top-0">
       <Button
         buttonClassName="!w-[60px] !h-[72px] flex items-center justify-center bg-transparent"
-        isLink
-        href={`/course/${course?.id}`}
+        onClick={() => router.back()}
       >
         <Image src={CloseX} alt="Close" className="text-bodyText"/>
       </Button>
@@ -34,15 +39,14 @@ export default function LessonHeader({ course }: { course: Course }) {
       <div className="flex grow h-full" />
 
       <div className="flex flex-row items-center mr-[56px]">
-        <Button
-          label={(
-            <div className="flex flex-row">
-              <Image src={Info} alt="Info Handle" className="mr-2"/>
-              <span className="text-disabledText">Info</span>
-            </div>
-          )}
-          buttonClassName="!w-[87px] !h-[40px] bg-white px-1 py-2 border border-bordeerBg rounded-[6px] mr-[12px]"
-          textClassName="text-black"
+        <LessonInfoOverlay
+          lesson={{
+            title: lessonTitle,
+            course: { name: course?.name },
+            author: { name: user?.displayName },
+            blocks: lessonBlocks,
+            lastUpdated: lastUpdated,
+          } as Lesson}
         />
         <Button label="Submit Lesson" type="submit" buttonClassName="!w-[130px] !h-[40px]" preventDefault={false} />
       </div>

@@ -11,7 +11,7 @@ import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, MouseSensor, Poi
 import { useCallback, useMemo, useState } from "react";
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
-export default function AddLessonForm({ course }: { course: Course }) {
+export default function AddLessonForm({ course }: { course?: Course }) {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const { lessonBlocks, setLessonBlocks } = useLessonBlocks();
   const blockIds = useMemo(() => lessonBlocks.map((block) => block.id), [lessonBlocks]);
