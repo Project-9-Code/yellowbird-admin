@@ -18,8 +18,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUser();
-
   return (
     <html lang="en" className={clsx("w-full h-full", whitney.variable)} data-color-mode="light">
       <body className="w-full h-full text-bodyText flex flex-col">

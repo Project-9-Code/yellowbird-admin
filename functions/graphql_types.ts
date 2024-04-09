@@ -43,6 +43,7 @@ export type Course = {
   authorId?: Maybe<Scalars['String']['output']>;
   coverPhoto?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
+  createdBy?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   draftLessons?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
@@ -51,6 +52,7 @@ export type Course = {
   lessons?: Maybe<Array<Maybe<Lesson>>>;
   name?: Maybe<Scalars['String']['output']>;
   shortDescription?: Maybe<Scalars['String']['output']>;
+  updatedBy?: Maybe<Scalars['String']['output']>;
 };
 
 export type CourseInput = {
@@ -79,6 +81,7 @@ export type Lesson = {
   course?: Maybe<Course>;
   courseId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
+  createdBy?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastUpdated?: Maybe<Scalars['String']['output']>;
@@ -87,6 +90,7 @@ export type Lesson = {
   status?: Maybe<LessonStatus>;
   tags?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  updatedBy?: Maybe<Scalars['String']['output']>;
 };
 
 export type LessonBlock = {
@@ -487,6 +491,7 @@ export type CourseResolvers<ContextType = any, ParentType extends ResolversParen
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   coverPhoto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   draftLessons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -495,6 +500,7 @@ export type CourseResolvers<ContextType = any, ParentType extends ResolversParen
   lessons?: Resolver<Maybe<Array<Maybe<ResolversTypes['Lesson']>>>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   shortDescription?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -506,6 +512,7 @@ export type LessonResolvers<ContextType = any, ParentType extends ResolversParen
   course?: Resolver<Maybe<ResolversTypes['Course']>, ParentType, ContextType>;
   courseId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastUpdated?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -514,6 +521,7 @@ export type LessonResolvers<ContextType = any, ParentType extends ResolversParen
   status?: Resolver<Maybe<ResolversTypes['LessonStatus']>, ParentType, ContextType>;
   tags?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

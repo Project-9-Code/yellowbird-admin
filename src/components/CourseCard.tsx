@@ -39,6 +39,7 @@ export default function CourseCard(props: CourseCardProps) {
         onMouseLeave={onHoverOut}
       >
         <input
+          id={props.course.id}
           type="checkbox"
           className={clsx("absolute top-4 right-4 w-4 h-4 cursor-pointer", !showCheckbox && "hidden")}
           checked={selected}
