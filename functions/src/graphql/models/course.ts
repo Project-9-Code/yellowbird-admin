@@ -32,6 +32,9 @@ export const typeDef = `
     coverPhoto: String
     authorId: String
     author: UserProfile
+    activeLessons: Int
+    archivedLessons: Int
+    draftLessons: Int
   }
 
   input CourseInput {
@@ -112,9 +115,11 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     addCourse: async (_, args) => {
+      const timestamp = db.Timestamp.now();
       const data = {
         ...args.course,
-        createdAt: db.Timestamp.now(),
+        lastUpdated: timestamp,
+        createdAt: timestamp,
       };
       return await db.createItem(courseCollectionName, data) as Course;
     },
@@ -134,9 +139,10 @@ export const resolvers: Resolvers = {
       return db.deleteItem(courseCollectionName, args.courseId);
     },
     bulkAddCourses: async (_, args) => {
+      const timestamp = db.Timestamp.now();
       return await db.addBatch(args.courses.map((course) => ({
         collection: courseCollectionName,
-        data: {...course, createdAt: db.Timestamp.now()},
+        data: {...course, createdAt: timestamp, lastUpdated: timestamp},
       } as db.BatchItem))) as Course[];
     },
     bulkUpdateCourses: async (_, args) => {

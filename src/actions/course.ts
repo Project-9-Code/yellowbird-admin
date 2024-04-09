@@ -5,7 +5,6 @@ import { request } from "graphql-request";
 import { gql } from "@/graphql/gql";
 import { storage, uploadFileToStorage } from "@/utils/firebase";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { GRAPHQL_API_URL } from "@/utils/common";
 import { v4 as uuid } from "uuid";
 import { deleteObject, ref } from "firebase/storage";
@@ -35,7 +34,7 @@ export const addCourse = async function addCourseAPI(course: FormData) {
   const data = addCourse as Course;
 
   revalidatePath("/");
-  redirect("/");
+  return data;
 };
 
 export const archiveCourses = async function archiveCoursesAPI(courseIds: string[]) {

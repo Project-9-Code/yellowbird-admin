@@ -23,7 +23,8 @@ export default async function CourseDetail(props: CourseDetailProps) {
         <Button
           buttonClassName="!w-[160px] bg-white border-[1px] py-2 px-3 flex flex-row items-center justify-between rounded-[6px]"
           textClassName="!text-black"
-          goBack
+          isLink
+          href="/"
           label={(
             <div className="flex flex-row py-1 items-center justify-between">
               <Image src={BackSvg} alt="Go Back" className="mr-2" />
@@ -38,7 +39,7 @@ export default async function CourseDetail(props: CourseDetailProps) {
           label="New Lesson"
           isLink
           buttonClassName="!w-[116px]"
-          href={`/addLesson/${props.params.id}`}
+          href={`/lesson/addLesson/${props.params.id}`}
         />
       </div>
       
@@ -78,12 +79,17 @@ export default async function CourseDetail(props: CourseDetailProps) {
 
               <div className="flex flex-row items-center justify-between mb-4">
                 <span>Active Lessons</span>
-                <span>0</span>
+                <span>{course.activeLessons ?? 0}</span>
+              </div>
+
+              <div className="flex flex-row items-center justify-between mb-4">
+                <span>Draft Lessons</span>
+                <span>{course.draftLessons ?? 0}</span>
               </div>
 
               <div className="flex flex-row items-center justify-between mb-4">
                 <span>Archived Lessons</span>
-                <span>0</span>
+                <span>{course.archivedLessons ?? 0}</span>
               </div>
 
               <Button

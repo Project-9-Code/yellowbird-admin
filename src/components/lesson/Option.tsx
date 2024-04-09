@@ -2,11 +2,12 @@ import { LessonBlock } from "@/graphql/graphql";
 import { useCallback, useMemo } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 import ChoiceOption from "./ChoiceOption";
+import { generateLessonBlockName } from "@/utils/common";
 
 
 export default function LessonBlockOptions(
-  { block, choiceType, multiple, readOnly=false, options=[] }:
-  { block: LessonBlock, choiceType?: "radio" | "checkbox", multiple?: boolean, options?: string[], readOnly?: boolean }
+  { block, multiple, readOnly=false, options=[] }:
+  { block: LessonBlock, multiple?: boolean, options?: string[], readOnly?: boolean }
 ) {
   const answers = useMemo(() => block.answers as string[] ?? [], [block.answers]);
   const { updateBlock } = useLessonBlocks(block);
@@ -43,8 +44,9 @@ export default function LessonBlockOptions(
       {options?.map((option, index) => (
         <ChoiceOption
           key={index}
+          id={`${block.id}-${index}`}
           option={option}
-          type={choiceType}
+          type={(multiple) ? "checkbox" : "radio"}
           checked={isChecked(option as string)}
           onOptionChange={onOptionChange(index)}
           onSelectedChange={onSelectedChange(option as string)}
@@ -52,6 +54,11 @@ export default function LessonBlockOptions(
           readOnly={readOnly}
         />
       ))}
+
+      {!readOnly && (<>
+        <input type="hidden" name={generateLessonBlockName(block, "answer_options")} value={JSON.stringify(options)} />
+        <input type="hidden" name={generateLessonBlockName(block, "answers")} value={JSON.stringify(answers)} />
+      </>)}
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { LessonBlock } from "@/graphql/graphql";
+
 export const GRAPHQL_API_URL = "https://us-central1-yellowbird-4e1b8.cloudfunctions.net/graphql";
 
 
@@ -11,4 +13,8 @@ export function insertAtIndex(arr: any[]=[], index=0, item: any) {
 
 export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export function generateLessonBlockName(block: LessonBlock, key: string) {
+  return `lessonBlock:${block.id}:${block.type}:${key}`;
 }

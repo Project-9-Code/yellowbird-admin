@@ -6,6 +6,7 @@ import useLessonBlocks from "../hooks/useLessonBlocks";
 import MDEditor from '@uiw/react-md-editor';
 import BlockHeader from "./BlockHeader";
 import BlockContainer from "./BlockContainer";
+import { generateLessonBlockName } from "@/utils/common";
 
 export default function TextBlock({ block }: { block: LessonBlock }) {
   const { updateBlock } = useLessonBlocks(block);
@@ -21,7 +22,11 @@ export default function TextBlock({ block }: { block: LessonBlock }) {
           <BlockHeader block={block} />
           <div className="flex flex-col">
             <h6 className="text-[12px] text-bodyText mb-1">Screen Content</h6>
-            <MarkdownEditor value={block.screenContent as string} onChange={updateBlockText} />
+            <MarkdownEditor
+              name={generateLessonBlockName(block, "screenContent")}
+              value={block.screenContent as string}
+              onChange={updateBlockText}
+            />
           </div>
         </>
       )}

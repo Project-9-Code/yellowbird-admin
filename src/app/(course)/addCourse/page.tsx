@@ -3,6 +3,7 @@ import InputField from "@/components/InputField";
 import TextAreaField from "@/components/TextAreaField";
 import Button from "@/components/Button";
 import { addCourse } from "@/actions/course";
+import SubmitCourseButton from "./submitCourse";
 
 export default async function AddCourse() {
   return (
@@ -44,11 +45,7 @@ export default async function AddCourse() {
             goBack
           />
 
-          <Button
-            label="Create Course"
-            buttonClassName="!w-[142px]"
-            type="submit"
-          />
+          <SubmitCourseButton />
         </div>
       </form>
     </div>

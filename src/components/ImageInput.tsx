@@ -2,20 +2,21 @@
 
 import Image from "next/image";
 import UploadImage from "@/svgs/uploadImage.svg";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, Ref, forwardRef, useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 
 interface ImageInputProps {
   id?: string;
+  src?: string;
   containerClass?: string;
   imageClass?: string;
   width?: number;
   height?: number;
-  onChange?: (file: string) => void;
+  onChange?: (fileStr: string, file: File) => void;
 }
 
-export default function ImageInput(props: ImageInputProps) {
-  const [image, setImage] = useState<string | undefined>();
+export default forwardRef(function ImageInput(props: ImageInputProps, ref) {
+  const [image, setImage] = useState<string | undefined>(props.src);
   const { containerClass, onChange, width=220, height=220, imageClass } = props;
   const onFileChange = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -24,11 +25,13 @@ export default function ImageInput(props: ImageInputProps) {
       reader.onload = (e) => {
         const base64Str = e.target?.result as string;
         setImage(base64Str);
-        onChange?.(base64Str);
+        onChange?.(base64Str, file);
       };
       reader.readAsDataURL(file);
     }
   }, [onChange]);
+
+  useEffect(() => setImage(props.src), [props.src]);
 
   return (
     <label
@@ -53,6 +56,7 @@ export default function ImageInput(props: ImageInputProps) {
 
       <input
         type="file"
+        ref={ref as Ref<HTMLInputElement>}
         id={props.id}
         name={props.id}
         className="absolute left-[-1000px]"
@@ -61,4 +65,4 @@ export default function ImageInput(props: ImageInputProps) {
       />
     </label>
   );
-}
+})

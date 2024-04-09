@@ -3,7 +3,7 @@ import InputField from "../InputField";
 import { ChangeEvent, useCallback } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 
-export default function QuestionInput({ block }: { block: LessonBlock }) {
+export default function QuestionInput({ block, name }: { block: LessonBlock, name?: string }) {
   const { updateBlock } = useLessonBlocks(block);
   const updateQuestion = updateBlock("question");
 
@@ -13,6 +13,7 @@ export default function QuestionInput({ block }: { block: LessonBlock }) {
 
   return (
     <InputField
+      id={name}
       label="Question"
       placeholder="Ask your question here..."
       containerClass="mb-4"

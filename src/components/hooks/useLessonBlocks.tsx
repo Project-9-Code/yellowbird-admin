@@ -6,8 +6,8 @@ import { useCallback } from "react";
 import { capitalizeFirstLetter, insertAtIndex } from "@/utils/common";
 import { toast } from "react-toastify";
 
-export default function useLessonBlocks(block?: LessonBlock) {
-  const { value, setValues } = useUrlParam("lessonBlocks", "");
+export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: LessonBlock[]) {
+  const { value, setValues } = useUrlParam("lessonBlocks", defaultBlocks?.map((block) => JSON.stringify(block)).join("$") ?? "");
   const lessonBlocks = value.split("$")
     .filter((str) => str.length > 0)
     .map((block) => JSON.parse(block) as LessonBlock);

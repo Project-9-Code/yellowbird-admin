@@ -8,10 +8,12 @@ import useUrlParam from "../hooks/useUrlParam";
 import MarkdownEditor from "../MarkdownEditor";
 import MDEditor from '@uiw/react-md-editor';
 import EmptyLessonBlock from "./EmptyLessonBlock";
+import clsx from "clsx";
+import { Lesson } from "@/graphql/graphql";
 
-export default function LessonRecap() {
+export default function LessonRecap(props: { lesson?: Lesson }) {
   const { isFocused, enableFocus } = useFocusParam("recap");
-  const { value, setValue } = useUrlParam("recap", "");
+  const { value, setValue } = useUrlParam("recapDescription", props.lesson?.recapDescription ?? "");
   const onChange = useCallback((value?: string) => setValue(value), [setValue]);
 
   return (
@@ -19,10 +21,11 @@ export default function LessonRecap() {
       <Title title="Lesson Recap" />
       <h6 className="text-textBody text-[20px] mb-[16px]">A quick review of what was learned</h6>
       
-      {isFocused && <MarkdownEditor value={value} onChange={onChange}/>}
+      <div className={clsx(!isFocused && "hidden")}>
+        <MarkdownEditor value={value} onChange={onChange} name="recap" />
+      </div>
 
       {!isFocused && value && <MDEditor.Markdown source={value} />}
-
       {!isFocused && !value && <EmptyLessonBlock />}
     </Card>
   );

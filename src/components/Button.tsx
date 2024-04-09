@@ -4,7 +4,6 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MouseEvent, MouseEventHandler, PropsWithChildren, ReactNode, forwardRef, useCallback } from "react";
-import { useFormStatus } from "react-dom";
 import { ClockLoader } from "react-spinners";
 
 interface ButtonProps {
@@ -23,18 +22,17 @@ interface ButtonProps {
 
 export default forwardRef<any, PropsWithChildren<ButtonProps>>(function Button(props, ref) {
   const router = useRouter();
-  const { pending } = useFormStatus();
   const { showLoader=true, loading=false, isLink=false, href="", preventDefault=true, goBack, onClick } = props;
-  const isLoading = showLoader && (loading || pending);
+  const isLoading = showLoader && loading;
 
   const handleClick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    if (preventDefault) {
+    if (props.type !== "submit" && preventDefault) {
       e.preventDefault();
       e.stopPropagation();
     }
     if (goBack) router.back();
     onClick?.(e);
-  }, [onClick, router, goBack, preventDefault]);
+  }, [onClick, router, goBack, preventDefault, props.type]);
 
   return (
     (isLink) ? (

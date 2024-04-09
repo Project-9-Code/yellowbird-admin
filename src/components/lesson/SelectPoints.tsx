@@ -25,8 +25,7 @@ export default function SelectPoints({ onSelect, block }: { block: LessonBlock, 
       id={block.id}
       options={options}
       className="w-[215px]"
-      defaultValue={options[0]}
-      value={selected}
+      defaultValue={selected}
       onChange={onChange}
       classNames={{
         container: () =>"w-full",

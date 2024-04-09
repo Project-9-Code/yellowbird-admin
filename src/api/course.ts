@@ -39,6 +39,13 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
         name
         description
         coverPhoto
+        archivedLessons
+        activeLessons
+        draftLessons
+        author {
+          name
+          id
+        }
         lessons {
           __typename
           _empty
@@ -49,6 +56,7 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
             name
             id
           }
+          lastUpdated
         }
       }
     }

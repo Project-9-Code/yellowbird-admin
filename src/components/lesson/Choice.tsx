@@ -3,11 +3,11 @@ import BlockContainer from "./BlockContainer";
 import BlockHeader from "./BlockHeader";
 import QuestionInput from "./QuestionInput";
 import LessonBlockOptions from "./Option";
+import { generateLessonBlockName } from "@/utils/common";
 
 const options = ["True", "False"];
 
 export default function Choice({ block }: { block: LessonBlock }) {
-
   return (
     <BlockContainer
       block={block}
@@ -15,13 +15,11 @@ export default function Choice({ block }: { block: LessonBlock }) {
         <BlockHeader block={block} showPoints />
 
         <div className="flex flex-col">
-          <QuestionInput block={block} />
+          <QuestionInput block={block} name={generateLessonBlockName(block, "question")} />
 
           <LessonBlockOptions
             block={block}
-            choiceType="radio"
             options={options}
-            readOnly
           />
         </div>
       </>)}
@@ -31,7 +29,6 @@ export default function Choice({ block }: { block: LessonBlock }) {
         </p>
         <LessonBlockOptions
           block={block}
-          choiceType="radio"
           options={options}
           readOnly
         />

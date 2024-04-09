@@ -1,3 +1,5 @@
+"use client";
+
 import { LessonBlock } from "@/graphql/graphql";
 import MarkdownEditor from "../MarkdownEditor";
 import Image from "next/image";
@@ -6,7 +8,8 @@ import MDEditor from '@uiw/react-md-editor';
 import BlockContainer from "./BlockContainer";
 import BlockHeader from "./BlockHeader";
 import ImageInput from "../ImageInput";
-import { useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
+import { generateLessonBlockName } from "@/utils/common";
 
 type KeyLessonBlock = LessonBlock & { [key: string]: any };
 
@@ -19,6 +22,10 @@ export default function MediaBlock(
   const updateText = updateBlock(textKey);
   const onUrlChange = useCallback((url?: string) => updateUrl(url), [updateUrl]);
   const onTextChange = useCallback((text?: string) => updateText(text), [updateText]);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [imageStr, setImageStr] = useState<string | undefined>(block[urlKey]);
+  const onImageChange = useCallback((str: string) => setImageStr(str), []);
+  const imageDisplay = imageStr || block[urlKey];
 
   return (
     <BlockContainer
@@ -29,17 +36,21 @@ export default function MediaBlock(
           <BlockHeader block={block} />
           <div className="flex flex-col">
             <ImageInput
-              id={`${urlKey}-${block.id}`}
+              id={generateLessonBlockName(block, "mediaUrl")}
+              ref={imageInputRef}
+              src={imageStr}
               width={500}
               height={220}
               containerClass="w-full h-[220] my-[16px]"
-              imageClass="w-full h-full object-contain"
+              imageClass="object-contain max-h-full"
+              onChange={onImageChange}
             />
   
             <h6 className="text-[12px] text-bodyText mb-1">Screen Content</h6>
             <MarkdownEditor
               value={block[textKey] as string}
               onChange={onTextChange}
+              name={generateLessonBlockName(block, "screenContent")}
             />
           </div>
         </>
@@ -47,8 +58,8 @@ export default function MediaBlock(
       unfocusedContent={(
         <div className="flex flex-col items-center">
           <div className="w-[600px] h-[300px] mb-[16px]">
-            {!block[urlKey] && <p className="text-center">No Photo Available</p>}
-            {block[urlKey] && <Image src={block[urlKey]} alt="Media" width={600} height={300} />}
+            {!imageDisplay && <p className="text-center">No Photo Available</p>}
+            {imageDisplay && <Image src={imageDisplay} alt="Media" width={600} height={300} className="max-h-full object-contain" />}
           </div>
           <MDEditor.Markdown source={block[textKey] ?? ""} />
         </div>

@@ -10,12 +10,14 @@ const MDEditor = dynamic(
 );
 
 interface MarkdownEditorProps {
+  id?: string;
+  name?: string;
   value?: string;
   onChange?: (value?: string) => void;
 }
 
 export default function MarkdownEditor(props: PropsWithChildren<MarkdownEditorProps>) {
-  const { value="", onChange } = props;
+  const { id, name, value="", onChange } = props;
   const [data, setData] = useState<string | undefined>(value);
   const handleChange = useCallback((text?: string) => {
     onChange?.(text);
@@ -23,13 +25,12 @@ export default function MarkdownEditor(props: PropsWithChildren<MarkdownEditorPr
   }, [onChange]);
 
   return (
-    <div>
-      <MDEditor
-        value={data}
-        onChange={handleChange}
-        highlightEnable={false}
-        previewOptions={{  rehypePlugins: [[rehypeSanitize]] }}
-      />
-    </div>
+    <MDEditor
+      value={data}
+      onChange={handleChange}
+      highlightEnable={false}
+      previewOptions={{  rehypePlugins: [[rehypeSanitize]] }}
+      textareaProps={{ id, name }}
+    />
   );
 }

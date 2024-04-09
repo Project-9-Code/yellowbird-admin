@@ -37,11 +37,14 @@ export type BookmarkInput = {
 export type Course = {
   __typename?: 'Course';
   _empty?: Maybe<Scalars['String']['output']>;
+  activeLessons?: Maybe<Scalars['Int']['output']>;
+  archivedLessons?: Maybe<Scalars['Int']['output']>;
   author?: Maybe<UserProfile>;
   authorId?: Maybe<Scalars['String']['output']>;
   coverPhoto?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  draftLessons?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   isSponsored?: Maybe<Scalars['Boolean']['output']>;
   lastUpdated?: Maybe<Scalars['String']['output']>;
@@ -144,6 +147,7 @@ export type LessonInput = {
   blocks?: InputMaybe<Array<InputMaybe<LessonBlockInput>>>;
   courseId?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   order?: InputMaybe<Scalars['Int']['input']>;
   recapDescription?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<LessonStatus>;
@@ -477,11 +481,14 @@ export type BookmarkResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type CourseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Course'] = ResolversParentTypes['Course']> = ResolversObject<{
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  activeLessons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  archivedLessons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   author?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   coverPhoto?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  draftLessons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isSponsored?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   lastUpdated?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

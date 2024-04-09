@@ -3,6 +3,7 @@ import Card from "../Card";
 import useFocusParam from "../hooks/useFocusParam";
 import { PropsWithChildren, ReactElement } from "react";
 import EmptyLessonBlock from "./EmptyLessonBlock";
+import clsx from "clsx";
 
 export { type LessonBlock };
 
@@ -26,8 +27,12 @@ export default function BlockContainer(
       disableDrag={disableDrag}
       onClick={enableFocus}
     >
-      {isFocused && focusedContent}
-      {!isFocused && unfocusedContent}
+      <div className={clsx(!isFocused && "hidden")}>
+        {focusedContent}
+      </div>
+      <div className={clsx(isFocused && "hidden")}>
+        {unfocusedContent}
+      </div>
       {showEmpty && <EmptyLessonBlock />}
       {children}
     </Card>

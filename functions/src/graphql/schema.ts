@@ -19,11 +19,15 @@ const Query = `
     _empty: String
     lastUpdated: String
     createdAt: String
+    createdBy: String
+    updatedBy: String
   }
   type Lesson {
     _empty: String
     lastUpdated: String
     createdAt: String
+    createdBy: String
+    updatedBy: String
   }
   type Bookmark {
     _empty: String

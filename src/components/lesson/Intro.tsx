@@ -1,27 +1,28 @@
 "use client";
 
-import { Course } from "@/graphql/graphql";
+import { Course, Lesson } from "@/graphql/graphql";
 import Card from "../Card";
 import InputField from "../InputField";
 import TextAreaField from "../TextAreaField";
 import Title from "../Title";
 import useUrlParam from "../hooks/useUrlParam";
 import useFocusParam from "../hooks/useFocusParam";
+import clsx from "clsx";
 
-export default function LessonIntro({ course }: { course?: Course }) {
+export default function LessonIntro({ course, lesson }: { course?: Course, lesson?: Lesson }) {
   const { isFocused, enableFocus } = useFocusParam("intro", "intro");
-  const { value: title, setValueOnChange: setTitle } = useUrlParam("title", "");
-  const { value: description, setValueOnChange: setDescription } = useUrlParam("description", "");
-  const { value: tags, setValueOnChange: setTags } = useUrlParam("tags", "");
+  const { value: title, setValueOnChange: setTitle } = useUrlParam("title", lesson?.title || "");
+  const { value: description, setValueOnChange: setDescription } = useUrlParam("description", lesson?.description || "");
+  const { value: tags, setValueOnChange: setTags } = useUrlParam("tags", lesson?.tags || "");
 
   return (
     <Card focused={isFocused} onClick={enableFocus} className="mb-4 mt-6" disableDrag>
-      {isFocused && (<>
+      <div className={clsx(!isFocused && "hidden")}>
         <Title title="Lesson Intro" className="mb-[28px]" />
 
         <div className="flex flex-row justify-between mb-[16px]">
           <InputField
-            id="name"
+            id="title"
             label="Lesson Name*"
             containerClass="w-[300px]"
             placeholder="Debit Cards, Bitcoin, e.g."
@@ -55,18 +56,12 @@ export default function LessonIntro({ course }: { course?: Course }) {
           defaultValue={tags}
           onChange={setTags()}
         />
-      </>)}
+      </div>
 
       {!isFocused && (<>
         <Title title={title || "Untitled"} className="mb-[8px]" />
         <p className="text-[20px] text-bodyText">{description}</p>
       </>)}
     </Card>
-  );
-}
-
-function Footer() {
-  return (
-    <div className=""></div>
   );
 }

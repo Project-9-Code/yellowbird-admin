@@ -6,8 +6,9 @@ import { ChangeEvent, useCallback } from "react";
 import Button from "../Button";
 
 export default function ChoiceOption(
-  { option, checked, readOnly, type, onOptionChange, onSelectedChange, onRemove }:
+  { id, option, checked, readOnly, type, onOptionChange, onSelectedChange, onRemove }:
   {
+    id?: string,
     option?: string,
     checked?: boolean;
     readOnly?: boolean;
@@ -30,16 +31,18 @@ export default function ChoiceOption(
   return (
     <div className="flex flex-row items-center mb-2">
       <Checkbox
-        name={option}
+        id={id}
+        name={(type === "radio") ? "option" : option}
         type={type ?? "checkbox"}
         className="mr-2"
+        defaultChecked={checked}
         checked={checked}
         onChange={handleSelectedChange}
         disabled={readOnly}
       />
       <InputField
         containerClass="grow mr-2"
-        value={option}
+        defaultValue={option}
         onChange={handleChange}
         disabled={readOnly}
       />

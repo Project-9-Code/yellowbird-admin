@@ -1,7 +1,7 @@
 import { LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
 import TextBlock from "./TextBlock";
 import MediaBlock from "./Media";
-import MultiChoice from "./MultiChoice";
+import MultiChoice from "./MultiSelect";
 import Choice from "./Choice";
 
 export default function LessonBlockView(props: { block: LessonBlock }) {

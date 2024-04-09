@@ -13,6 +13,7 @@ import { CSSProperties, useCallback, useMemo } from "react";
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import Link from "next/link";
 
 interface CourseLessonListProps {
   lessons?: Lesson[];
@@ -56,15 +57,22 @@ export default function CourseLessonList(props: CourseLessonListProps) {
       header: () => <h6>Last Updated</h6>
     }),
     columnHelper.accessor("_empty", {
-      cell: () => (
+      cell: (info) => (
         <div className="flex flex-row">
           <button>
             <Image src={Info} alt="Info Handle" className="mr-5"/>
           </button>
+
           <Menu
-            menuButton={<MenuButton><Image src={Ellipses} alt="More Options" /></MenuButton>}
+            menuButton={(
+              <MenuButton>
+                <Image src={Ellipses} alt="More Options" />
+              </MenuButton>
+            )}
           >
-            <MenuItem>Edit lesson</MenuItem>
+            <MenuItem>
+              <Link href={`/lesson/${info.row.getValue("id")}`}>Edit lesson</Link>
+            </MenuItem>
             <MenuItem>Archive lesson</MenuItem>
           </Menu>
         </div>

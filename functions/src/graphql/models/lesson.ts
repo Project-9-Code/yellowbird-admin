@@ -4,7 +4,6 @@ import {
 } from "../../../graphql_types";
 import {courseCollectionName} from "./course";
 import {userCollectionName} from "./user";
-import {v4 as uuidV4} from "uuid";
 
 export const lessonCollectionName = "lessons";
 
@@ -76,6 +75,7 @@ export const typeDef = `
   }
 
   input LessonInput {
+    id: ID
     courseId: String
     title: String
     description: String
@@ -150,10 +150,6 @@ export const resolvers: Resolvers = {
         lessonCollectionName,
         {
           ...args.lesson,
-          blocks: args.lesson.blocks?.map((block) => {
-            if (block) block.id = uuidV4();
-            return block;
-          }),
           status: args.lesson.status ?? "DRAFT",
           createdAt: db.Timestamp.now(),
           lastUpdated: db.Timestamp.now(),
