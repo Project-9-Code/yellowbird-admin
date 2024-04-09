@@ -1,12 +1,9 @@
 "use client";
  
 import * as React from "react";
-import { getAuth, onIdTokenChanged, User as FirebaseUser } from "firebase/auth";
-import { filterStandardClaims } from "next-firebase-auth-edge/lib/auth/claims";
-import { User } from "@/utils/auth/common";
+import { User } from "firebase/auth";
 import { AuthContext } from "@/utils/auth/client";
-import "@/utils/firebase";
-import { useRouter, useSearchParams } from "next/navigation";
+import useUserSession from "./hooks/useUserSession";
  
 export interface AuthProviderProps {
   serverUser: User | null;
@@ -14,39 +11,7 @@ export interface AuthProviderProps {
 }
  
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (props) => {
-  const [user, setUser] = React.useState(props.serverUser);
-  const searchParams = useSearchParams();
-  const router = useRouter();
- 
-  const handleIdTokenChanged =  React.useCallback(async (firebaseUser: FirebaseUser | null) => {
-    if (firebaseUser) {
-      const idTokenResult = await firebaseUser.getIdTokenResult();
-      const redirect = searchParams.get("redirect");
- 
-      // Sets authenticated user cookies
-      await fetch("/api/login", {
-        headers: { Authorization: `Bearer ${idTokenResult.token}` },
-      });
- 
-      setUser({
-        ...user,
-        customClaims: filterStandardClaims(idTokenResult.claims),
-      } as User);
-
-      if (redirect) router.replace(redirect);
-      return;
-    }
- 
-    // Removes authenticated user cookies
-    await fetch("/api/logout");
- 
-    setUser(null);
-  }, [user, searchParams, router]);
- 
-  React.useEffect(() => {
-    return onIdTokenChanged(getAuth(), handleIdTokenChanged);
-  }, [handleIdTokenChanged]);
- 
+  const user = useUserSession(props.serverUser);
   return (
     <AuthContext.Provider value={{ user }}>
       {props.children}

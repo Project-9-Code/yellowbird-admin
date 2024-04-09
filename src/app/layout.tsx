@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import clsx from "clsx";
-import { whitney } from "@/utils/fonts";
-import { getUser } from "@/utils/auth/server";
-import AppProviders from "@/components/Providers";
-import { ToastContainer } from 'react-toastify';
 import "@szhsin/react-menu/dist/index.css";
 import 'react-toastify/dist/ReactToastify.css';
+
+import type { Metadata } from "next";
+import clsx from "clsx";
+import { whitney } from "@/utils/fonts";
+import AppProviders from "@/components/Providers";
+import { ToastContainer } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: "Yellowbird Dashboard",
