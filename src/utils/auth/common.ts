@@ -33,11 +33,10 @@ export function toUser({ decodedToken }: Tokens): User {
 };
 
 export const commonAuthOptions = {
-  apiKey: process.env.FIREBASE_API_KEY as string,
-  cookieName: "__session",
+  apiKey: process.env.YELLOWBIRD_FIREBASE_API_KEY as string,
   cookieSignatureKeys: [
-    process.env.FIREBASE_COOKIE_SECRET_CURRENT as string,
-    process.env.FIREBASE_COOKIE_SECRET_PREVIOUS as string,
+    process.env.YELLOWBIRD_FIREBASE_COOKIE_SECRET_CURRENT as string,
+    process.env.YELLOWBIRD_FIREBASE_COOKIE_SECRET_PREVIOUS as string,
   ],
   cookieSerializeOptions: {
     path: "/",
@@ -47,8 +46,8 @@ export const commonAuthOptions = {
     maxAge: 12 * 60 * 60 * 24, // twelve days
   },
   serviceAccount: {
-    projectId: process.env.FIREBASE_PROJECT_ID as string,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL as string,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY as string,
+    projectId: process.env.YELLOWBIRD_FIREBASE_PROJECT_ID as string,
+    clientEmail: process.env.YELLOWBIRD_FIREBASE_CLIENT_EMAIL as string,
+    privateKey: process.env.YELLOWBIRD_FIREBASE_PRIVATE_KEY as string,
   },
 };

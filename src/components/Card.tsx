@@ -1,3 +1,5 @@
+"use client";
+
 import { UniqueIdentifier, useDraggable } from "@dnd-kit/core";
 import clsx from "clsx";
 import { PropsWithChildren } from "react";

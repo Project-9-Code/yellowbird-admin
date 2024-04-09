@@ -2,13 +2,14 @@ import { authMiddleware, redirectToLogin } from "next-firebase-auth-edge";
 import { NextRequest, NextResponse } from "next/server";
 import { commonAuthOptions } from "@/utils/auth/common";
 
-const SIGNIN_ROUTE = "/signin";
-const AUTH_ROUTES = [SIGNIN_ROUTE, "/createAccount", "/resetPassword"];
+const SIGNIN_ROUTE = "/auth/signin";
+const AUTH_ROUTES = [SIGNIN_ROUTE, "/auth/createAccount", "/auth/resetPassword"];
 const isDev = process.env.NODE_ENV === "development";
  
 export async function middleware(request: NextRequest) {
   return authMiddleware(request, {
     ...commonAuthOptions,
+    cookieName: "yellowbird-auth-session",
     debug: isDev,
     loginPath: "/api/login",
     logoutPath: "/api/logout",
@@ -54,6 +55,6 @@ export const config = {
         { type: 'header', key: 'purpose', value: 'prefetch' },
       ],
     },
-    "/api/login", "/api/logout",
+    "/api/login", "/api/logout"
   ],
 }

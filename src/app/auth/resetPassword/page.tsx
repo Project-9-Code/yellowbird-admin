@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";

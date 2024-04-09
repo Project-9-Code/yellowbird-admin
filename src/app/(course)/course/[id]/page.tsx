@@ -119,7 +119,7 @@ export default async function CourseDetail(props: CourseDetailProps) {
                   isLink
                   label="Create New Lesson"
                   buttonClassName="!w-[160px]"
-                  href={`/addLesson/${props.params.id}`}
+                  href={`/lesson/addLesson/${props.params.id}`}
                 />
               </div>
             )}
