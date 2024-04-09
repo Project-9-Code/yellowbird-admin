@@ -45,7 +45,7 @@ export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (props) 
  
   React.useEffect(() => {
     return onIdTokenChanged(getAuth(), handleIdTokenChanged);
-  }, []);
+  }, [handleIdTokenChanged]);
  
   return (
     <AuthContext.Provider value={{ user }}>
