@@ -36,8 +36,8 @@ export const commonAuthOptions = {
   apiKey: process.env.YELLOWBIRD_FIREBASE_API_KEY as string,
   cookieName: "yellowbird-auth-session",
   cookieSignatureKeys: [
-    process.env.YELLOWBIRD_FIREBASE_COOKIE_SECRET_CURRENT as string,
-    process.env.YELLOWBIRD_FIREBASE_COOKIE_SECRET_PREVIOUS as string,
+    process.env.FIREBASE_COOKIE_SECRET_CURRENT as string,
+    process.env.FIREBASE_COOKIE_SECRET_PREVIOUS as string,
   ],
   cookieSerializeOptions: {
     path: "/",
