@@ -7,9 +7,9 @@ const AUTH_ROUTES = [SIGNIN_ROUTE, "/auth/createAccount", "/auth/resetPassword"]
 const isDev = process.env.NODE_ENV === "development";
  
 export async function middleware(request: NextRequest) {
+  console.log(process.env)
   return authMiddleware(request, {
     ...commonAuthOptions,
-    cookieName: "yellowbird-auth-session",
     debug: isDev,
     loginPath: "/api/login",
     logoutPath: "/api/logout",
