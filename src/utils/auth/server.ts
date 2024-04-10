@@ -23,8 +23,12 @@ export async function getAuthenticatedAppForUser(session?: string) {
   const adminApp =
     getAdminApps().find((it) => it.name === ADMIN_APP_NAME) ||
     initializeAdminApp({
-      credential: credential.applicationDefault(),
-  }, ADMIN_APP_NAME);
+      credential: credential.cert({
+        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+        clientEmail: process.env.YELLOWBIRD_FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.YELLOWBIRD_FIREBASE_PRIVATE_KEY,
+      }),
+    }, ADMIN_APP_NAME);
 
   const adminAuth = getAdminAuth(adminApp);
   const noSessionReturn = { app: null, currentUser: null };
