@@ -1,12 +1,12 @@
-import { getAuthenticatedAppForUser } from "@/utils/auth/server";
 import { PropsWithChildren } from "react";
 import { AuthProvider } from "./AuthProvider";
-import { User } from "firebase/auth";
+import { getUser } from "@/utils/firebase/server";
+import { cookies } from "next/headers";
 
 export default async function AppProviders(props: PropsWithChildren) {
-  const { currentUser } = await getAuthenticatedAppForUser();
+  const user = await getUser(cookies());
   return (
-    <AuthProvider serverUser={currentUser as User}>
+    <AuthProvider serverUser={user}>
       {props.children}
     </AuthProvider>
   );

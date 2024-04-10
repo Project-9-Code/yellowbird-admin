@@ -1,7 +1,7 @@
 "use client";
 
-import { useAuth } from "@/utils/auth/client";
 import Link from "next/link";
+import { useAuth } from "./AuthProvider";
 
 export default function ProfileButton() {
   const { user } = useAuth();

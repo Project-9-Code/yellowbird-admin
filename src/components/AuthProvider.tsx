@@ -2,19 +2,20 @@
  
 import * as React from "react";
 import { User } from "firebase/auth";
-import { AuthContext } from "@/utils/auth/client";
-import useUserSession from "./hooks/useUserSession";
  
 export interface AuthProviderProps {
   serverUser: User | null;
   children: React.ReactNode;
 }
  
+export const AuthContext = React.createContext<{ user: User | null }>({ user: null });
+ 
 export const AuthProvider: React.FunctionComponent<AuthProviderProps> = (props) => {
-  const user = useUserSession(props.serverUser);
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user: props.serverUser }}>
       {props.children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => React.useContext(AuthContext);

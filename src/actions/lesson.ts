@@ -3,7 +3,7 @@
 import { gql } from "@/graphql";
 import { Lesson, LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
 import { GRAPHQL_API_URL } from "@/utils/common";
-import { uploadFileToStorage } from "@/utils/firebase";
+import { uploadFileToStorage } from "@/utils/firebase/client";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import request from "graphql-request";
 import { revalidatePath } from "next/cache";

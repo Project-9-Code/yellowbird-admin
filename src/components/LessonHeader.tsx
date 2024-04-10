@@ -7,11 +7,11 @@ import Folder from "@/svgs/folder.svg";
 import { Course, Lesson, LessonBlock } from "@/graphql/graphql";
 import { useRouter, useSearchParams } from "next/navigation";
 import LessonInfoOverlay from "./LessonInfoOverlay";
-import { useAuth } from "@/utils/auth/client";
 import useLessonBlocks from "./hooks/useLessonBlocks";
 import { useFormStatus } from "react-dom";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useAuth } from "./AuthProvider";
 
 export default function LessonHeader({ course, lesson }: { course?: Course, lesson?: Lesson }) {
   const router = useRouter();
@@ -19,10 +19,10 @@ export default function LessonHeader({ course, lesson }: { course?: Course, less
   const courseId = course?.id ?? lesson?.course?.id ?? searchParams.get("courseId");
   const lessonTitle = lesson?.title ?? searchParams.get("title") ?? "";
   const lastUpdated = lesson?.lastUpdated ?? searchParams.get("lastUpdated");
-  const { user } = useAuth();
   const { lessonBlocks } = useLessonBlocks(undefined, lesson?.blocks as LessonBlock[]);
   const { pending, data } = useFormStatus();
   const onClose = useCallback(() => router.push(`/course/${courseId}`), [courseId, router]);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (data) {

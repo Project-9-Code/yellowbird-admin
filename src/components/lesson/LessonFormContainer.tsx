@@ -2,9 +2,9 @@
 
 import { addLesson, updateLesson } from "@/actions/lesson";
 import { Course, Lesson } from "@/graphql/graphql";
-import { useAuth } from "@/utils/auth/client";
 import { PropsWithChildren, useMemo } from "react";
 import { v4 as uuid } from "uuid";
+import { useAuth } from "../AuthProvider";
 
 export default function LessonFormContainer(
   props: PropsWithChildren<{ lesson?: Lesson, course?: Course, edit?: boolean }>

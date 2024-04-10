@@ -4,13 +4,16 @@ import Button from "@/components/Button";
 import ErrorContainer from "@/components/ErrorContainer";
 import InputField from "@/components/InputField";
 import StyledLink from "@/components/Link";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signIn } from "@/utils/firebase/client";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useCallback, useState } from "react";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const onEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value), [setEmail]);
   const onPasswordChange = useCallback((event: ChangeEvent<HTMLInputElement>) => setPassword(event.target.value), [setPassword]);
 
@@ -19,8 +22,10 @@ export default function SignInForm() {
     event.stopPropagation();
     
     setError(undefined);
+    setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(getAuth(), email, password);
+      await signIn(email, password);
+      router.refresh();
     } catch (e) {
       const code = (e as any).code;
       switch (code) {
@@ -33,11 +38,14 @@ export default function SignInForm() {
           break;
         
         default:
+          console.error(e);
           break;
       }
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
-  }, [email, password]);
+  }, [email, password, router]);
 
   return (
     <form onSubmit={onSubmit}>
@@ -72,7 +80,7 @@ export default function SignInForm() {
         </ErrorContainer>
       )}
 
-      <Button label="Sign In" type="submit" />
+      <Button label="Sign In" type="submit" loading={isLoading} />
     </form>
   );
 }

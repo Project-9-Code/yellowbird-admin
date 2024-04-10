@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, Suspense } from "react";
 
 export default function AppLayout(
   { header, children }:
@@ -8,7 +8,7 @@ export default function AppLayout(
     <div className="flex flex-col w-full grow overflow-hidden">
       {header}
       <div className="flex grow flex-col items-center overflow-auto">
-        {children}
+        <Suspense>{children}</Suspense>
       </div>
     </div>
   );
