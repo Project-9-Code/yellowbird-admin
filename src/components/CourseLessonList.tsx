@@ -10,7 +10,7 @@ import useSelectedIds from "./hooks/useSelectedIds";
 import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from '@dnd-kit/utilities';
 import { CSSProperties, useCallback, useMemo } from "react";
-import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import Link from "next/link";
@@ -97,11 +97,15 @@ export default function CourseLessonList(props: CourseLessonListProps) {
     useSensor(KeyboardSensor, {})
   );
 
+  const handleDragEnd = useCallback(({ active, over }: DragEndEvent) => {
+    console.log(active, over);
+  }, []);
+
   return (
     <DndContext
       collisionDetection={closestCenter}
       modifiers={[restrictToVerticalAxis]}
-      //onDragEnd={handleDragEnd}
+      onDragEnd={handleDragEnd}
       sensors={sensors}
     >
       <table className="w-full bg-white rounded-md">

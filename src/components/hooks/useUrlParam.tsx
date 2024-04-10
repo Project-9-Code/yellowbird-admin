@@ -1,9 +1,8 @@
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { ChangeEvent, useCallback } from "react";
 import debounce from "lodash.debounce";
 
 export default function useUrlParam(key: string, defaultValue?: string) {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const value = searchParams.get(key) ?? defaultValue ?? "";
@@ -13,18 +12,18 @@ export default function useUrlParam(key: string, defaultValue?: string) {
     newUrl.set(key, value);
     newUrl.set("lastUpdated", Date.now().toString());
     const path = `${pathname}?${newUrl.toString()}${hash ? `#${hash}` : ""}`;
-    router.replace(path, { scroll: false });
-    return path
-  }, [searchParams, key, pathname, router]);
+    history.replaceState(null, "", path);
+    return path;
+  }, [searchParams, key, pathname]);
 
   const setValues = useCallback((values: [string, any][], hash?: string) => {
     const newUrl = new URLSearchParams(searchParams.toString());
     values.forEach(([key, value]) => newUrl.set(key, value));
     newUrl.set("lastUpdated", Date.now().toString());
     const path = `${pathname}?${newUrl.toString()}${hash ? `#${hash}` : ""}`;
-    router.replace(path, { scroll: false });
+    history.replaceState(null, "", path);
     return path;
-  }, [pathname, searchParams, router]);
+  }, [pathname, searchParams]);
 
   const setValueOnChange = useCallback((time=300) => 
     debounce((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>

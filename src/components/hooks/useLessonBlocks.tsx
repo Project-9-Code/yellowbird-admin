@@ -2,7 +2,7 @@
 
 import { LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
 import useUrlParam from "./useUrlParam";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { capitalizeFirstLetter, insertAtIndex } from "@/utils/common";
 import { toast } from "react-toastify";
 
@@ -50,6 +50,10 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
   const updateBlock = useCallback((key: string) => (value?: any) => {
     if (block) updateLessonBlock({ ...block, [key]: value } as LessonBlock);
   }, [block, updateLessonBlock]);
+
+  useEffect(() => {
+    if (defaultBlocks) setLessonBlocks(defaultBlocks);
+  }, []);
 
   return {
     lessonBlocks,

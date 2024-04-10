@@ -28,7 +28,6 @@ export const authConfig = {
 
 export async function getUser(cookies: ReadonlyRequestCookies) {
   const tokens = await getTokens(cookies, authConfig);
-  console.log("tokens", tokens)
   const user = tokens ? toUser(tokens) : null;
   return user;
 }
