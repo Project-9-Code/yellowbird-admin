@@ -1,5 +1,5 @@
 import DefaultLoader from "@/components/DefaultLoader";
 
-export default function AddLessonLoading() {
+export default function CourseLoading() {
   return <DefaultLoader />;
 }

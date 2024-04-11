@@ -33,6 +33,7 @@ export default function CourseCard(props: CourseCardProps) {
   return (
     <div className="w-[234px] h-[252px] flex flex-col relative">
       <Link
+        shallow
         href={href}
         className="w-[234px] h-[168px] bg-brand mb-4 rounded-md"
         onMouseEnter={onHover}

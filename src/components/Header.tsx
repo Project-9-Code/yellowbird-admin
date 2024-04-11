@@ -1,8 +1,9 @@
 import Link from "next/link";
-import Button from "./Button";
 import ProfileButton from "./ProfileButton";
+import { getUser } from "@/api/user";
 
-export default function AppHeader() {
+export default async function AppHeader() {
+  const user = await getUser();
   return (
     <div className="flex flex-row items-center bg-white px-8 py-2.5 shadow-[0_1px_0_0_rgba(0,0,0,0.10)]">
       <Link href="/" className="flex flex-row items-center">
@@ -16,7 +17,7 @@ export default function AppHeader() {
 
       <div className="grow" />
 
-      <ProfileButton />
+      <ProfileButton user={user} />
     </div>
   );
 }

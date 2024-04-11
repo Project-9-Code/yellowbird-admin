@@ -1,16 +1,17 @@
 import Card from "@/components/Card";
 import LogoutButton from "@/components/LogoutButton";
+import { ProfilePic } from "@/components/ProfilePic";
 
 export default function Profile() {
   return (
     <div className="flex flex-col grow self-stretch items-center py-[48px]">
-      <Card disableDrag>
+      <Card disableDrag className="mb-5">
         <h1 className="font-ginto text-[30px] text-headlineText font-bold mb-[24px]">
           Information
         </h1>
 
         <div className="flex flex-row items-center mb-[16px]">
-          <div className="w-[40px] h-[40px] mr-[25px]"></div>
+          <ProfilePic />
 
           <div className="flex flex-col ml-[16px]">
             <h3 className="text-bodyText font-bold text-[14px]">Profile Photo</h3>
@@ -26,7 +27,25 @@ export default function Profile() {
         </div>
       </Card>
 
+      <Card disableDrag className="mb-5">
+        <h1 className="font-ginto text-[30px] text-headlineText font-bold mb-[24px]">
+          Password
+        </h1>
+      </Card>
+
+      <Card disableDrag className="mb-5">
+        <h1 className="font-ginto text-[30px] text-headlineText font-bold mb-[24px]">
+          Notifications
+        </h1>
+      </Card>
+
       <LogoutButton />
     </div>
+  );
+}
+
+function EmptyProfileImage() {
+  return (
+    <div></div>
   );
 }

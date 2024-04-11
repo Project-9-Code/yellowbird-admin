@@ -1,6 +1,7 @@
 import { getTokens } from "next-firebase-auth-edge";
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { toUser } from "./common";
+import { cookies } from "next/headers";
+import { cache } from "react";
 
 export const serverConfig = {
   useSecureCookies: process.env.USE_SECURE_COOKIES === "true",
@@ -26,8 +27,8 @@ export const authConfig = {
   serviceAccount: serverConfig.serviceAccount,
 };
 
-export async function getUser(cookies: ReadonlyRequestCookies) {
-  const tokens = await getTokens(cookies, authConfig);
+export const getUser = async function getUserAPI() {
+  const tokens = await getTokens(cookies(), authConfig);
   const user = tokens ? toUser(tokens) : null;
   return user;
 }

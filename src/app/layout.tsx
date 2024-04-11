@@ -22,14 +22,12 @@ export default async function RootLayout({
   return (
     <html lang="en" className={clsx("w-full h-full", whitney.variable)} data-color-mode="light">
       <body className="w-full h-full text-bodyText flex flex-col">
-        <Suspense>
         <AppProviders>
           <main className="flex flex-col grow bg-snowGrey overflow-hidden">
             {children}
           </main>
           <ToastContainer />
         </AppProviders>
-        </Suspense>
       </body>
     </html>
   );

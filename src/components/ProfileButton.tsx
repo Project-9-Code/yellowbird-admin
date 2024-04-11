@@ -1,11 +1,10 @@
 "use client";
 
+import { User } from "@/utils/firebase/common";
 import Link from "next/link";
-import { useAuth } from "./AuthProvider";
 
-export default function ProfileButton() {
-  const { user } = useAuth();
-
+export default function ProfileButton(props: { user: User | null }) {
+  const { user } = props;
   return (
     <Link
       href="/profile"
