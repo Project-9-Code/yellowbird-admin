@@ -4,8 +4,8 @@ import LessonIntro from "./Intro";
 import LessonRecap from "./Recap";
 import ViewLessonBlocks from "./ViewLessonBlocks";
 import LessonFormContainer from "./LessonFormContainer";
-import { fetchCourseMeta } from "@/api/course";
-import { fetchLesson } from "@/api/lesson";
+import { fetchCourseMeta } from "@/requests/course";
+import { fetchLesson } from "@/requests/lesson";
 
 export default async function AddLessonForm(
   { courseId, lessonId, lesson, edit }:

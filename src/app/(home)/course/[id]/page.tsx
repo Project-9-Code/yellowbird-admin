@@ -1,4 +1,4 @@
-import { fetchCourse } from "@/api/course";
+import { fetchCourse } from "@/requests/course";
 import Button from "@/components/Button";
 import Image from "next/image";
 import BackSvg from "@/svgs/arrow-left.svg";

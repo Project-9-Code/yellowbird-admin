@@ -1,6 +1,6 @@
 import CourseCard from "./CourseCard";
 import ListToolbar from "./ListToolbar";
-import { fetchCourses } from "@/api/course";
+import { fetchCourses } from "@/requests/course";
 
 export default async function CourseCardList() {
   const courses = await fetchCourses();

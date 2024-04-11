@@ -1,8 +1,3 @@
-import { getTokens } from "next-firebase-auth-edge";
-import { toUser } from "./common";
-import { cookies } from "next/headers";
-import { cache } from "react";
-
 export const serverConfig = {
   useSecureCookies: process.env.USE_SECURE_COOKIES === "true",
   firebaseApiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
@@ -27,8 +22,3 @@ export const authConfig = {
   serviceAccount: serverConfig.serviceAccount,
 };
 
-export const getUser = async function getUserAPI() {
-  const tokens = await getTokens(cookies(), authConfig);
-  const user = tokens ? toUser(tokens) : null;
-  return user;
-}
