@@ -4,9 +4,11 @@ import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import StyledLink from "@/components/Link";
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 
 export default function CreateAccountForm() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,12 +27,13 @@ export default function CreateAccountForm() {
       const { user } = await createUserWithEmailAndPassword(getAuth(), email, password);
       await updateProfile(user, { displayName: name });
       await user.reload();
+      router.replace("/auth/signin");
     } catch (error) {
       console.error(error);
       setError("Error creating user");
     }
     setIsLoading(false);
-  }, [email, password, name]);
+  }, [email, password, name, router]);
 
   return (
     <form onSubmit={onSubmit}>
@@ -74,7 +77,7 @@ export default function CreateAccountForm() {
         By clicking “Create your account” below, you agree to our <StyledLink href="">Terms of Service and Privacy Statement</StyledLink>. We’ll occasionally send you account related emails.
       </div>
 
-      <Button label="Create Account" type="submit" onClick={onSubmit} />
+      <Button label="Create Account" type="submit" onClick={onSubmit} loading={isLoading} />
     </form>
   );
 }

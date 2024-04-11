@@ -1,5 +1,3 @@
-import Button from "@/components/Button";
-import InputField from "@/components/InputField";
 import StyledLink from "@/components/Link";
 import { Metadata } from "next";
 import CreateAccountForm from "./component/CreateAccountForm";
