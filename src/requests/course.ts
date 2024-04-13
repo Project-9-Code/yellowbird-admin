@@ -42,6 +42,7 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
         archivedLessons
         activeLessons
         draftLessons
+        lastUpdated
         author {
           name
           id

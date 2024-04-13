@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { whitney } from "@/utils/fonts";
 import AppProviders from "@/components/Providers";
 import { ToastContainer } from 'react-toastify';
+import AppToastContainer from "@/components/ToastContainer";
 
 export const metadata: Metadata = {
   title: "Yellowbird Dashboard",
@@ -25,7 +26,7 @@ export default async function RootLayout({
           <main className="flex flex-col grow bg-snowGrey overflow-hidden">
             {children}
           </main>
-          <ToastContainer />
+          <AppToastContainer />
         </AppProviders>
       </body>
     </html>

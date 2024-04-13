@@ -9,3 +9,7 @@
 .radix-themes {
   --default-font-family: var(--font-inter);
 }
+
+:root {
+  --toastify-toast-width: 360px;
+}

@@ -46,6 +46,7 @@ export default function LessonIntro({ course, lesson }: { course?: Course, lesso
           containerClass="w-full mb-[16px]"
           defaultValue={description}
           onChange={setDescription()}
+          required
         />
 
         <InputField

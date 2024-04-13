@@ -15,9 +15,11 @@ import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import Link from "next/link";
 import { DropdownMenu } from "@radix-ui/themes";
+import { archiveLesson } from "@/actions/lesson";
 
 interface CourseLessonListProps {
   lessons?: Lesson[];
+  courseId?: string;
 }
 
 export default function CourseLessonList(props: CourseLessonListProps) {
@@ -28,6 +30,9 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   const lessonIds = lessons.map((lesson) => lesson.id);
   const allLessonsSelected = isAllSelected(lessonIds);
   const toggleAllLessons = useCallback(() => toggleAllIds(lessonIds), [lessonIds, toggleAllIds]);
+  const onArchive = useCallback((lessonId: string) => async () => {
+    await archiveLesson(lessonId, props.courseId);
+  }, [props.courseId]);
 
   const columns: ColumnDef<Lesson, any>[] = useMemo(() => [
     columnHelper.accessor("__typename", {
@@ -59,7 +64,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
       },
       header: () => <h6>Last Updated</h6>
     }),
-    columnHelper.accessor("_empty", {
+    columnHelper.accessor("courseId", {
       cell: (info) => (
         <div className="flex flex-row">
           <button>
@@ -75,14 +80,18 @@ export default function CourseLessonList(props: CourseLessonListProps) {
               <DropdownMenu.Item>
                 <Link href={`/lesson/${info.row.getValue("id")}`}>Edit lesson</Link>
               </DropdownMenu.Item>
-              <DropdownMenu.Item>Archive lesson</DropdownMenu.Item>
+              <DropdownMenu.Item>
+                <button type="button" onClick={onArchive(info.row.getValue("id"))}>
+                  Archive lesson
+                </button>
+              </DropdownMenu.Item>
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </div>
       ),
       header: () => null,
     }),
-  ], [allLessonsSelected, columnHelper, toggleAllLessons]);
+  ], [allLessonsSelected, columnHelper, toggleAllLessons, onArchive]);
 
   const table = useReactTable({
     data: lessons,
@@ -140,9 +149,11 @@ export default function CourseLessonList(props: CourseLessonListProps) {
 function RowHandleCell({ row }: { row: Row<Lesson> }) {
   const { attributes, listeners } = useSortable({ id: row.id });
   return (
-    <button className="pl-5" {...attributes} {...listeners} aria-describedby="">
-      <Image src={DragHandle} alt="Drag Handle" />
-    </button>
+    <div className="flex w-full h-full">
+      <button className="pl-5" {...attributes} {...listeners} aria-describedby="">
+        <Image src={DragHandle} alt="Drag Handle" />
+      </button>
+    </div>
   )
 }
 

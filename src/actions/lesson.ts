@@ -10,6 +10,7 @@ import { revalidatePath } from "next/cache";
 import { v4 as uuid } from "uuid";
 
 export async function addLesson(authorId: string, lessonData: FormData) {
+  console.log("Adding", authorId, lessonData)
   const lesson = await cleanLessonData(lessonData, authorId);
 
   const { addLesson } = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
@@ -24,17 +25,20 @@ export async function addLesson(authorId: string, lessonData: FormData) {
   return addLesson;
 };
 
-export async function archiveLesson(lessonId: string) {
+export async function archiveLesson(lessonId: string, courseId?: string) {
   await request(GRAPHQL_API_URL, gql(/* GraphQL */`
     mutation ArchiveLesson($lessonId: String!) {
       deleteLesson(lessonId: $lessonId)
     }
   `), { lessonId });
 
+
+  if (courseId) revalidatePath(`/course/${courseId}`);
   revalidatePath(`/lesson/${lessonId}`);
 }
 
 export async function updateLesson(authorId: string, lessonData: FormData) {
+  console.log("updating", authorId, lessonData)
   const lesson = await cleanLessonData(lessonData, authorId);
 
   const { updateLesson } = await request(GRAPHQL_API_URL, gql(/* GraphQL */`

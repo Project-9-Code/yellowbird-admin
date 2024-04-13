@@ -29,7 +29,6 @@ function LessonInfo({ lesson, course }: { lesson?: Lesson, course?: Course }) {
   const numOfScreens = (lesson?.blocks?.length ?? 0) + 2;
   const numOfQuestions = lesson?.blocks?.reduce((acc, block) => acc + (isQuestionBlock(block as LessonBlock) ? 1 : 0), 0) ?? 0;
   const lastUpdated = lesson?.lastUpdated ?? searchParams.get("lastUpdated") ?? Date.now();
-  console.log(lesson?.title?.length)
 
   return (
     <div className="w-[300px] flex flex-col px-5">

@@ -24,7 +24,7 @@ export default function LessonHeader({ course, lesson }: { course?: Course, less
 
   useEffect(() => {
     if (data) {
-      toast.success("Lesson created successfully");
+      toast.success("Lesson created successfully", { icon: () => null });
       router.push(`/lesson/${data.get("id")}`);
     }
   }, [data, router]);

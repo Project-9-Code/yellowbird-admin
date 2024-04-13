@@ -6,6 +6,7 @@ import ViewLessonBlocks from "./ViewLessonBlocks";
 import LessonFormContainer from "./LessonFormContainer";
 import { fetchCourseMeta } from "@/requests/course";
 import { fetchLesson } from "@/requests/lesson";
+import { getUser } from "@/requests/user";
 
 export default async function AddLessonForm(
   { courseId, lessonId, lesson, edit }:
@@ -14,9 +15,10 @@ export default async function AddLessonForm(
 
   const lessonData = (lessonId) ? await fetchLesson(lessonId) : lesson;
   const courseData = (courseId) ? await fetchCourseMeta(courseId) : lessonData?.course as Course;
+  const user = await getUser();
 
   return (
-    <LessonFormContainer course={courseData} lesson={lessonData} edit={edit}>
+    <LessonFormContainer user={user} course={courseData} lesson={lessonData} edit={edit}>
       <LessonHeader course={courseData} lesson={lessonData} />
 
       <div className="flex grow flex-col items-center overflow-auto">

@@ -24,7 +24,7 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
       const focusBlock = (focus) ? block.id : undefined;
       toast.info(
         `${capitalizeFirstLetter(LessonBlockTypes.Text.toLowerCase())} only card added.`,
-        { toastId: block.id }
+        { toastId: block.id, icon: () => null }
       );
       return setLessonBlocks(insertAtIndex(lessonBlocks, position, block), focusBlock);
     }
@@ -40,9 +40,9 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
   const removeLessonBlock = useCallback((block: LessonBlock) => {
     if (lessonBlocks.find((b) => b.id === block.id)) {
       setLessonBlocks(lessonBlocks.filter((b) => b.id !== block.id));
-      toast.warn(
+      toast.error(
         `${capitalizeFirstLetter(block.type.toLowerCase())} was removed.`,
-        { toastId: block.id }
+        { toastId: block.id, icon: () => null }
       );
     }
   }, [lessonBlocks, setLessonBlocks]);
