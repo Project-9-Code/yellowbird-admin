@@ -18,6 +18,7 @@ const documents = {
     "\n    mutation AddLesson($lesson: LessonInput!) {\n      addLesson(lesson: $lesson) {\n        id\n      }\n    }\n  ": types.AddLessonDocument,
     "\n    mutation ArchiveLesson($lessonId: String!) {\n      deleteLesson(lessonId: $lessonId)\n    }\n  ": types.ArchiveLessonDocument,
     "\n    mutation UpdateLesson($lesson: LessonUpdateInput!) {\n      updateLesson(lesson: $lesson) {\n        id\n      }\n    }\n  ": types.UpdateLessonDocument,
+    "\n    mutation DeleteLesson($lessonId: String!) {\n      deleteLesson(lessonId: $lessonId)\n    }\n  ": types.DeleteLessonDocument,
     "\n    query GetCourses {\n      courses {\n        id\n        name\n        description\n        coverPhoto\n      }\n    }\n  ": types.GetCoursesDocument,
     "\n    query GetCourse($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n        description\n        coverPhoto\n        archivedLessons\n        activeLessons\n        draftLessons\n        author {\n          name\n          id\n        }\n        lessons {\n          __typename\n          _empty\n          id\n          title\n          order\n          author {\n            name\n            id\n          }\n          lastUpdated\n        }\n      }\n    }\n  ": types.GetCourseDocument,
     "\n    query GetCourseMeta($courseId: String!) {\n      course(courseId: $courseId) {\n        id\n        name\n      }\n    }\n  ": types.GetCourseMetaDocument,
@@ -58,6 +59,10 @@ export function gql(source: "\n    mutation ArchiveLesson($lessonId: String!) {\
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n    mutation UpdateLesson($lesson: LessonUpdateInput!) {\n      updateLesson(lesson: $lesson) {\n        id\n      }\n    }\n  "): (typeof documents)["\n    mutation UpdateLesson($lesson: LessonUpdateInput!) {\n      updateLesson(lesson: $lesson) {\n        id\n      }\n    }\n  "];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation DeleteLesson($lessonId: String!) {\n      deleteLesson(lessonId: $lessonId)\n    }\n  "): (typeof documents)["\n    mutation DeleteLesson($lessonId: String!) {\n      deleteLesson(lessonId: $lessonId)\n    }\n  "];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

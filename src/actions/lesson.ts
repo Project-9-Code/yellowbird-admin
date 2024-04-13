@@ -49,6 +49,16 @@ export async function updateLesson(authorId: string, lessonData: FormData) {
   return updateLesson;
 };
 
+export async function deleteLesson(lessonId: string) {
+  await request(GRAPHQL_API_URL, gql(/* GraphQL */`
+    mutation DeleteLesson($lessonId: String!) {
+      deleteLesson(lessonId: $lessonId)
+    }
+  `), { lessonId });
+
+  revalidatePath(`/lesson/${lessonId}`);
+}
+
 function shouldParse(key: string) {
   return key === "answers" || key === "answer_options";
 }

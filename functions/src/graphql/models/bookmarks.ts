@@ -4,7 +4,7 @@ import {auth} from "firebase-admin";
 
 export const collectionName = "bookmarks";
 
-export const typeDef = `
+export const typeDef = /* GraphQL */`
   extend type Query {
     bookmarks: [Bookmark]
     bookmark(id: String!): Bookmark

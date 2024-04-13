@@ -5,3 +5,7 @@
 .w-md-editor-text {
   height: 100%;
 }
+
+.radix-themes {
+  --default-font-family: var(--font-inter);
+}

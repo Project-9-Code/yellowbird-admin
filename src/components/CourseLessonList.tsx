@@ -14,6 +14,7 @@ import { DndContext, DragEndEvent, KeyboardSensor, MouseSensor, TouchSensor, clo
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import Link from "next/link";
+import { DropdownMenu } from "@radix-ui/themes";
 
 interface CourseLessonListProps {
   lessons?: Lesson[];
@@ -53,7 +54,9 @@ export default function CourseLessonList(props: CourseLessonListProps) {
       header: () => <h6>Author</h6>
     }),
     columnHelper.accessor("lastUpdated", {
-      cell: (info) => <span>{info.getValue() ?? "Unknown"}</span>,
+      cell: (info) => {
+        return <span>{info.getValue() ?? "Unknown"}</span>;
+      },
       header: () => <h6>Last Updated</h6>
     }),
     columnHelper.accessor("_empty", {
@@ -62,19 +65,19 @@ export default function CourseLessonList(props: CourseLessonListProps) {
           <button>
             <Image src={Info} alt="Info Handle" className="mr-5"/>
           </button>
+          
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <Image src={Ellipses} alt="More Options" />
+            </DropdownMenu.Trigger>
 
-          <Menu
-            menuButton={(
-              <MenuButton>
-                <Image src={Ellipses} alt="More Options" />
-              </MenuButton>
-            )}
-          >
-            <MenuItem>
-              <Link href={`/lesson/${info.row.getValue("id")}`}>Edit lesson</Link>
-            </MenuItem>
-            <MenuItem>Archive lesson</MenuItem>
-          </Menu>
+            <DropdownMenu.Content>
+              <DropdownMenu.Item>
+                <Link href={`/lesson/${info.row.getValue("id")}`}>Edit lesson</Link>
+              </DropdownMenu.Item>
+              <DropdownMenu.Item>Archive lesson</DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
         </div>
       ),
       header: () => null,

@@ -1,11 +1,10 @@
-"use client";
-
 import Image from "next/image";
-import { useAuth } from "./AuthProvider";
 import AddIcon from "@/svgs/grey-plus.svg";
+import { getUser } from "@/requests/user";
 
-export function ProfilePic() {
-  const { user } = useAuth();
+export async function ProfilePic() {
+  const user = await getUser();
+
   return (
     <label htmlFor="profilePic" className="w-[70px] h-[70px] mr-[16px] cursor-pointer">
       <div className="flex w-[70px] h-[70px] rounded-full bg-borderBg justify-center items-center">

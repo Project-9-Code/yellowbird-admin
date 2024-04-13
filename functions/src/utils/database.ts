@@ -98,7 +98,7 @@ export async function getCollectionList(
   const result = await query.get();
 
   const list: DocumentData[] = [];
-  result.forEach((doc: any) => {
+  result.forEach((doc: DocumentData) => {
     const data = doc.data();
     data.id = doc.id;
     list.push(data);

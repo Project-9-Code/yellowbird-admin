@@ -11,7 +11,6 @@ import useLessonBlocks from "./hooks/useLessonBlocks";
 import { useFormStatus } from "react-dom";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useAuth } from "./AuthProvider";
 
 export default function LessonHeader({ course, lesson }: { course?: Course, lesson?: Lesson }) {
   const router = useRouter();
@@ -22,7 +21,6 @@ export default function LessonHeader({ course, lesson }: { course?: Course, less
   const { lessonBlocks } = useLessonBlocks(undefined, lesson?.blocks as LessonBlock[]);
   const { pending, data } = useFormStatus();
   const onClose = useCallback(() => router.push(`/course/${courseId}`), [courseId, router]);
-  const { user } = useAuth();
 
   useEffect(() => {
     if (data) {
@@ -56,7 +54,6 @@ export default function LessonHeader({ course, lesson }: { course?: Course, less
           lesson={{
             title: lessonTitle,
             course: { name: course?.name },
-            author: { name: user?.displayName },
             blocks: lessonBlocks,
             lastUpdated: lastUpdated,
           } as Lesson}

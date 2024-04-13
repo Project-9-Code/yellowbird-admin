@@ -7,7 +7,7 @@ import {userCollectionName} from "./user";
 
 export const lessonCollectionName = "lessons";
 
-export const typeDef = `
+export const typeDef = /* GraphQL */`
   extend type Query {
     lessons: [Lesson]
     lesson(lessonId: String!): Lesson

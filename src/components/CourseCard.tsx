@@ -64,7 +64,7 @@ export default function CourseCard(props: CourseCardProps) {
           {props.course.name}
         </span>
 
-        <span className="text-sm">
+        <span className="text-sm line-clamp-3">
           {props.course.description}
         </span>
       </Link>

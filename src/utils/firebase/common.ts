@@ -1,6 +1,7 @@
 import { User as AuthUser } from "firebase/auth";
 import { Tokens } from "next-firebase-auth-edge";
 import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims';
+export { Timestamp } from "firebase/firestore";
 
 export interface User extends AuthUser {
   customClaims?: Record<string, any>;

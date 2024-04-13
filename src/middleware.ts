@@ -20,8 +20,6 @@ export async function middleware(request: NextRequest) {
       if (PUBLIC_PATHS.includes(request.nextUrl.pathname)) {
         return redirectToHome(request);
       }
-      console.log('User is authenticated', {decodedToken})
-
       return NextResponse.next({ request: { headers } });
     },
     handleInvalidToken: async (reason) => {

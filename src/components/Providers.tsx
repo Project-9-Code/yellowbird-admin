@@ -1,11 +1,10 @@
 import { PropsWithChildren } from "react";
-import { AuthProvider } from "./AuthProvider";
-import { User } from "firebase/auth";
+import { Theme } from '@radix-ui/themes';
 
 export default async function AppProviders(props: PropsWithChildren) {
   return (
-    <AuthProvider serverUser={{} as User}>
+    <Theme className="flex flex-grow">
       {props.children}
-    </AuthProvider>
+    </Theme>
   );
 }

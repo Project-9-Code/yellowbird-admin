@@ -8,7 +8,7 @@ import {
   typeDef as Bookmark, resolvers as BookmarkResolvers,
 } from "./models/bookmarks";
 
-const Query = `
+const Query = /* GraphQL */`
   type Query {
     _empty: String
   }

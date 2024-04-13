@@ -4,7 +4,7 @@ import {auth} from "firebase-admin";
 
 export const userCollectionName = "users";
 
-export const typeDef = `
+export const typeDef = /* GraphQL */`
   extend type Query {
     users: [UserProfile]
     user(userId: String!): UserProfile

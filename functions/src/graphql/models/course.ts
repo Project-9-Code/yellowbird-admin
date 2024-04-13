@@ -7,7 +7,7 @@ import {getDownloadURL} from "firebase-admin/storage";
 
 export const courseCollectionName = "courses";
 
-export const typeDef = `
+export const typeDef = /* GraphQL */`
   extend type Query {
     courses: [Course]
     course(courseId: String!): Course

@@ -1,36 +1,18 @@
 /* eslint-disable new-cap */
-import express from "express";
-import cors from "cors";
-import http from "http";
 import * as functions from "firebase-functions";
-import {ApolloServer} from "@apollo/server";
-import {expressMiddleware} from "@apollo/server/express4";
-import {
-  ApolloServerPluginDrainHttpServer,
-} from "@apollo/server/plugin/drainHttpServer";
+import {createYoga} from "graphql-yoga";
 import {schema} from "./schema";
+import {useResponseCache} from "@graphql-yoga/plugin-response-cache";
 
-const app = express();
-const httpServer = http.createServer(app);
-
-app.use(cors());
-app.use(express.json());
-
-const plugins = [ApolloServerPluginDrainHttpServer({httpServer})];
-
-const server = new ApolloServer({
+const yoga = createYoga({
   schema,
-  status400ForVariableCoercionErrors: true,
-  introspection: true,
-  plugins: plugins,
-  csrfPrevention: false,
+  graphqlEndpoint: "*",
+  batching: true,
+  plugins: [
+    useResponseCache({
+      session: () => null,
+    }),
+  ],
 });
 
-server.start().then(() => {
-  app.use("/", expressMiddleware(server));
-  console.log("Server started");
-});
-
-export default functions.runWith({
-  secrets: ["PROJECT_ID", "CLIENT_EMAIL", "PRIVATE_KEY"],
-}).https.onRequest(app);
+export default functions.https.onRequest(yoga);

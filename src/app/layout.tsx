@@ -1,13 +1,12 @@
 import "./globals.css";
-import "@szhsin/react-menu/dist/index.css";
 import 'react-toastify/dist/ReactToastify.css';
+import '@radix-ui/themes/styles.css';
 
 import type { Metadata } from "next";
 import clsx from "clsx";
 import { whitney } from "@/utils/fonts";
 import AppProviders from "@/components/Providers";
 import { ToastContainer } from 'react-toastify';
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Yellowbird Dashboard",
