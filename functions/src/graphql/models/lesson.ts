@@ -32,7 +32,6 @@ export const typeDef = /* GraphQL */`
     order: Int
     authorId: String
     author: UserProfile
-    lastUpdated: String
     tags: String
     status: LessonStatus
     blocks: [LessonBlock]
@@ -151,8 +150,9 @@ export const resolvers: Resolvers = {
         {
           ...args.lesson,
           status: args.lesson.status ?? "DRAFT",
-          createdAt: db.Timestamp.now(),
-          lastUpdated: db.Timestamp.now(),
+          createdById: args.lesson.authorId,
+          createdAt: Date.now(),
+          lastUpdated: Date.now(),
         }
       ) as Lesson;
     },
@@ -164,6 +164,7 @@ export const resolvers: Resolvers = {
           ...args.lesson,
           status: args.lesson.status ?? "DRAFT",
           lastUpdated: Date.now().toString(),
+          updatedById: args.lesson.authorId,
         },
       ) as unknown as Lesson;
     },
@@ -177,7 +178,8 @@ export const resolvers: Resolvers = {
         data: {
           ...lesson,
           status: lesson?.status ?? "DRAFT",
-          lastUpdated: db.Timestamp.now(),
+          lastUpdated: Date.now(),
+          createdAt: Date.now(),
         },
       } as db.BatchItem))) as Lesson[];
 
@@ -189,7 +191,7 @@ export const resolvers: Resolvers = {
         data: {
           ...lesson,
           status: lesson?.status ?? "DRAFT",
-          lastUpdated: db.Timestamp.now(),
+          lastUpdated: Date.now(),
         },
       } as db.BatchItem))) as Lesson[];
     },

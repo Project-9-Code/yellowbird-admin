@@ -60,7 +60,9 @@ export default function CourseLessonList(props: CourseLessonListProps) {
     }),
     columnHelper.accessor("lastUpdated", {
       cell: (info) => {
-        return <span>{info.getValue() ?? "Unknown"}</span>;
+        return <span>{info.getValue() ? 
+          `${new Date(parseInt(info.getValue())).toLocaleDateString()} ${new Date(parseInt(info.getValue())).toLocaleTimeString()}` : 
+          "Unknown"}</span>;
       },
       header: () => <h6>Last Updated</h6>
     }),

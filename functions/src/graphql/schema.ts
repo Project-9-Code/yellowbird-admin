@@ -19,20 +19,28 @@ const Query = /* GraphQL */`
     _empty: String
     lastUpdated: String
     createdAt: String
-    createdBy: String
-    updatedBy: String
+    createdBy: UserProfile
+    createdById: String
+    updatedBy: UserProfile
+    updatedById: String
   }
   type Lesson {
     _empty: String
     lastUpdated: String
     createdAt: String
-    createdBy: String
-    updatedBy: String
+    createdBy: UserProfile
+    createdById: String
+    updatedBy: UserProfile
+    updatedById: String
   }
   type Bookmark {
     _empty: String
     lastUpdated: String
     createdAt: String
+    createdBy: UserProfile
+    createdById: String
+    updatedBy: UserProfile
+    updatedById: String
   }
   type UserProfile {
     _empty: String

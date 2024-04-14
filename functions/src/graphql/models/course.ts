@@ -115,7 +115,7 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     addCourse: async (_, args) => {
-      const timestamp = db.Timestamp.now();
+      const timestamp = Date.now();
       const data = {
         ...args.course,
         lastUpdated: timestamp,
@@ -126,7 +126,7 @@ export const resolvers: Resolvers = {
     updateCourse: async (_, args) => {
       const data = {
         ...args.course,
-        lastUpdated: db.Timestamp.now(),
+        lastUpdated: Date.now(),
       };
       return db.setItem(
         courseCollectionName,
@@ -139,7 +139,7 @@ export const resolvers: Resolvers = {
       return db.deleteItem(courseCollectionName, args.courseId);
     },
     bulkAddCourses: async (_, args) => {
-      const timestamp = db.Timestamp.now();
+      const timestamp = Date.now();
       return await db.addBatch(args.courses.map((course) => ({
         collection: courseCollectionName,
         data: {...course, createdAt: timestamp, lastUpdated: timestamp},
@@ -148,7 +148,7 @@ export const resolvers: Resolvers = {
     bulkUpdateCourses: async (_, args) => {
       return await db.updateBatch(args.courses.map((course) => ({
         collection: courseCollectionName,
-        data: {...course, lastUpdated: db.Timestamp.now()},
+        data: {...course, lastUpdated: Date.now()},
       } as db.BatchItem))) as Course[];
     },
     bulkDeleteCourses: async (_, args) => {

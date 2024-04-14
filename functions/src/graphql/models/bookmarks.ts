@@ -22,8 +22,6 @@ export const typeDef = /* GraphQL */`
     userId: String!
     lessonId: String
     courseId: String
-    lastUpdated: String
-    createdAt: String
   }
 
   input BookmarkInput {
@@ -57,7 +55,7 @@ export const resolvers: Resolvers = {
         collectionName,
         {
           ...bookmark,
-          createdAt: db.Timestamp.now(), lastUpdated: db.Timestamp.now(),
+          createdAt: Date.now(), lastUpdated: Date.now(),
         }
       ) as Bookmark;
     },
@@ -65,7 +63,7 @@ export const resolvers: Resolvers = {
       return db.setItem(
         collectionName,
         args.bookmark.id as string,
-        {...args.bookmark, lastUpdated: db.Timestamp.now()},
+        {...args.bookmark, lastUpdated: Date.now()},
       ) as unknown as Bookmark;
     },
   },

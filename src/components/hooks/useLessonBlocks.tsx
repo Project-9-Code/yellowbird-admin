@@ -5,12 +5,19 @@ import useUrlParam from "./useUrlParam";
 import { useCallback, useEffect } from "react";
 import { capitalizeFirstLetter, insertAtIndex } from "@/utils/common";
 import { toast } from "react-toastify";
+import { v4 as uuid } from "uuid";
 
 export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: LessonBlock[]) {
   const { value, setValues } = useUrlParam("lessonBlocks", defaultBlocks?.map((block) => JSON.stringify(block)).join("$") ?? "");
   const lessonBlocks = value.split("$")
     .filter((str) => str.length > 0)
-    .map((block) => JSON.parse(block) as LessonBlock);
+    .map((block) => {
+      try {
+        return JSON.parse(block) as LessonBlock
+      } catch (e) {
+        return { id: uuid(),  type: "TEXT", screenContent: "Could not load block content" } as LessonBlock;
+      }
+    });
 
   const setLessonBlocks = useCallback((blocks: LessonBlock[], focus?: string) => {
     const updates: [string, any][] = [["lessonBlocks", blocks.map((block) => JSON.stringify(block)).join("$")]];

@@ -21,9 +21,13 @@ export type Bookmark = {
   _empty?: Maybe<Scalars['String']['output']>;
   courseId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
+  createdBy?: Maybe<UserProfile>;
+  createdById?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastUpdated?: Maybe<Scalars['String']['output']>;
   lessonId?: Maybe<Scalars['String']['output']>;
+  updatedBy?: Maybe<UserProfile>;
+  updatedById?: Maybe<Scalars['String']['output']>;
   userId: Scalars['String']['output'];
 };
 
@@ -43,7 +47,8 @@ export type Course = {
   authorId?: Maybe<Scalars['String']['output']>;
   coverPhoto?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
-  createdBy?: Maybe<Scalars['String']['output']>;
+  createdBy?: Maybe<UserProfile>;
+  createdById?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   draftLessons?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
@@ -52,7 +57,8 @@ export type Course = {
   lessons?: Maybe<Array<Maybe<Lesson>>>;
   name?: Maybe<Scalars['String']['output']>;
   shortDescription?: Maybe<Scalars['String']['output']>;
-  updatedBy?: Maybe<Scalars['String']['output']>;
+  updatedBy?: Maybe<UserProfile>;
+  updatedById?: Maybe<Scalars['String']['output']>;
 };
 
 export type CourseInput = {
@@ -81,7 +87,8 @@ export type Lesson = {
   course?: Maybe<Course>;
   courseId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
-  createdBy?: Maybe<Scalars['String']['output']>;
+  createdBy?: Maybe<UserProfile>;
+  createdById?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lastUpdated?: Maybe<Scalars['String']['output']>;
@@ -90,7 +97,8 @@ export type Lesson = {
   status?: Maybe<LessonStatus>;
   tags?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updatedBy?: Maybe<Scalars['String']['output']>;
+  updatedBy?: Maybe<UserProfile>;
+  updatedById?: Maybe<Scalars['String']['output']>;
 };
 
 export type LessonBlock = {
