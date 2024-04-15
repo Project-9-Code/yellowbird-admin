@@ -23,6 +23,7 @@ export const fetchLesson = cache(async function fetchLessonApi(id: string) {
           mediaUrl
           screenContent
           question
+          points
           answers
           answer_options
         }

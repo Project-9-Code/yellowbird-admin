@@ -4,6 +4,7 @@ import { LessonBlock } from "@/graphql/graphql";
 import { useCallback } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 import dynamic from "next/dynamic";
+import { generateLessonBlockName } from "@/utils/common";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
@@ -23,6 +24,7 @@ export default function SelectPoints({ onSelect, block }: { block: LessonBlock, 
   return (
     <Select
       id={block.id}
+      name={generateLessonBlockName(block, "points")}
       options={options}
       className="w-[215px]"
       defaultValue={selected}

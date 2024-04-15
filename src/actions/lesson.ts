@@ -10,7 +10,6 @@ import { revalidatePath } from "next/cache";
 import { v4 as uuid } from "uuid";
 
 export async function addLesson(authorId: string, lessonData: FormData) {
-  console.log("Adding", authorId, lessonData)
   const lesson = await cleanLessonData(lessonData, authorId);
 
   const { addLesson } = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
@@ -64,7 +63,7 @@ export async function deleteLesson(lessonId: string) {
 }
 
 function shouldParse(key: string) {
-  return key === "answers" || key === "answer_options";
+  return key === "answers" || key === "answer_options" || key === "points";
 }
 
 async function uploadToS3(block: LessonBlock) {
@@ -113,6 +112,8 @@ async function cleanLessonData(lesson: FormData, authorId?: string) {
     if (uploadedBlock) return uploadedBlock;
     return block;
   });
+
+  console.log(lessonData)
 
   return lessonData;
 }
