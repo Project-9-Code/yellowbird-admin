@@ -63,6 +63,7 @@ export type Course = {
 
 export type CourseInput = {
   coverPhoto?: InputMaybe<Scalars['String']['input']>;
+  createdById?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   isSponsored?: InputMaybe<Scalars['Boolean']['input']>;
@@ -76,6 +77,7 @@ export type CourseUpdateInput = {
   id: Scalars['ID']['input'];
   isSponsored?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  updatedById?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Lesson = {
@@ -158,6 +160,7 @@ export type LessonInput = {
   authorId?: InputMaybe<Scalars['String']['input']>;
   blocks?: InputMaybe<Array<InputMaybe<LessonBlockInput>>>;
   courseId?: InputMaybe<Scalars['String']['input']>;
+  createdById?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
   order?: InputMaybe<Scalars['Int']['input']>;
@@ -184,6 +187,7 @@ export type LessonUpdateInput = {
   status?: InputMaybe<LessonStatus>;
   tags?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  updatedById?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {
@@ -336,11 +340,15 @@ export type UserProfile = {
   __typename?: 'UserProfile';
   _empty?: Maybe<Scalars['String']['output']>;
   businessName?: Maybe<Scalars['String']['output']>;
+  courseBookmarkIds?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  courseBookmarks?: Maybe<Array<Maybe<Course>>>;
   createdAt?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isEmailVerified?: Maybe<Scalars['Boolean']['output']>;
   lastUpdated?: Maybe<Scalars['String']['output']>;
+  lessonBookmarkIds?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  lessonBookmarks?: Maybe<Array<Maybe<Lesson>>>;
   monthlyMetricsUpdates?: Maybe<Scalars['Boolean']['output']>;
   monthlyProductUpdates?: Maybe<Scalars['Boolean']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -352,9 +360,11 @@ export type UserProfile = {
 
 export type UserProfileInput = {
   businessName?: InputMaybe<Scalars['String']['input']>;
+  courseBookmarkIds?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   email?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   isEmailVerified?: InputMaybe<Scalars['Boolean']['input']>;
+  lessonBookmarkIds?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   monthlyMetricsUpdates?: InputMaybe<Scalars['Boolean']['input']>;
   monthlyProductUpdates?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -599,11 +609,15 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type UserProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserProfile'] = ResolversParentTypes['UserProfile']> = ResolversObject<{
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   businessName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  courseBookmarkIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  courseBookmarks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Course']>>>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isEmailVerified?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   lastUpdated?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lessonBookmarkIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  lessonBookmarks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Lesson']>>>, ParentType, ContextType>;
   monthlyMetricsUpdates?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   monthlyProductUpdates?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

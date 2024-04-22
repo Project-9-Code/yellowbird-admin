@@ -6,8 +6,9 @@ import { gql } from "@/graphql/gql";
 import { revalidatePath } from "next/cache";
 import { GRAPHQL_API_URL } from "@/utils/common";
 import { v4 as uuid } from "uuid";
-import { deleteObject, ref } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref } from "firebase/storage";
 import { storage, uploadFileToStorage } from "@/utils/firebase/client";
+import { getUser } from "@/requests/user";
 
 export const addCourse = async function addCourseAPI(course: FormData) {
   const id = uuid();
@@ -15,10 +16,13 @@ export const addCourse = async function addCourseAPI(course: FormData) {
   const name = course.get("name") as string ?? undefined;
   const coverPhoto = course.get("coverPhoto") as File ?? undefined;
   const description = course.get("description") as string ?? undefined;
+  const user = await getUser();
+  let url;
 
   if (coverPhoto) { 
     // Upload cover photo to S3
     await uploadFileToStorage(coverPhotoKey, coverPhoto);
+    url = await getDownloadURL(ref(storage, coverPhotoKey));
   }
 
   const { addCourse} = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
@@ -29,12 +33,10 @@ export const addCourse = async function addCourseAPI(course: FormData) {
         description
       }
     }
-  `), { course: { id, name, description, coverPhoto: (coverPhoto) ? coverPhotoKey : undefined } });
-
-  const data = addCourse as Course;
+  `), { course: { id, name, description, coverPhoto: url, createdById: user?.uid } });
 
   revalidatePath("/");
-  return data;
+  return addCourse as Course;
 };
 
 export const archiveCourses = async function archiveCoursesAPI(courseIds: string[]) {

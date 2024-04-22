@@ -43,6 +43,7 @@ export const typeDef = /* GraphQL */`
     description: String
     isSponsored: Boolean
     coverPhoto: String
+    createdById: String
   }
   
   input CourseUpdateInput {
@@ -52,6 +53,7 @@ export const typeDef = /* GraphQL */`
     isSponsored: Boolean
     coverPhoto: String
     authorId: String
+    updatedById: String
   }
 `;
 
@@ -72,27 +74,6 @@ export const resolvers: Resolvers = {
   Query: {
     courses: async () => {
       const courses = await db.getList(courseCollectionName) as [Course];
-      const images: {[key: string]: string} = {};
-
-      // Fetch cover photos from storage and return download URLs
-      await Promise.all(courses.map(async (course) => {
-        if (
-          !course.coverPhoto || course.coverPhoto.length === 0 ||
-          course.coverPhoto.startsWith("http")
-        ) {
-          return Promise.resolve(undefined);
-        }
-
-        return getDownloadURL(bucket.file(course.coverPhoto as string))
-          .then((url) => images[course.id] = url)
-          .catch((e) => console.error(e));
-      }));
-
-      // Replace cover photo paths with download URLs
-      courses.forEach((course) => {
-        if (images[course.id]) course.coverPhoto = images[course.id];
-      });
-
       return courses;
     },
     course: async (_, args) => {

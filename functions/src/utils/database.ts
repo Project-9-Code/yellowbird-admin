@@ -10,7 +10,7 @@ type DocumentData = admin.firestore.DocumentData;
 interface QueryCondition {
   field: string;
   operator: admin.firestore.WhereFilterOp;
-  value: string;
+  value: string | string[];
 }
 
 /**

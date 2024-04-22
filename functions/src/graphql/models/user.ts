@@ -1,5 +1,5 @@
 import * as db from "../../utils/database";
-import {Resolvers, UserProfile} from "../../../graphql_types";
+import {Course, Lesson, Resolvers, UserProfile} from "../../../graphql_types";
 import {auth} from "firebase-admin";
 
 export const userCollectionName = "users";
@@ -27,6 +27,10 @@ export const typeDef = /* GraphQL */`
     website: String
     monthlyProductUpdates: Boolean
     monthlyMetricsUpdates: Boolean
+    courseBookmarks: [Course]
+    courseBookmarkIds: [String]
+    lessonBookmarks: [Lesson]
+    lessonBookmarkIds: [String]
   }
 
   input UserProfileInput {
@@ -41,10 +45,28 @@ export const typeDef = /* GraphQL */`
     website: String
     monthlyProductUpdates: Boolean
     monthlyMetricsUpdates: Boolean
+    courseBookmarkIds: [String]
+    lessonBookmarkIds: [String]
   }
 `;
 
 export const resolvers: Resolvers = {
+  UserProfile: {
+    courseBookmarks: async (parent) => {
+      return await db.getList("courses", [{
+        field: "id",
+        operator: "in",
+        value: parent.courseBookmarkIds as string[],
+      }]) as [Course];
+    },
+    lessonBookmarks: async (parent) => {
+      return await db.getList("lessons", [{
+        field: "id",
+        operator: "in",
+        value: parent.lessonBookmarkIds as string[],
+      }]) as [Lesson];
+    },
+  },
   Query: {
     users: async () => {
       return await db.getList(userCollectionName) as [UserProfile];

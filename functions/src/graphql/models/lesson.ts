@@ -84,6 +84,7 @@ export const typeDef = /* GraphQL */`
     tags: String
     status: LessonStatus
     blocks: [LessonBlockInput]
+    createdById: String
   }
   
   input LessonUpdateInput {
@@ -97,6 +98,7 @@ export const typeDef = /* GraphQL */`
     tags: String
     status: LessonStatus
     blocks: [LessonBlockInput]
+    updatedById: String
   }
 
   input LessonBlockInput {
@@ -150,7 +152,7 @@ export const resolvers: Resolvers = {
         {
           ...args.lesson,
           status: args.lesson.status ?? "DRAFT",
-          createdById: args.lesson.authorId,
+          createdById: args.lesson.authorId ?? "",
           createdAt: Date.now(),
           lastUpdated: Date.now(),
         }
@@ -164,7 +166,6 @@ export const resolvers: Resolvers = {
           ...args.lesson,
           status: args.lesson.status ?? "DRAFT",
           lastUpdated: Date.now().toString(),
-          updatedById: args.lesson.authorId,
         },
       ) as unknown as Lesson;
     },
