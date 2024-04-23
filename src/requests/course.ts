@@ -49,7 +49,6 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
         }
         lessons {
           __typename
-          _empty
           id
           title
           order

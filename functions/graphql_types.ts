@@ -18,29 +18,16 @@ export type Scalars = {
 
 export type Bookmark = {
   __typename?: 'Bookmark';
-  _empty?: Maybe<Scalars['String']['output']>;
-  courseId?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['String']['output']>;
   createdBy?: Maybe<UserProfile>;
   createdById?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
   lastUpdated?: Maybe<Scalars['String']['output']>;
-  lessonId?: Maybe<Scalars['String']['output']>;
   updatedBy?: Maybe<UserProfile>;
   updatedById?: Maybe<Scalars['String']['output']>;
-  userId: Scalars['String']['output'];
-};
-
-export type BookmarkInput = {
-  courseId?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['ID']['input']>;
-  lessonId?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['String']['input'];
 };
 
 export type Course = {
   __typename?: 'Course';
-  _empty?: Maybe<Scalars['String']['output']>;
   activeLessons?: Maybe<Scalars['Int']['output']>;
   archivedLessons?: Maybe<Scalars['Int']['output']>;
   author?: Maybe<UserProfile>;
@@ -82,7 +69,6 @@ export type CourseUpdateInput = {
 
 export type Lesson = {
   __typename?: 'Lesson';
-  _empty?: Maybe<Scalars['String']['output']>;
   author?: Maybe<UserProfile>;
   authorId?: Maybe<Scalars['String']['output']>;
   blocks?: Maybe<Array<Maybe<LessonBlock>>>;
@@ -193,27 +179,22 @@ export type LessonUpdateInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']['output']>;
-  addBookmark?: Maybe<Bookmark>;
   addCourse?: Maybe<Course>;
   addLesson?: Maybe<Lesson>;
+  addUserLesson?: Maybe<UserLesson>;
   bulkAddCourses?: Maybe<Array<Maybe<Course>>>;
   bulkAddLessons?: Maybe<Array<Maybe<Lesson>>>;
   bulkDeleteCourses?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   bulkDeleteLessons?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   bulkUpdateCourses?: Maybe<Array<Maybe<Course>>>;
   bulkUpdateLessons?: Maybe<Array<Maybe<Lesson>>>;
-  deleteBookmark?: Maybe<Bookmark>;
   deleteCourse?: Maybe<Scalars['String']['output']>;
   deleteLesson?: Maybe<Scalars['String']['output']>;
-  updateBookmark?: Maybe<Bookmark>;
+  deleteUserLesson?: Maybe<Scalars['String']['output']>;
   updateCourse?: Maybe<Course>;
   updateLesson?: Maybe<Lesson>;
   updateProfile?: Maybe<UserProfile>;
-};
-
-
-export type MutationAddBookmarkArgs = {
-  bookmark: BookmarkInput;
+  updateUserLesson?: Maybe<UserLesson>;
 };
 
 
@@ -224,6 +205,11 @@ export type MutationAddCourseArgs = {
 
 export type MutationAddLessonArgs = {
   lesson: LessonInput;
+};
+
+
+export type MutationAddUserLessonArgs = {
+  userLesson: UserLessonInput;
 };
 
 
@@ -257,11 +243,6 @@ export type MutationBulkUpdateLessonsArgs = {
 };
 
 
-export type MutationDeleteBookmarkArgs = {
-  id: Scalars['String']['input'];
-};
-
-
 export type MutationDeleteCourseArgs = {
   courseId: Scalars['String']['input'];
 };
@@ -272,8 +253,8 @@ export type MutationDeleteLessonArgs = {
 };
 
 
-export type MutationUpdateBookmarkArgs = {
-  bookmark: BookmarkInput;
+export type MutationDeleteUserLessonArgs = {
+  userLessonId: Scalars['String']['input'];
 };
 
 
@@ -291,24 +272,22 @@ export type MutationUpdateProfileArgs = {
   user: UserProfileInput;
 };
 
+
+export type MutationUpdateUserLessonArgs = {
+  userLesson: UserLessonInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   _empty?: Maybe<Scalars['String']['output']>;
-  bookmark?: Maybe<Bookmark>;
-  bookmarks?: Maybe<Array<Maybe<Bookmark>>>;
   course?: Maybe<Course>;
   courses?: Maybe<Array<Maybe<Course>>>;
   lesson?: Maybe<Lesson>;
   lessons?: Maybe<Array<Maybe<Lesson>>>;
   user?: Maybe<UserProfile>;
-  userBookmarks?: Maybe<Array<Maybe<Bookmark>>>;
   userExist?: Maybe<Scalars['Boolean']['output']>;
+  userLessons?: Maybe<Array<Maybe<UserLesson>>>;
   users?: Maybe<Array<Maybe<UserProfile>>>;
-};
-
-
-export type QueryBookmarkArgs = {
-  id: Scalars['String']['input'];
 };
 
 
@@ -327,18 +306,42 @@ export type QueryUserArgs = {
 };
 
 
-export type QueryUserBookmarksArgs = {
-  userId: Scalars['String']['input'];
-};
-
-
 export type QueryUserExistArgs = {
   email: Scalars['String']['input'];
 };
 
+
+export type QueryUserLessonsArgs = {
+  userId: Scalars['String']['input'];
+};
+
+export type UserLesson = {
+  __typename?: 'UserLesson';
+  bookmarked?: Maybe<Scalars['Boolean']['output']>;
+  completed?: Maybe<Scalars['Boolean']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  dateCompleted?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
+  lastUpdated?: Maybe<Scalars['String']['output']>;
+  lesson?: Maybe<Lesson>;
+  lessonId: Scalars['String']['output'];
+  user?: Maybe<UserProfile>;
+  userId: Scalars['String']['output'];
+};
+
+export type UserLessonInput = {
+  bookmarked?: InputMaybe<Scalars['Boolean']['input']>;
+  completed?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['String']['input']>;
+  dateCompleted?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  lastUpdated?: InputMaybe<Scalars['String']['input']>;
+  lessonId: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type UserProfile = {
   __typename?: 'UserProfile';
-  _empty?: Maybe<Scalars['String']['output']>;
   businessName?: Maybe<Scalars['String']['output']>;
   courseBookmarkIds?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   courseBookmarks?: Maybe<Array<Maybe<Course>>>;
@@ -447,7 +450,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Bookmark: ResolverTypeWrapper<Bookmark>;
-  BookmarkInput: BookmarkInput;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Course: ResolverTypeWrapper<Course>;
   CourseInput: CourseInput;
@@ -464,6 +466,8 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  UserLesson: ResolverTypeWrapper<UserLesson>;
+  UserLessonInput: UserLessonInput;
   UserProfile: ResolverTypeWrapper<UserProfile>;
   UserProfileInput: UserProfileInput;
 }>;
@@ -471,7 +475,6 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Bookmark: Bookmark;
-  BookmarkInput: BookmarkInput;
   Boolean: Scalars['Boolean']['output'];
   Course: Course;
   CourseInput: CourseInput;
@@ -486,27 +489,23 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   Query: {};
   String: Scalars['String']['output'];
+  UserLesson: UserLesson;
+  UserLessonInput: UserLessonInput;
   UserProfile: UserProfile;
   UserProfileInput: UserProfileInput;
 }>;
 
 export type BookmarkResolvers<ContextType = any, ParentType extends ResolversParentTypes['Bookmark'] = ResolversParentTypes['Bookmark']> = ResolversObject<{
-  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  courseId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdBy?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
   createdById?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   lastUpdated?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  lessonId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedBy?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
   updatedById?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type CourseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Course'] = ResolversParentTypes['Course']> = ResolversObject<{
-  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   activeLessons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   archivedLessons?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   author?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
@@ -529,7 +528,6 @@ export type CourseResolvers<ContextType = any, ParentType extends ResolversParen
 }>;
 
 export type LessonResolvers<ContextType = any, ParentType extends ResolversParentTypes['Lesson'] = ResolversParentTypes['Lesson']> = ResolversObject<{
-  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   author?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   blocks?: Resolver<Maybe<Array<Maybe<ResolversTypes['LessonBlock']>>>, ParentType, ContextType>;
@@ -574,40 +572,51 @@ export type LessonBlockResolvers<ContextType = any, ParentType extends Resolvers
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  addBookmark?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType, RequireFields<MutationAddBookmarkArgs, 'bookmark'>>;
   addCourse?: Resolver<Maybe<ResolversTypes['Course']>, ParentType, ContextType, RequireFields<MutationAddCourseArgs, 'course'>>;
   addLesson?: Resolver<Maybe<ResolversTypes['Lesson']>, ParentType, ContextType, RequireFields<MutationAddLessonArgs, 'lesson'>>;
+  addUserLesson?: Resolver<Maybe<ResolversTypes['UserLesson']>, ParentType, ContextType, RequireFields<MutationAddUserLessonArgs, 'userLesson'>>;
   bulkAddCourses?: Resolver<Maybe<Array<Maybe<ResolversTypes['Course']>>>, ParentType, ContextType, RequireFields<MutationBulkAddCoursesArgs, 'courses'>>;
   bulkAddLessons?: Resolver<Maybe<Array<Maybe<ResolversTypes['Lesson']>>>, ParentType, ContextType, RequireFields<MutationBulkAddLessonsArgs, 'lessons'>>;
   bulkDeleteCourses?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, RequireFields<MutationBulkDeleteCoursesArgs, 'courseIds'>>;
   bulkDeleteLessons?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType, RequireFields<MutationBulkDeleteLessonsArgs, 'lessonIds'>>;
   bulkUpdateCourses?: Resolver<Maybe<Array<Maybe<ResolversTypes['Course']>>>, ParentType, ContextType, RequireFields<MutationBulkUpdateCoursesArgs, 'courses'>>;
   bulkUpdateLessons?: Resolver<Maybe<Array<Maybe<ResolversTypes['Lesson']>>>, ParentType, ContextType, RequireFields<MutationBulkUpdateLessonsArgs, 'lessons'>>;
-  deleteBookmark?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType, RequireFields<MutationDeleteBookmarkArgs, 'id'>>;
   deleteCourse?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteCourseArgs, 'courseId'>>;
   deleteLesson?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteLessonArgs, 'lessonId'>>;
-  updateBookmark?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType, RequireFields<MutationUpdateBookmarkArgs, 'bookmark'>>;
+  deleteUserLesson?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationDeleteUserLessonArgs, 'userLessonId'>>;
   updateCourse?: Resolver<Maybe<ResolversTypes['Course']>, ParentType, ContextType, RequireFields<MutationUpdateCourseArgs, 'course'>>;
   updateLesson?: Resolver<Maybe<ResolversTypes['Lesson']>, ParentType, ContextType, RequireFields<MutationUpdateLessonArgs, 'lesson'>>;
   updateProfile?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType, RequireFields<MutationUpdateProfileArgs, 'user'>>;
+  updateUserLesson?: Resolver<Maybe<ResolversTypes['UserLesson']>, ParentType, ContextType, RequireFields<MutationUpdateUserLessonArgs, 'userLesson'>>;
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  bookmark?: Resolver<Maybe<ResolversTypes['Bookmark']>, ParentType, ContextType, RequireFields<QueryBookmarkArgs, 'id'>>;
-  bookmarks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Bookmark']>>>, ParentType, ContextType>;
   course?: Resolver<Maybe<ResolversTypes['Course']>, ParentType, ContextType, RequireFields<QueryCourseArgs, 'courseId'>>;
   courses?: Resolver<Maybe<Array<Maybe<ResolversTypes['Course']>>>, ParentType, ContextType>;
   lesson?: Resolver<Maybe<ResolversTypes['Lesson']>, ParentType, ContextType, RequireFields<QueryLessonArgs, 'lessonId'>>;
   lessons?: Resolver<Maybe<Array<Maybe<ResolversTypes['Lesson']>>>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'userId'>>;
-  userBookmarks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Bookmark']>>>, ParentType, ContextType, RequireFields<QueryUserBookmarksArgs, 'userId'>>;
   userExist?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<QueryUserExistArgs, 'email'>>;
+  userLessons?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserLesson']>>>, ParentType, ContextType, RequireFields<QueryUserLessonsArgs, 'userId'>>;
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserProfile']>>>, ParentType, ContextType>;
 }>;
 
+export type UserLessonResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserLesson'] = ResolversParentTypes['UserLesson']> = ResolversObject<{
+  bookmarked?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  completed?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  dateCompleted?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  lastUpdated?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lesson?: Resolver<Maybe<ResolversTypes['Lesson']>, ParentType, ContextType>;
+  lessonId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['UserProfile']>, ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type UserProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserProfile'] = ResolversParentTypes['UserProfile']> = ResolversObject<{
-  _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   businessName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   courseBookmarkIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   courseBookmarks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Course']>>>, ParentType, ContextType>;
@@ -635,6 +644,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   LessonBlock?: LessonBlockResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  UserLesson?: UserLessonResolvers<ContextType>;
   UserProfile?: UserProfileResolvers<ContextType>;
 }>;
 

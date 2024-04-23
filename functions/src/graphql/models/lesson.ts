@@ -1,16 +1,19 @@
 import * as db from "../../utils/database";
 import {
   Resolvers, Lesson, Course, UserProfile,
+  UserLesson,
 } from "../../../graphql_types";
 import {courseCollectionName} from "./course";
 import {userCollectionName} from "./user";
 
 export const lessonCollectionName = "lessons";
+export const userLessonCollectionName = "userLessons";
 
 export const typeDef = /* GraphQL */`
   extend type Query {
     lessons: [Lesson]
     lesson(lessonId: String!): Lesson
+    userLessons(userId: String!): [UserLesson]
   }
 
   extend type Mutation {
@@ -20,6 +23,9 @@ export const typeDef = /* GraphQL */`
     bulkUpdateLessons(lessons: [LessonUpdateInput]!): [Lesson]
     deleteLesson(lessonId: String!): String
     bulkDeleteLessons(lessonIds: [String]!): [String]
+    addUserLesson(userLesson: UserLessonInput!): UserLesson
+    updateUserLesson(userLesson: UserLessonInput!): UserLesson
+    deleteUserLesson(userLessonId: String!): String
   }
 
   extend type Lesson {
@@ -122,9 +128,45 @@ export const typeDef = /* GraphQL */`
     order: Int
     points: Int
   }
+
+  extend type UserLesson {
+    id: ID
+    lesson: Lesson
+    lessonId: String!
+    user: UserProfile
+    userId: String!
+    completed: Boolean
+    bookmarked: Boolean
+    dateCompleted: String
+  }
+
+  input UserLessonInput {
+    id: ID
+    lessonId: String!
+    userId: String!
+    completed: Boolean
+    bookmarked: Boolean
+    dateCompleted: String
+    lastUpdated: String
+    createdAt: String
+  }
 `;
 
 export const resolvers: Resolvers = {
+  UserLesson: {
+    lesson: async (userLesson) => {
+      return await db.getItem(
+        lessonCollectionName,
+        userLesson.lessonId
+      ) as Lesson;
+    },
+    user: async (userLesson) => {
+      return await db.getItem(
+        userCollectionName,
+        userLesson.userId
+      ) as UserProfile;
+    },
+  },
   Lesson: {
     course: async (lesson) => {
       return (lesson.courseId) ? await db.getItem(
@@ -138,6 +180,12 @@ export const resolvers: Resolvers = {
     },
   },
   Query: {
+    userLessons: async (_, args) => {
+      return await db.getList(
+        userLessonCollectionName,
+        [{field: "userId", operator: "==", value: args.userId}]
+      ) as [UserLesson];
+    },
     lessons: async () => {
       return await db.getList(lessonCollectionName) as [Lesson];
     },
@@ -203,6 +251,29 @@ export const resolvers: Resolvers = {
       } as db.BatchItem)));
 
       return args.lessonIds;
+    },
+    addUserLesson: async (_, args) => {
+      return await db.createItem(
+        userLessonCollectionName,
+        {
+          ...args.userLesson,
+          createdAt: Date.now(),
+          lastUpdated: Date.now(),
+        }
+      ) as UserLesson;
+    },
+    updateUserLesson: async (_, args) => {
+      return db.setItem(
+        userLessonCollectionName,
+        args.userLesson.userId,
+        {
+          ...args.userLesson,
+          lastUpdated: Date.now().toString(),
+        },
+      ) as unknown as UserLesson;
+    },
+    deleteUserLesson: async (_, args) => {
+      return db.deleteItem(userLessonCollectionName, args.userLessonId);
     },
   },
 };

@@ -4,9 +4,6 @@ import {printSchema} from "graphql";
 import {typeDef as Course, resolvers as CourseResolvers} from "./models/course";
 import {typeDef as Lesson, resolvers as LessonResolvers} from "./models/lesson";
 import {typeDef as User, resolvers as UserResolvers} from "./models/user";
-import {
-  typeDef as Bookmark, resolvers as BookmarkResolvers,
-} from "./models/bookmarks";
 
 const Query = /* GraphQL */`
   type Query {
@@ -16,7 +13,6 @@ const Query = /* GraphQL */`
     _empty: String
   }
   type Course {
-    _empty: String
     lastUpdated: String
     createdAt: String
     createdBy: UserProfile
@@ -25,7 +21,6 @@ const Query = /* GraphQL */`
     updatedById: String
   }
   type Lesson {
-    _empty: String
     lastUpdated: String
     createdAt: String
     createdBy: UserProfile
@@ -34,7 +29,6 @@ const Query = /* GraphQL */`
     updatedById: String
   }
   type Bookmark {
-    _empty: String
     lastUpdated: String
     createdAt: String
     createdBy: UserProfile
@@ -43,19 +37,21 @@ const Query = /* GraphQL */`
     updatedById: String
   }
   type UserProfile {
-    _empty: String
+    lastUpdated: String
+    createdAt: String
+  }
+  type UserLesson {
     lastUpdated: String
     createdAt: String
   }
 `;
 
 export const schema = makeExecutableSchema({
-  typeDefs: [Query, User, Course, Lesson, Bookmark],
+  typeDefs: [Query, User, Course, Lesson],
   resolvers: merge(
     UserResolvers,
     CourseResolvers,
     LessonResolvers,
-    BookmarkResolvers,
   ),
 });
 
