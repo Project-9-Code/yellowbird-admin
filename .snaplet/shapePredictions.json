@@ -140,6 +140,14 @@
         "confidenceContext": 0
       },
       {
+        "input": "public profiles email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.97197026014328,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public profiles full_name",
         "column": "full_name",
         "shape": "PERSON_FULL_NAME",

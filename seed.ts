@@ -20,6 +20,11 @@ const main = async () => {
   await seed.users([{
     id: introUserId,
     email: "samantha@yellowbird.com",
+    raw_user_meta_data: {
+      full_name: "Samantha Taylor",
+      organization: "Yellowbird",
+      avatar_url: "https://s3-alpha-sig.figma.com/img/a122/e47f/b96ab35580fed3a624bcb755939a3c62?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EIUIc~dbpR4tIFVwqgN9ulbJ1-7lVD-MsAT0U-8GS7m6ciSZfSiniq77WOqMeehB~Sfawgo9~5czRW3bzCdPplpbenWE8hAQMx0s-i18JKUEbRihdJjJJBA1HOwNonPCSgcf1QSx0xVv460P8sxMICU7073lAkM8hcecYJeC8Zf02ZKeg064PkxJtg8dVjOHeXYi8CJVpYu4uHMAqtlz9iHqeFJU7OCNW7V6SWa62cr1f1cZS80bYH84JQ6~H79srNAcFCG7JX1kboZ7N5FlcAeC2QyybQ31t8TR3cErUdqK5D5vWJoNRObJoHhtRTIDZCxpz3bZSSYkfZasYvwcZA__"
+    }
   }]);
 
   // Create intro course with intro lesson

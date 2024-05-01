@@ -43,8 +43,8 @@ CREATE OR REPLACE FUNCTION "public"."handle_new_user"() RETURNS "trigger"
     LANGUAGE "plpgsql" SECURITY DEFINER
     AS $$
 begin
-  insert into public.profiles (id, full_name, avatar_url)
-  values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  insert into public.profiles (id, email, full_name, avatar_url, organization)
+  values (new.id, new.email, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url', new.raw_user_meta_data->>'organization');
   return new;
 end;
 $$;
@@ -127,7 +127,9 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "avatar_url" "text",
     "website" "text",
     "organization" "text",
-    CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3))
+    "email" "text",
+    CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3)),
+    UNIQUE("email")
 );
 
 ALTER TABLE "public"."profiles" OWNER TO "postgres";
