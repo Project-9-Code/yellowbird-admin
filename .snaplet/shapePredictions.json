@@ -1,73 +1,5 @@
 [
   {
-    "schemaName": "public",
-    "tableName": "bookmark",
-    "predictions": [
-      {
-        "input": "public bookmark completed",
-        "column": "completed",
-        "shape": "NOTIFICATIONS",
-        "confidence": 0.3595989048480988,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public bookmark completed_at",
-        "column": "completed_at",
-        "shape": "DATE",
-        "confidence": 0.9961305856704712,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public bookmark progress",
-        "column": "progress",
-        "shape": "PROGRESS",
-        "confidence": 0.8204792737960815,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public bookmark started_at",
-        "column": "started_at",
-        "shape": "DATE",
-        "confidence": 0.9953961968421936,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      }
-    ]
-  },
-  {
-    "schemaName": "public",
-    "tableName": "course",
-    "predictions": [
-      {
-        "input": "public course cover_photo_url",
-        "column": "cover_photo_url",
-        "shape": "IMAGE_URL",
-        "confidence": 0.9843478202819824,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public course description",
-        "column": "description",
-        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
-        "confidence": 0.9528364539146423,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public course title",
-        "column": "title",
-        "shape": "COMMERCE_PRODUCT_NAME",
-        "confidence": 0.5728651881217957,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      }
-    ]
-  },
-  {
     "schemaName": "auth",
     "tableName": "identities",
     "predictions": [
@@ -90,28 +22,6 @@
     ]
   },
   {
-    "schemaName": "public",
-    "tableName": "lesson",
-    "predictions": [
-      {
-        "input": "public lesson description",
-        "column": "description",
-        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
-        "confidence": 0.9462082982063293,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public lesson title",
-        "column": "title",
-        "shape": "COMMERCE_PRODUCT_NAME",
-        "confidence": 0.7317246198654175,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      }
-    ]
-  },
-  {
     "schemaName": "auth",
     "tableName": "sessions",
     "predictions": [
@@ -128,52 +38,6 @@
         "column": "user_agent",
         "shape": "USER_AGENT",
         "confidence": 0.9931508302688599,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      }
-    ]
-  },
-  {
-    "schemaName": "public",
-    "tableName": "user",
-    "predictions": [
-      {
-        "input": "public user avatar_url",
-        "column": "avatar_url",
-        "shape": "INTERNET_AVATAR",
-        "confidence": 0.9271218776702881,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public user email",
-        "column": "email",
-        "shape": "EMAIL",
-        "confidence": 0.99404376745224,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public user name",
-        "column": "name",
-        "shape": "USERNAME",
-        "confidence": 0.9706624150276184,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public user organization",
-        "column": "organization",
-        "shape": "COMPANY_NAME",
-        "confidence": 0.6246380805969238,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public user phone",
-        "column": "phone",
-        "shape": "PHONE_NUMBER",
-        "confidence": 0.9625558853149414,
         "context": "GENERAL",
         "confidenceContext": 0
       }

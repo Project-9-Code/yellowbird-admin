@@ -17,7 +17,7 @@ const main = async () => {
   await seed.$resetDatabase();
 
   // Create intro user
-  await seed.user([{
+  /*await seed.user([{
     id: introUserId,
     name: "Samantha Taylor",
     organization: "Yellowbird",
@@ -69,7 +69,7 @@ const main = async () => {
         points: 10
       }
     ]),
-  }]);
+  }]);*/
 
   process.exit();
 };
