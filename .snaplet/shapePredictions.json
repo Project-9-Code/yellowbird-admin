@@ -1,5 +1,35 @@
 [
   {
+    "schemaName": "public",
+    "tableName": "courses",
+    "predictions": [
+      {
+        "input": "public courses course_description",
+        "column": "course_description",
+        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
+        "confidence": 0.7293632626533508,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public courses cover_photo_url",
+        "column": "cover_photo_url",
+        "shape": "IMAGE_URL",
+        "confidence": 0.9825857877731323,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public courses title",
+        "column": "title",
+        "shape": "COMMERCE_PRODUCT_NAME",
+        "confidence": 0.6983917355537415,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
     "schemaName": "auth",
     "tableName": "identities",
     "predictions": [
@@ -16,6 +46,128 @@
         "column": "provider_id",
         "shape": "UUID",
         "confidence": 0.9941206574440002,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "lesson_blocks",
+    "predictions": [
+      {
+        "input": "public lesson_blocks answer_options",
+        "column": "answer_options",
+        "shape": "COMMERCE_PRODUCT",
+        "confidence": 0.5057640671730042,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public lesson_blocks answers",
+        "column": "answers",
+        "shape": "POST_BODY",
+        "confidence": 0.4189850687980652,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public lesson_blocks media_url",
+        "column": "media_url",
+        "shape": "MEDIA_LINK",
+        "confidence": 0.7,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public lesson_blocks question",
+        "column": "question",
+        "shape": "QUESTION",
+        "confidence": 0.9900746941566467,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public lesson_blocks screen_content",
+        "column": "screen_content",
+        "shape": "POST_BODY",
+        "confidence": 0.5557907819747925,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "lessons",
+    "predictions": [
+      {
+        "input": "public lessons lesson_description",
+        "column": "lesson_description",
+        "shape": "POST_TITLE",
+        "confidence": 0.4567529261112213,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public lessons tags",
+        "column": "tags",
+        "shape": "KEYWORDS",
+        "confidence": 0.6888342499732971,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public lessons title",
+        "column": "title",
+        "shape": "COMMERCE_PRODUCT_NAME",
+        "confidence": 0.9663906097412109,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "profiles",
+    "predictions": [
+      {
+        "input": "public profiles avatar_url",
+        "column": "avatar_url",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.8755327463150024,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profiles full_name",
+        "column": "full_name",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.9122052788734436,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profiles organization",
+        "column": "organization",
+        "shape": "PERSON_BIO",
+        "confidence": 0.6707421541213989,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profiles username",
+        "column": "username",
+        "shape": "USERNAME",
+        "confidence": 0.9713683724403381,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profiles website",
+        "column": "website",
+        "shape": "INTERNET_DOMAIN_NAME",
+        "confidence": 0.8494228720664978,
         "context": "GENERAL",
         "confidenceContext": 0
       }

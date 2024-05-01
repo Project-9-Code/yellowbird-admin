@@ -9,8 +9,8 @@
     "lint": "next lint",
     "codegen": "graphql-codegen --config codegen.ts",
     "codegen:watch": "graphql-codegen --config codegen.ts --watch",
-    "db:reset": "pnpm db:seed:sync && pnpm db:seed && supabase db reset",
-    "db:seed": "npx env-cmd -f ./.env.local npx tsx seed.ts > supabase/seed.sql",
+    "db:reset": "pnpm db:seed:generate && supabase db reset",
+    "db:seed:generate": "pnpm db:seed:sync && npx env-cmd -f ./.env.local npx tsx seed.ts > supabase/seed.sql",
     "db:seed:sync": "npx env-cmd -f ./.env.local npx @snaplet/seed sync"
   },
   "dependencies": {
