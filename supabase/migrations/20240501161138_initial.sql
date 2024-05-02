@@ -168,7 +168,7 @@ ALTER TABLE ONLY "public"."lesson_blocks"
     ADD CONSTRAINT "lesson_blocks_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "public"."profiles"("id") ON UPDATE CASCADE ON DELETE SET NULL;
 
 ALTER TABLE ONLY "public"."lesson_blocks"
-    ADD CONSTRAINT "lesson_blocks_lesson_fkey" FOREIGN KEY ("lesson") REFERENCES "public"."lessons"("id");
+    ADD CONSTRAINT "lesson_blocks_lesson_fkey" FOREIGN KEY ("lesson") REFERENCES "public"."lessons"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY "public"."lesson_blocks"
     ADD CONSTRAINT "lesson_blocks_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."profiles"("id") ON UPDATE CASCADE ON DELETE SET NULL;
@@ -193,6 +193,9 @@ CREATE POLICY "Public profiles are viewable by everyone." ON "public"."profiles"
 CREATE POLICY "Users can insert their own profile." ON "public"."profiles" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "id"));
 
 CREATE POLICY "Users can update own profile." ON "public"."profiles" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "id"));
+
+CREATE POLICY "Public courses are viewable by everyone." ON "public"."courses" FOR SELECT USING (true);
+CREATE POLICY "Public lessons are viewable by everyone." ON "public"."lessons" FOR SELECT USING (true);
 
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."courses" ENABLE ROW LEVEL SECURITY;

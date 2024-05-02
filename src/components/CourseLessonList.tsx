@@ -1,6 +1,5 @@
 "use client";
 
-import { Lesson } from "@/graphql/graphql";
 import { ColumnDef, Row, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import DragHandle from "@/svgs/drag-handle.svg";
 import Info from "@/svgs/info.svg";
@@ -11,14 +10,14 @@ import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-
 import { CSS } from '@dnd-kit/utilities';
 import { CSSProperties, useCallback, useMemo } from "react";
 import { DndContext, DragEndEvent, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
-import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import Link from "next/link";
 import { DropdownMenu } from "@radix-ui/themes";
 import { archiveLesson } from "@/actions/lesson";
+import { LessonWithRelationships } from "@/requests/lesson";
 
 interface CourseLessonListProps {
-  lessons?: Lesson[];
+  lessons?: LessonWithRelationships[];
   courseId?: string;
 }
 
@@ -26,16 +25,16 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   const isDev = process.env.NODE_ENV === "development";
   const { lessons=[] } = props;
   const { toggleAllIds, isAllSelected } = useSelectedIds("selectedLessons");
-  const columnHelper = createColumnHelper<Lesson>();
-  const lessonIds = lessons.map((lesson) => lesson.id);
+  const columnHelper = createColumnHelper<LessonWithRelationships>();
+  const lessonIds = lessons.map((lesson) => lesson?.id).filter((id) => id !== undefined && id !== null) as string[];
   const allLessonsSelected = isAllSelected(lessonIds);
   const toggleAllLessons = useCallback(() => toggleAllIds(lessonIds), [lessonIds, toggleAllIds]);
   const onArchive = useCallback((lessonId: string) => async () => {
     await archiveLesson(lessonId, props.courseId);
   }, [props.courseId]);
 
-  const columns: ColumnDef<Lesson, any>[] = useMemo(() => [
-    columnHelper.accessor("__typename", {
+  const columns: ColumnDef<LessonWithRelationships, any>[] = useMemo(() => [
+    columnHelper.accessor("created_at", {
       cell: RowHandleCell,
       header: () => null,
     }),
@@ -52,21 +51,23 @@ export default function CourseLessonList(props: CourseLessonListProps) {
         const author = info.getValue();
         return (
           <span className="">
-            {author?.name ?? "Uknown"}
+            {author?.full_name ?? "Uknown"}
           </span>
         );
       },
       header: () => <h6>Author</h6>
     }),
-    columnHelper.accessor("lastUpdated", {
+    columnHelper.accessor("updated_at", {
       cell: (info) => {
-        return <span>{info.getValue() ? 
-          `${new Date(parseInt(info.getValue())).toLocaleDateString()} ${new Date(parseInt(info.getValue())).toLocaleTimeString()}` : 
+        const date = info.getValue() ?? info.row.getValue("updated_at");
+        console.log("date", info.row.original);
+        return <span>{date ? 
+          `${new Date(parseInt(date)).toLocaleTimeString()}` : 
           "Unknown"}</span>;
       },
       header: () => <h6>Last Updated</h6>
     }),
-    columnHelper.accessor("courseId", {
+    columnHelper.accessor("course", {
       cell: (info) => (
         <div className="flex flex-row">
           <button>
@@ -148,7 +149,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   );
 }
 
-function RowHandleCell({ row }: { row: Row<Lesson> }) {
+function RowHandleCell({ row }: { row: Row<Partial<LessonWithRelationships>> }) {
   const { attributes, listeners } = useSortable({ id: row.id });
   return (
     <div className="flex w-full h-full">
@@ -159,9 +160,9 @@ function RowHandleCell({ row }: { row: Row<Lesson> }) {
   )
 }
 
-function TableRow({ row }: { row: Row<Lesson>}) {
+function TableRow({ row }: { row: Row<Partial<LessonWithRelationships>>}) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
-    id: row.original.id,
+    id: row.original.id ?? "",
   });
 
   const style: CSSProperties = {
@@ -183,7 +184,7 @@ function TableRow({ row }: { row: Row<Lesson>}) {
   );
 }
 
-function SelectCell({ row }: { row: Row<Lesson>}) {
+function SelectCell({ row }: { row: Row<Partial<LessonWithRelationships>>}) {
   const { selectedIds, toggleId } = useSelectedIds("selectedLessons");
   return (
     <input

@@ -1,14 +1,14 @@
 "use client";
 
-import { auth } from "@/utils/firebase/client";
+import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 export default function LogoutButton() {
   const router = useRouter();
   const signOut = useCallback(async () => {
-    await auth.signOut();
-    await fetch("/api/logout");
+    const superbase = createClient();
+    await superbase.auth.signOut();
     router.refresh();
   }, [router]);
 

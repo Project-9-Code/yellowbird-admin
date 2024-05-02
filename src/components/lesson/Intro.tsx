@@ -1,6 +1,5 @@
 "use client";
 
-import { Course, Lesson } from "@/graphql/graphql";
 import Card from "../Card";
 import InputField from "../InputField";
 import TextAreaField from "../TextAreaField";
@@ -8,12 +7,13 @@ import Title from "../Title";
 import useUrlParam from "../hooks/useUrlParam";
 import useFocusParam from "../hooks/useFocusParam";
 import clsx from "clsx";
+import { LessonWithRelationships } from "@/requests/lesson";
 
-export default function LessonIntro({ course, lesson }: { course?: Course, lesson?: Lesson }) {
+export default function LessonIntro({ lesson }: { lesson?: LessonWithRelationships }) {
   const { isFocused, enableFocus } = useFocusParam("intro", "intro");
   const { value: title, setValueOnChange: setTitle } = useUrlParam("title", lesson?.title || "");
-  const { value: description, setValueOnChange: setDescription } = useUrlParam("description", lesson?.description || "");
-  const { value: tags, setValueOnChange: setTags } = useUrlParam("tags", lesson?.tags || "");
+  const { value: description, setValueOnChange: setDescription } = useUrlParam("description", lesson?.lesson_description || "");
+  const { value: tags, setValueOnChange: setTags } = useUrlParam("tags", lesson?.tags?.join("") || "");
 
   return (
     <Card focused={isFocused} onClick={enableFocus} className="mb-4 mt-6" disableDrag>
@@ -35,8 +35,8 @@ export default function LessonIntro({ course, lesson }: { course?: Course, lesso
             id="courseName"
             label="Parent Course*"
             containerClass="w-[300px]"
-            value={course?.name as string}
-            disabled={course?.name !== undefined}
+            value={lesson?.course?.title as string}
+            disabled={lesson?.course?.title !== undefined}
           />
         </div>
 

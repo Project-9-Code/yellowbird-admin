@@ -1,11 +1,10 @@
 "use client";
-
-import { LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
 import useUrlParam from "./useUrlParam";
 import { useCallback, useEffect } from "react";
 import { capitalizeFirstLetter, insertAtIndex } from "@/utils/common";
 import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
+import { LessonBlock } from "@/requests/lesson";
 
 export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: LessonBlock[]) {
   const { value, setValues } = useUrlParam("lessonBlocks", defaultBlocks?.map((block) => JSON.stringify(block)).join("$") ?? "");
@@ -15,7 +14,7 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
       try {
         return JSON.parse(block) as LessonBlock
       } catch (e) {
-        return { id: uuid(),  type: "TEXT", screenContent: "Could not load block content" } as LessonBlock;
+        return { id: uuid(),  type: "TEXT", screenContent: "Could not load block content" } as unknown as LessonBlock;
       }
     });
 
@@ -30,7 +29,7 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
       const position = (index !== undefined) ? index : lessonBlocks.length;
       const focusBlock = (focus) ? block.id : undefined;
       toast.info(
-        `${capitalizeFirstLetter(LessonBlockTypes.Text.toLowerCase())} only card added.`,
+        `Text only card added.`,
         { toastId: block.id, icon: () => null }
       );
       return setLessonBlocks(insertAtIndex(lessonBlocks, position, block), focusBlock);
@@ -48,7 +47,7 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
     if (lessonBlocks.find((b) => b.id === block.id)) {
       setLessonBlocks(lessonBlocks.filter((b) => b.id !== block.id));
       toast.error(
-        `${capitalizeFirstLetter(block.type.toLowerCase())} was removed.`,
+        `${capitalizeFirstLetter(block.block_type.toLowerCase())} was removed.`,
         { toastId: block.id, icon: () => null }
       );
     }

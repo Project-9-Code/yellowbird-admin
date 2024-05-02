@@ -2,14 +2,13 @@
 
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { ChangeEvent, useCallback, useState } from "react";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
   const onEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value), []);
   const onSubmit = useCallback(async () => {
-    await sendPasswordResetEmail(getAuth(), email);
+    // Send reset password email
   }, [email]);
 
   return (

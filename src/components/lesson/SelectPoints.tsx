@@ -1,10 +1,10 @@
 "use client";
 
-import { LessonBlock } from "@/graphql/graphql";
 import { useCallback } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 import dynamic from "next/dynamic";
 import { generateLessonBlockName } from "@/utils/common";
+import { LessonBlock } from "@/requests/lesson";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 

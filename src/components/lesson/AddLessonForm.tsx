@@ -1,28 +1,25 @@
 import LessonHeader from "@/components/LessonHeader";
-import { Course, Lesson } from "@/graphql/graphql";
 import LessonIntro from "./Intro";
 import LessonRecap from "./Recap";
 import ViewLessonBlocks from "./ViewLessonBlocks";
 import LessonFormContainer from "./LessonFormContainer";
-import { fetchCourseMeta } from "@/requests/course";
-import { fetchLesson } from "@/requests/lesson";
+import { LessonWithRelationships, fetchLesson } from "@/requests/lesson";
 import { getUser } from "@/requests/user";
 
 export default async function AddLessonForm(
-  { courseId, lessonId, lesson, edit }:
-  { courseId?: string, lessonId?: string, lesson?: Lesson, edit?: boolean }
+  { lessonId, lesson, edit }:
+  { lessonId?: string, lesson?: LessonWithRelationships, edit?: boolean }
 ) {
 
   const lessonData = (lessonId) ? await fetchLesson(lessonId) : lesson;
-  const courseData = (courseId) ? await fetchCourseMeta(courseId) : lessonData?.course as Course;
   const user = await getUser();
 
   return (
-    <LessonFormContainer user={user} course={courseData} lesson={lessonData} edit={edit}>
-      <LessonHeader course={courseData} lesson={lessonData} />
+    <LessonFormContainer user={user} lesson={lessonData} edit={edit}>
+      <LessonHeader lesson={lessonData} />
 
       <div className="flex grow flex-col items-center overflow-auto">
-        <LessonIntro course={courseData} lesson={lessonData} />
+        <LessonIntro lesson={lessonData} />
         <ViewLessonBlocks lesson={lessonData} />
         <LessonRecap lesson={lessonData} />
       </div>

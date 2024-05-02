@@ -1,58 +1,14 @@
 "use server";
 
-import { Course } from "@/graphql/graphql";
-import { request } from "graphql-request";
-import { gql } from "@/graphql/gql";
 import { revalidatePath } from "next/cache";
-import { GRAPHQL_API_URL } from "@/utils/common";
-import { v4 as uuid } from "uuid";
-import { deleteObject, getDownloadURL, ref } from "firebase/storage";
-import { storage, uploadFileToStorage } from "@/utils/firebase/client";
-import { getUser } from "@/requests/user";
 
 export const addCourse = async function addCourseAPI(course: FormData) {
-  const id = uuid();
-  const coverPhotoKey = `public/course/${id}/cover`;
-  const name = course.get("name") as string ?? undefined;
-  const coverPhoto = course.get("coverPhoto") as File ?? undefined;
-  const description = course.get("description") as string ?? undefined;
-  const user = await getUser();
-  let url;
+  
 
-  if (coverPhoto) { 
-    // Upload cover photo to S3
-    await uploadFileToStorage(coverPhotoKey, coverPhoto);
-    url = await getDownloadURL(ref(storage, coverPhotoKey));
-  }
-
-  const { addCourse} = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    mutation AddCourse($course: CourseInput!) {
-      addCourse(course: $course) {
-        id
-        name
-        description
-      }
-    }
-  `), { course: { id, name, description, coverPhoto: url, createdById: user?.uid } });
-
-  revalidatePath("/");
-  return addCourse as Course;
+  revalidatePath("/course");
 };
 
 export const archiveCourses = async function archiveCoursesAPI(courseIds: string[]) {
-  await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    mutation Mutation($courseIds: [String]!) {
-      bulkDeleteCourses(courseIds: $courseIds)
-    }
-  `), { courseIds });
 
-  courseIds.forEach((courseId) => {
-    try {
-      deleteObject(ref(storage, `public/course/${courseId}/cover`));
-    } catch (error) {
-      console.error("Error deleting cover photo", error);
-    }
-  });
-
-  revalidatePath("/");
+  revalidatePath("/course");
 }

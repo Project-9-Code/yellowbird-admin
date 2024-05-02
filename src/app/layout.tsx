@@ -6,7 +6,6 @@ import type { Metadata } from "next";
 import clsx from "clsx";
 import { whitney } from "@/utils/fonts";
 import AppProviders from "@/components/Providers";
-import { ToastContainer } from 'react-toastify';
 import AppToastContainer from "@/components/ToastContainer";
 
 export const metadata: Metadata = {

@@ -3,9 +3,9 @@ import Button from "../Button";
 import SelectLessonType from "./SelectLessonType";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 import { useCallback } from "react";
-import { LessonBlock } from "@/graphql/graphql";
 import SmallX from "@/svgs/small-x.svg";
 import SelectPoints from "./SelectPoints";
+import { LessonBlock } from "@/requests/lesson";
 
 export default function BlockHeader(
   { block, showPoints }:

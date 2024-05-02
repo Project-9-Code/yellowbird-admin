@@ -1,11 +1,9 @@
-import { LessonBlock } from "@/graphql/graphql";
 import Card from "../Card";
 import useFocusParam from "../hooks/useFocusParam";
 import { PropsWithChildren, ReactElement } from "react";
 import EmptyLessonBlock from "./EmptyLessonBlock";
 import clsx from "clsx";
-
-export { type LessonBlock };
+import { LessonBlock } from "@/requests/lesson";
 
 export default function BlockContainer(
   { block, children, focusedContent, unfocusedContent, disableDrag, isEmpty }:

@@ -1,9 +1,9 @@
 "use client";
 
-import { User } from "@/utils/firebase/common";
+import { Tables } from "@/database.types";
 import Link from "next/link";
 
-export default function ProfileButton(props: { user: User | null }) {
+export default function ProfileButton(props: { user: Tables<"profiles"> | null }) {
   const { user } = props;
   return (
     <Link
@@ -12,7 +12,7 @@ export default function ProfileButton(props: { user: User | null }) {
       type="button"
     >
       <span className="text-[14px] text-displayText">
-        {getName(user?.displayName)}
+        {getName(user?.full_name)}
       </span>
     </Link>
   );

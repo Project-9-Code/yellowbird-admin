@@ -2306,6 +2306,20 @@
           "maxLength": null
         },
         {
+          "id": "public.lessons.recap",
+          "name": "recap",
+          "columnName": "recap",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "name": "courses",
           "type": "courses",
           "isRequired": false,
@@ -3304,6 +3318,20 @@
           "id": "public.profiles.email",
           "name": "email",
           "columnName": "email",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.profiles.phone",
+          "name": "phone",
+          "columnName": "phone",
           "type": "text",
           "isRequired": false,
           "kind": "scalar",

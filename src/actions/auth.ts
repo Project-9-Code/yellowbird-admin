@@ -18,11 +18,11 @@ export async function signIn(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect('/error');
-  }
+    return error.message;
+  };
 
-  revalidatePath('/');
-  redirect('/');
+  revalidatePath('/course');
+  redirect('/course');
 }
 
 export async function signup(formData: FormData) {
@@ -33,21 +33,16 @@ export async function signup(formData: FormData) {
   const args = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
+    options: {
+      data: {
+        full_name: formData.get('name') as string,
+      },
+    }
   };
 
-  const { error, data } = await supabase.auth.signUp(args);
+  const { error } = await supabase.auth.signUp(args);
 
   if (error) throw error;
-
-  const uid = data.user?.user_metadata?.sub;
-  const full_name = formData.get('name') as string;
-
-  if (uid && full_name) {
-    await supabase.from('profiles').update([{
-      id: uid,
-      full_name,
-    }]);
-  }
 
   redirect('/');
 }

@@ -5,7 +5,6 @@ import BackSvg from "@/svgs/arrow-left.svg";
 import EmptyBox from "@/images/EmptyBox.png";
 import Plus from "@/svgs/plus.svg";
 import CourseLessonList from "@/components/CourseLessonList";
-import { Lesson } from "@/graphql/graphql";
 
 interface CourseDetailProps {
   params: { id: string };
@@ -45,16 +44,15 @@ export default async function CourseDetail(props: CourseDetailProps) {
 
 async function CourseContent(props: { courseId: string; }) {
   const course = await fetchCourse(props.courseId);
-  const lessons = (course.lessons ?? []) as Lesson[];
-  const hasLessons = lessons.length > 0;
+  const hasLessons = course?.lessons && course?.lessons.length > 0;
 
   return (
     <div className="flex flex-row grow">
       <div className="flex flex-col bg-white w-[296px] rounded-[8px] mr-[55px] border-borderBg p-5 items-center">
         <div className="flex flex-col items-center bg-brand rounded-[6px] w-[180px] h-[180px] mb-4">
-          {course.coverPhoto && (
+          {course?.cover_photo_url && (
             <Image
-              src={course.coverPhoto}
+              src={course.cover_photo_url}
               alt="Course Cover"
               width={180}
               height={180}
@@ -67,7 +65,7 @@ async function CourseContent(props: { courseId: string; }) {
         <div className="flex flex-col mb-9 w-full">
           <div className="flex flex-row items-center justify-between">
             <span className="text-[24px] font-bold text-headlineText">
-              {course.name}
+              {course?.title}
             </span>
 
             <Button
@@ -79,22 +77,22 @@ async function CourseContent(props: { courseId: string; }) {
           </div>
 
           <span className="font-[14px] mb-7">
-            {course.description}
+            {course?.course_description}
           </span>
 
           <div className="flex flex-row items-center justify-between mb-4">
             <span>Active Lessons</span>
-            <span>{course.activeLessons ?? 0}</span>
+            <span>{course?.active_lessons ?? 0}</span>
           </div>
 
           <div className="flex flex-row items-center justify-between mb-4">
             <span>Draft Lessons</span>
-            <span>{course.draftLessons ?? 0}</span>
+            <span>{course?.draft_lessons ?? 0}</span>
           </div>
 
           <div className="flex flex-row items-center justify-between mb-4">
             <span>Archived Lessons</span>
-            <span>{course.archivedLessons ?? 0}</span>
+            <span>{course?.archived_lessons ?? 0}</span>
           </div>
 
           <Button
@@ -111,7 +109,7 @@ async function CourseContent(props: { courseId: string; }) {
       </div>
 
       <div className="flex flex-col grow items-center mt-4">
-        {(hasLessons) ? <CourseLessonList lessons={lessons} /> : (
+        {(hasLessons) ? <CourseLessonList lessons={course.lessons as any} /> : (
           <div className="flex flex-col items-center">
             <Image src={EmptyBox} alt="No lessons" />
             <span className="text-textBody font-bold text-[30px]">

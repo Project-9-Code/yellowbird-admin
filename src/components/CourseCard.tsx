@@ -1,14 +1,14 @@
 "use client";
 
-import { Course } from "@/graphql/graphql";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import useSelectedCourseIds from "./hooks/useSelectedIds";
+import { Tables } from "@/database.types";
 
 interface CourseCardProps {
-  course: Course;
+  course: Tables<"courses">;
   selected?: boolean;
   showCheckbox?: boolean;
   onSelect?: (selected: boolean) => void;
@@ -47,9 +47,9 @@ export default function CourseCard(props: CourseCardProps) {
           onChange={onCourseSelect}
           disabled={!showCheckbox}
         />
-        {props.course.coverPhoto && props.course.coverPhoto.length > 0 && (
+        {props.course.cover_photo_url && props.course.cover_photo_url.length > 0 && (
           <Image
-            src={props.course.coverPhoto}
+            src={props.course.cover_photo_url}
             alt="Picture of course"
             width={234}
             height={168}
@@ -61,11 +61,11 @@ export default function CourseCard(props: CourseCardProps) {
       
       <Link href={href} className="flex flex-col">
         <span className="font-bold text-headlineText mb-1">
-          {props.course.name}
+          {props.course.title}
         </span>
 
         <span className="text-sm line-clamp-3">
-          {props.course.description}
+          {props.course.course_description}
         </span>
       </Link>
     </div>

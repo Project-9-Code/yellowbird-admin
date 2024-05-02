@@ -31,7 +31,7 @@ export default async function Profile() {
           <InputField
             id="displayName"
             label="Full Name"
-            defaultValue={user?.displayName ?? ""}
+            defaultValue={user?.full_name ?? ""}
             containerClass="w-[284px]"
             placeholder="Enter your full name here"
           />
@@ -52,7 +52,7 @@ export default async function Profile() {
           <InputField
             id="phoneNumber"
             label="Phone (Optional)"
-            defaultValue={user?.phoneNumber ?? ""}
+            defaultValue={user?.phone ?? ""}
             containerClass="w-[284px]"
             type="tel"
             placeholder="xxx-xxx-xxxx"
@@ -95,6 +95,7 @@ async function InfoFooter() {
         containerClass="w-[284px]"
         id="organization"
         placeholder="What’s the name of your business?"
+        defaultValue={user?.organization ?? ""}
       />
 
       <InputField
@@ -102,6 +103,7 @@ async function InfoFooter() {
         label="Website"
         containerClass="w-[284px]"
         placeholder="http://"
+        defaultValue={user?.website ?? ""}
       />
     </div>
   );

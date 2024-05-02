@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 import Info from "@/svgs/grey-info.svg";
-import { Course, Lesson, LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
 import { useSearchParams } from "next/navigation";
 import { Popover } from "@radix-ui/themes";
+import { LessonBlock, LessonWithRelationships } from "@/requests/lesson";
 
-export default function LessonInfoOverlay({ lesson }: { lesson?: Lesson }) {
+export default function LessonInfoOverlay({ lesson }: { lesson?: LessonWithRelationships }) {
   return (
     <Popover.Root>
       <Popover.Trigger>
@@ -21,14 +21,14 @@ export default function LessonInfoOverlay({ lesson }: { lesson?: Lesson }) {
   );
 }
 
-function LessonInfo({ lesson, course }: { lesson?: Lesson, course?: Course }) {
+function LessonInfo({ lesson }: { lesson?: LessonWithRelationships }) {
   const searchParams = useSearchParams();
   const title = (lesson?.title && lesson?.title?.length > 0) ? lesson?.title : searchParams.get("title") ?? "Untitled";
-  const courseName = lesson?.course?.name ??  course?.name ?? "[No Course]";
-  const authorName = lesson?.author?.name ?? "Unknown";
+  const courseName = lesson?.course?.title ??  "[No Course]";
+  const authorName = lesson?.author?.full_name ?? "Unknown";
   const numOfScreens = (lesson?.blocks?.length ?? 0) + 2;
   const numOfQuestions = lesson?.blocks?.reduce((acc, block) => acc + (isQuestionBlock(block as LessonBlock) ? 1 : 0), 0) ?? 0;
-  const lastUpdated = lesson?.lastUpdated ?? searchParams.get("lastUpdated") ?? Date.now();
+  const lastUpdated = lesson?.updated_at ?? searchParams.get("lastUpdated") ?? Date.now();
 
   return (
     <div className="w-[300px] flex flex-col px-5">
@@ -59,8 +59,8 @@ function InfoItem({ label, value }: { label?: string; value?: ReactNode }) {
 
 function isQuestionBlock(block: LessonBlock): boolean {
   return (
-    block.type === LessonBlockTypes.Choice ||
-    block.type === LessonBlockTypes.MultiChoice ||
-    block.type === LessonBlockTypes.MultiSelect
+    block.block_type === "CHOICE" ||
+    block.block_type === "MULTI_CHOICE" ||
+    block.block_type === "MULTI_SELECT"
   );
 }

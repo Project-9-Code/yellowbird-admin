@@ -1,6 +1,4 @@
 "use client";
-
-import { LessonBlock } from "@/graphql/graphql";
 import MarkdownEditor from "../MarkdownEditor";
 import Image from "next/image";
 import useLessonBlocks from "../hooks/useLessonBlocks";
@@ -10,6 +8,7 @@ import BlockHeader from "./BlockHeader";
 import ImageInput from "../ImageInput";
 import { useCallback, useRef, useState } from "react";
 import { generateLessonBlockName } from "@/utils/common";
+import { LessonBlock } from "@/requests/lesson";
 
 type KeyLessonBlock = LessonBlock & { [key: string]: any };
 

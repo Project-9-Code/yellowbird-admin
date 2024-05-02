@@ -117,6 +117,10 @@
     "examples": []
   },
   {
+    "shape": "PHONE_NUMBER",
+    "examples": []
+  },
+  {
     "shape": "USER_AGENT",
     "examples": []
   },
@@ -293,6 +297,24 @@
   {
     "shape": "POST_BODY",
     "examples": []
+  },
+  {
+    "shape": "DATABASE_COLUMN",
+    "examples": [
+      "id",
+      "createdAt",
+      "token",
+      "name",
+      "category",
+      "phone",
+      "group",
+      "comment",
+      "status",
+      "email",
+      "password",
+      "avatar",
+      "updatedAt"
+    ]
   },
   {
     "shape": "COMMERCE_PRODUCT_NAME",

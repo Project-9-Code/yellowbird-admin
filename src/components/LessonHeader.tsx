@@ -4,21 +4,21 @@ import Image from "next/image";
 import Button from "./Button";
 import CloseX from "@/svgs/closeX.svg";
 import Folder from "@/svgs/folder.svg";
-import { Course, Lesson, LessonBlock } from "@/graphql/graphql";
 import { useRouter, useSearchParams } from "next/navigation";
 import LessonInfoOverlay from "./LessonInfoOverlay";
 import useLessonBlocks from "./hooks/useLessonBlocks";
 import { useFormStatus } from "react-dom";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
+import { LessonBlock, LessonWithRelationships } from "@/requests/lesson";
 
-export default function LessonHeader({ course, lesson }: { course?: Course, lesson?: Lesson }) {
+export default function LessonHeader({ lesson }: { lesson?: LessonWithRelationships }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const courseId = course?.id ?? lesson?.course?.id ?? searchParams.get("courseId");
+  const courseId = lesson?.course?.id ?? searchParams.get("courseId");
   const lessonTitle = lesson?.title ?? searchParams.get("title") ?? "";
-  const lastUpdated = lesson?.lastUpdated ?? searchParams.get("lastUpdated");
-  const { lessonBlocks } = useLessonBlocks(undefined, lesson?.blocks as LessonBlock[]);
+  const lastUpdated = lesson?.updated_at ?? searchParams.get("lastUpdated");
+  const { lessonBlocks } = useLessonBlocks(undefined, lesson?.blocks);
   const { pending, data } = useFormStatus();
   const onClose = useCallback(() => router.push(`/course/${courseId}`), [courseId, router]);
 
@@ -40,7 +40,7 @@ export default function LessonHeader({ course, lesson }: { course?: Course, less
 
       <div className="flex flex-row items-center shadow-[-1px_0_0_0_rgba(0,0,0,0.05)] h-full">
         <Image src={Folder} alt="Folder" className="ml-[15px] mr-[10px]" />
-        <span className="mr-[10px]">{course?.name}</span>
+        <span className="mr-[10px]">{lesson?.course?.title}</span>
         <span className="mr-[10px]">/</span>
         <span className="text-disabledText">
           {lessonTitle.length > 0 ? lessonTitle : "Untitled"}
@@ -53,10 +53,9 @@ export default function LessonHeader({ course, lesson }: { course?: Course, less
         <LessonInfoOverlay
           lesson={{
             title: lessonTitle,
-            course: { name: course?.name },
-            blocks: lessonBlocks,
-            lastUpdated: lastUpdated,
-          } as Lesson}
+            blocks: lessonBlocks as unknown as LessonBlock[],
+            updated_at: lastUpdated ?? "",
+          } as unknown as LessonWithRelationships}
         />
         <Button
           label="Submit Lesson"

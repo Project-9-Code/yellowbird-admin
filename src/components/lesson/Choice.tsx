@@ -1,9 +1,9 @@
-import { LessonBlock } from "@/graphql/graphql";
 import BlockContainer from "./BlockContainer";
 import BlockHeader from "./BlockHeader";
 import QuestionInput from "./QuestionInput";
 import LessonBlockOptions from "./Option";
 import { generateLessonBlockName } from "@/utils/common";
+import { LessonBlock } from "@/requests/lesson";
 
 const options = ["True", "False"];
 

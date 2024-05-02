@@ -1,38 +1,16 @@
 "use server";
 
-import { gql } from "@/graphql";
 import { Lesson, LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
-import { GRAPHQL_API_URL } from "@/utils/common";
-import { uploadFileToStorage } from "@/utils/firebase/client";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import request from "graphql-request";
 import { revalidatePath } from "next/cache";
 import { v4 as uuid } from "uuid";
 
 export async function addLesson(authorId: string, lessonData: FormData) {
   const lesson = await cleanLessonData(lessonData, authorId);
 
-  const { addLesson } = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    mutation AddLesson($lesson: LessonInput!) {
-      addLesson(lesson: $lesson) {
-        id
-      }
-    }
-  `), { lesson });
-
   revalidatePath(`/course/${lesson.courseId}`);
-  return addLesson;
 };
 
 export async function archiveLesson(lessonId: string, courseId?: string) {
-  await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    mutation ArchiveLesson($lessonId: String!) {
-      deleteLesson(lessonId: $lessonId)
-    }
-  `), { lessonId });
-
-
-  if (courseId) revalidatePath(`/course/${courseId}`);
   revalidatePath(`/lesson/${lessonId}`);
 }
 
@@ -40,39 +18,17 @@ export async function updateLesson(authorId: string, lessonData: FormData) {
   console.log("updating", authorId, lessonData)
   const lesson = await cleanLessonData(lessonData, authorId);
 
-  const { updateLesson } = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    mutation UpdateLesson($lesson: LessonUpdateInput!) {
-      updateLesson(lesson: $lesson) {
-        id
-      }
-    }
-  `), { lesson });
-
   revalidatePath(`/lesson/${lesson.id}`);
   return updateLesson;
 };
 
 export async function deleteLesson(lessonId: string) {
-  await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    mutation DeleteLesson($lessonId: String!) {
-      deleteLesson(lessonId: $lessonId)
-    }
-  `), { lessonId });
 
   revalidatePath(`/lesson/${lessonId}`);
 }
 
 function shouldParse(key: string) {
   return key === "answers" || key === "answer_options" || key === "points";
-}
-
-async function uploadToS3(block: LessonBlock) {
-  return await uploadFileToStorage(`public/lesson/${block.id}/media`, block.mediaUrl as unknown as File)
-    .then(async () => await getDownloadURL(ref(getStorage(), `public/lesson/${block.id}/media`)))
-    .then((url) => {
-      block.mediaUrl = url;
-      return block;
-    });
 }
 
 async function cleanLessonData(lesson: FormData, authorId?: string) {
@@ -103,6 +59,7 @@ async function cleanLessonData(lesson: FormData, authorId?: string) {
     }
   });
 
+  /*
   const imageUploads = await Promise.all((lessonData.blocks?.filter(
     (block) => (block?.type === LessonBlockTypes.Media || block?.type === LessonBlockTypes.Video) && (block?.mediaUrl as any) instanceof File
   ) as LessonBlock[]).map(uploadToS3));
@@ -112,8 +69,7 @@ async function cleanLessonData(lesson: FormData, authorId?: string) {
     if (uploadedBlock) return uploadedBlock;
     return block;
   });
-
-  console.log(lessonData)
+  */
 
   return lessonData;
 }

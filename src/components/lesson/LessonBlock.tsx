@@ -1,23 +1,23 @@
-import { LessonBlock, LessonBlockTypes } from "@/graphql/graphql";
 import TextBlock from "./TextBlock";
 import MediaBlock from "./Media";
 import MultiChoice from "./MultiSelect";
 import Choice from "./Choice";
+import { LessonBlock } from "@/requests/lesson";
 
 export default function LessonBlockView(props: { block: LessonBlock }) {
   const { block } = props;
-  switch (block.type) {
-    case LessonBlockTypes.Text:
+  switch (block.block_type) {
+    case "TEXT":
       return <TextBlock block={props.block} />;
-    case LessonBlockTypes.Media:
+    case "MEDIA":
       return <MediaBlock block={block} />;
-    case LessonBlockTypes.Video:
+    case "VIDEO":
       return <MediaBlock block={block} inputLabel="Video Link" urlKey="videoUrl" textKey="videoText" />;
-    case LessonBlockTypes.Choice:
+    case "CHOICE":
       return <Choice block={props.block} />;
-    case LessonBlockTypes.MultiChoice:
+    case "MULTI_CHOICE":
       return <MultiChoice block={props.block} />;
-    case LessonBlockTypes.MultiSelect:
+    case "MULTI_SELECT":
       return <MultiChoice block={props.block} multiple />;
 
     default:

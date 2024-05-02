@@ -1,8 +1,8 @@
-import { LessonBlock } from "@/graphql/graphql";
 import { useCallback, useMemo } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
 import ChoiceOption from "./ChoiceOption";
 import { generateLessonBlockName } from "@/utils/common";
+import { LessonBlock } from "@/requests/lesson";
 
 
 export default function LessonBlockOptions(

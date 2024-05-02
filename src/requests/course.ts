@@ -1,79 +1,40 @@
-import { gql } from "@/graphql";
-import { Course } from "@/graphql/graphql";
-import { GRAPHQL_API_URL } from "@/utils/common";
-import request from "graphql-request";
+import { Tables } from "@/database.types";
+import { createClient } from "@/utils/supabase/server";
 import { cache } from "react";
+import { Lesson, LessonWithRelationships } from "./lesson";
 
+export interface Course extends Omit<Tables<"courses">, "created_by" | "lessons"> {
+  created_by: {
+    full_name: string;
+  };
+  lessons: LessonWithRelationships[];
+};
 export const fetchCourses = cache(async function fetchCoursesAPI() {
-  const data = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    query GetCourses {
-      courses {
-        id
-        name
-        description
-        coverPhoto
-      }
-    }
-  `));
+  const supabase = createClient();
+  const { data, error } = await supabase.from("courses").select("*, created_by(full_name)").order("title", { ascending: true });
 
-  if (data.courses) {
-    // Sort courses by name
-    return ([...data.courses] as Course[]).sort(function sortCourses(a, b) {
-      const nA = (a?.name ?? "").toLowerCase();
-      const nB = (b?.name ?? "").toLowerCase();
-    
-      if (nA < nB) return -1;
-      else if (nA > nB) return 1;
-      return 0;
-    });
-  }
+  if (error) throw error;
 
-  return [] as Course[];
+  return data;
 });
 
 export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
-  const data = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    query GetCourse($courseId: String!) {
-      course(courseId: $courseId) {
-        id
-        name
-        description
-        coverPhoto
-        archivedLessons
-        activeLessons
-        draftLessons
-        lastUpdated
-        createdBy {
-          name
-          id
-        }
-        lessons {
-          __typename
-          id
-          title
-          order
-          author {
-            name
-            id
-          }
-          lastUpdated
-        }
-      }
-    }
-  `), { courseId: id });
+  const supabase = createClient();
+  const { data, error } = await supabase.from("courses")
+    .select("*, lessons(id, title, lesson_order, created_at, updated_at, author(id, full_name)), created_by(id, full_name)")
+    .eq("id", id)
+    .maybeSingle();
+  
+  if (error) throw error;
 
-  return data.course as Course;
+  return data;
 });
 
 export const fetchCourseMeta = cache(async function fetchCourseMetaAPI(id: string) {
-  const data = await request(GRAPHQL_API_URL, gql(/* GraphQL */`
-    query GetCourseMeta($courseId: String!) {
-      course(courseId: $courseId) {
-        id
-        name
-      }
-    }
-  `), { courseId: id });
+  const supabase = createClient();
+  const { data, error } = await supabase.from("courses").select("id, name").eq("id", id);
+  
+  if (error) throw error;
 
-  return data.course as Course;
+  return data;
 });

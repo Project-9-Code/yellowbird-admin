@@ -4,13 +4,23 @@ import { signIn } from "@/actions/auth";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import StyledLink from "@/components/Link";
+import { FormEvent } from "react";
 import { useFormStatus } from "react-dom";
+import { toast } from "react-toastify";
 
 export default function SignInForm() {
   const { pending } = useFormStatus();
 
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const result = await signIn(new FormData(e.currentTarget));
+    if (result) {
+      toast.error(result, { position: "bottom-center" });
+    }
+  }
+
   return (
-    <form action={signIn}>
+    <form onSubmit={onSubmit}>
       <InputField
         id="email"
         label="Email Address"

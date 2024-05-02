@@ -1,7 +1,7 @@
-import { LessonBlock } from "@/graphql/graphql";
 import InputField from "../InputField";
 import { ChangeEvent, useCallback } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
+import { LessonBlock } from "@/requests/lesson";
 
 export default function QuestionInput({ block, name }: { block: LessonBlock, name?: string }) {
   const { updateBlock } = useLessonBlocks(block);

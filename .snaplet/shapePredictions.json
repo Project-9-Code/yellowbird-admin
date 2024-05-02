@@ -110,6 +110,14 @@
         "confidenceContext": 0
       },
       {
+        "input": "public lessons recap",
+        "column": "recap",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.3282661736011505,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public lessons tags",
         "column": "tags",
         "shape": "KEYWORDS",
@@ -160,6 +168,14 @@
         "column": "organization",
         "shape": "PERSON_BIO",
         "confidence": 0.6707421541213989,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profiles phone",
+        "column": "phone",
+        "shape": "PHONE_NUMBER",
+        "confidence": 0.9602307081222534,
         "context": "GENERAL",
         "confidenceContext": 0
       },
