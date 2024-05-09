@@ -35,7 +35,7 @@ const main = async () => {
     cover_photo_url: "https://loremflickr.com/640/480/creditcard",
     created_by: introUserId,
     status: "published",
-    active_lessons: 0,
+    active_lessons: 1,
     archived_lessons: 0,
     draft_lessons: 0,
     lessons: [{
