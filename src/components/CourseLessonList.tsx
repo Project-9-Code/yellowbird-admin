@@ -30,7 +30,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   const allLessonsSelected = isAllSelected(lessonIds);
   const toggleAllLessons = useCallback(() => toggleAllIds(lessonIds), [lessonIds, toggleAllIds]);
   const onArchive = useCallback((lessonId: string) => async () => {
-    await archiveLesson(lessonId, props.courseId);
+    await archiveLesson(lessonId);
   }, [props.courseId]);
 
   const columns: ColumnDef<Lesson, any>[] = useMemo(() => [

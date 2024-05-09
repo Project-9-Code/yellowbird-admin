@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import useSelectedCourseIds from "./hooks/useSelectedIds";
-import { Tables } from "@/database.types";
+import { Course } from "@/requests/course";
 
 interface CourseCardProps {
-  course: Tables<"courses">;
+  course: Course;
   selected?: boolean;
   showCheckbox?: boolean;
   onSelect?: (selected: boolean) => void;

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
-import BlockContainer, { LessonBlock } from "./BlockContainer";
+import BlockContainer from "./BlockContainer";
 import BlockHeader from "./BlockHeader";
 import AddIcon from "@/svgs/plus.svg";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import Button from "../Button";
 import QuestionInput from "./QuestionInput";
 import LessonBlockOptions from "./Option";
 import { generateLessonBlockName } from "@/utils/common";
+import { LessonBlock } from "@/requests/lesson";
 
 export default function MultiChoice({ block, multiple }: { block: LessonBlock, multiple?: boolean }) {
   const options = useMemo(() => block.answer_options as string[] ?? [], [block.answer_options]);

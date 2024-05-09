@@ -5,9 +5,9 @@ import ArchiveIcon from "@/svgs/archive.svg";
 import Image from "next/image";
 import clsx from "clsx";
 import { useCallback, useTransition } from "react";
-import { Course } from "@/graphql/graphql";
 import useSelectedCourseIds from "./hooks/useSelectedIds";
 import { archiveCourses } from "@/actions/course";
+import { Course } from "@/requests/course";
 
 interface ListToolbarProps {
   onCopy?: () => void;

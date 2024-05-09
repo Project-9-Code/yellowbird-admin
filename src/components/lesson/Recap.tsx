@@ -9,9 +9,9 @@ import MarkdownEditor from "../MarkdownEditor";
 import MDEditor from '@uiw/react-md-editor';
 import EmptyLessonBlock from "./EmptyLessonBlock";
 import clsx from "clsx";
-import { LessonWithRelationships } from "@/requests/lesson";
+import { Lesson } from "@/requests/lesson";
 
-export default function LessonRecap(props: { lesson?: LessonWithRelationships }) {
+export default function LessonRecap(props: { lesson?: Lesson }) {
   const { isFocused, enableFocus } = useFocusParam("recap");
   const { value, setValue } = useUrlParam("recapDescription", props.lesson?.recap ?? "");
   const onChange = useCallback((value?: string) => setValue(value), [setValue]);

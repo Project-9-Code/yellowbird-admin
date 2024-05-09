@@ -3,9 +3,9 @@ import Image from "next/image";
 import Info from "@/svgs/grey-info.svg";
 import { useSearchParams } from "next/navigation";
 import { Popover } from "@radix-ui/themes";
-import { LessonBlock, LessonWithRelationships } from "@/requests/lesson";
+import { LessonBlock, Lesson } from "@/requests/lesson";
 
-export default function LessonInfoOverlay({ lesson }: { lesson?: LessonWithRelationships }) {
+export default function LessonInfoOverlay({ lesson }: { lesson?: Lesson }) {
   return (
     <Popover.Root>
       <Popover.Trigger>
@@ -21,13 +21,13 @@ export default function LessonInfoOverlay({ lesson }: { lesson?: LessonWithRelat
   );
 }
 
-function LessonInfo({ lesson }: { lesson?: LessonWithRelationships }) {
+function LessonInfo({ lesson }: { lesson?: Lesson }) {
   const searchParams = useSearchParams();
   const title = (lesson?.title && lesson?.title?.length > 0) ? lesson?.title : searchParams.get("title") ?? "Untitled";
   const courseName = lesson?.course?.title ??  "[No Course]";
   const authorName = lesson?.author?.full_name ?? "Unknown";
-  const numOfScreens = (lesson?.blocks?.length ?? 0) + 2;
-  const numOfQuestions = lesson?.blocks?.reduce((acc, block) => acc + (isQuestionBlock(block as LessonBlock) ? 1 : 0), 0) ?? 0;
+  const numOfScreens = (lesson?.lesson_blocks?.length ?? 0) + 2;
+  const numOfQuestions = lesson?.lesson_blocks?.reduce((acc, block) => acc + (isQuestionBlock(block as LessonBlock) ? 1 : 0), 0) ?? 0;
   const lastUpdated = lesson?.updated_at ?? searchParams.get("lastUpdated") ?? Date.now();
 
   return (
