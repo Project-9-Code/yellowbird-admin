@@ -21,7 +21,7 @@ export const fetchCourses = cache(async function fetchCoursesAPI() {
 export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
   const supabase = createClient();
   const { data, error } = await supabase.from("courses")
-    .select("*, lessons(id, title, lesson_order, created_at, updated_at, author(id, full_name)), created_by(id, full_name)")
+    .select("*, lessons(id, title, lesson_order, updated_at, author(id, full_name))")
     .eq("id", id)
     .single();
   

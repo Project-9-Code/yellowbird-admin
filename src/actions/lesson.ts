@@ -36,7 +36,6 @@ export async function archiveLesson(lessonId: string) {
 }
 
 export async function updateLesson(lessonData: FormData) {
-  console.log("Update lesson data", lessonData )
   const { lesson, lessonBlocks } = await cleanLessonData(lessonData);
   const supabase = createClient();
 
@@ -95,17 +94,14 @@ async function cleanLessonData(lesson: FormData, author?: string) {
   });
 
   
+  const supabase = createClient();
   const imageUploads = await Promise.all((lessonBlocks.filter(
     (block) => (block?.block_type === "MEDIA" || block?.block_type === "VIDEO") && (block?.media_url as any) instanceof File
   ) as LessonBlock[]).map(async (block) => {
-    const supabase = createClient();
     const imageKey = `lessonMedia/${block.id}`;
     await supabase.storage.from("web").upload(imageKey, block.media_url as unknown as File);
     return { ...block, media_url: supabase.storage.from("web").getPublicUrl(imageKey).data?.publicUrl };
   }));
-
-  console.log("Image uploads", imageUploads);
-  console.log("Lesson blocks", lessonBlocks);
 
   lessonBlocks = lessonBlocks?.map((block) => {
     const uploadedBlock = imageUploads.find((uploadedBlock) => uploadedBlock.id === block?.id);
