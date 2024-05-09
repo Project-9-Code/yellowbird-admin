@@ -32,6 +32,7 @@ const main = async () => {
     id: introCourseId,
     title: "Intro to Yellowbird",
     course_description: "You will learn the difference between a credit card and a debit card. They look the same, but have different purposes.",
+    cover_photo_url: "https://loremflickr.com/640/480/creditcard",
     created_by: introUserId,
     status: "published",
     active_lessons: 0,
@@ -52,7 +53,7 @@ const main = async () => {
       }, {
         block_type: "MEDIA",
         block_order: 1,
-        media_url: "https://firebasestorage.googleapis.com/v0/b/yellowbird-4e1b8.appspot.com/o/public%2Flesson%2Fblock2%2Fmedia?alt=media&token=3e3bccd2-80cc-44f6-aadf-f05bbada65d5",
+        media_url: "https://loremflickr.com/640/480/creditcard",
         screen_content: "Some screens will have new words. User can tap the highlighted word to reveal a card overlay."
       }, {
         block_type: "CHOICE",

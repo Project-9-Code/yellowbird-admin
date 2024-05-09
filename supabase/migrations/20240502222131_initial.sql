@@ -16,6 +16,8 @@ CREATE EXTENSION IF NOT EXISTS "pgsodium" WITH SCHEMA "pgsodium";
 
 COMMENT ON SCHEMA "public" IS 'standard public schema';
 
+CREATE EXTENSION IF NOT EXISTS "moddatetime" WITH SCHEMA "extensions";
+
 CREATE EXTENSION IF NOT EXISTS "pg_graphql" WITH SCHEMA "graphql";
 
 CREATE EXTENSION IF NOT EXISTS "pg_stat_statements" WITH SCHEMA "extensions";
@@ -50,6 +52,21 @@ end;
 $$;
 
 ALTER FUNCTION "public"."handle_new_user"() OWNER TO "postgres";
+
+CREATE OR REPLACE FUNCTION "public"."update_course_lesson_data"() RETURNS "trigger"
+    LANGUAGE "plpgsql"
+    AS $$
+begin
+  update public.courses 
+  set draft_lessons = (select count(status) from public.lessons where course = new.course and status = 'draft'),
+      active_lessons = (select count(status) from public.lessons where course = new.course and status = 'published'),
+      archived_lessons = (select count(status) from public.lessons where course = new.course and status = 'archived')
+  where id = new.course;
+  return new;
+end;
+$$;
+
+ALTER FUNCTION "public"."update_course_lesson_data"() OWNER TO "postgres";
 
 SET default_tablespace = '';
 
@@ -133,8 +150,7 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "organization" "text",
     "email" "text",
     "phone" "text",
-    CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3)),
-    UNIQUE("email")
+    CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3))
 );
 
 ALTER TABLE "public"."profiles" OWNER TO "postgres";
@@ -152,10 +168,25 @@ ALTER TABLE ONLY "public"."lessons"
     ADD CONSTRAINT "lessons_pkey" PRIMARY KEY ("id");
 
 ALTER TABLE ONLY "public"."profiles"
+    ADD CONSTRAINT "profiles_email_key" UNIQUE ("email");
+
+ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_pkey" PRIMARY KEY ("id");
 
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_username_key" UNIQUE ("username");
+
+CREATE OR REPLACE TRIGGER "handle_bookmarks_updated_at" BEFORE UPDATE ON "public"."bookmarks" FOR EACH ROW EXECUTE FUNCTION "extensions"."moddatetime"('updated_at');
+
+CREATE OR REPLACE TRIGGER "handle_courses_updated_at" BEFORE UPDATE ON "public"."courses" FOR EACH ROW EXECUTE FUNCTION "extensions"."moddatetime"('updated_at');
+
+CREATE OR REPLACE TRIGGER "handle_lesson_blocks_updated_at" BEFORE UPDATE ON "public"."lesson_blocks" FOR EACH ROW EXECUTE FUNCTION "extensions"."moddatetime"('updated_at');
+
+CREATE OR REPLACE TRIGGER "handle_lessons_updated_at" BEFORE UPDATE ON "public"."lessons" FOR EACH ROW EXECUTE FUNCTION "extensions"."moddatetime"('updated_at');
+
+CREATE OR REPLACE TRIGGER "handle_profiles_updated_at" BEFORE UPDATE ON "public"."profiles" FOR EACH ROW EXECUTE FUNCTION "extensions"."moddatetime"('updated_at');
+
+CREATE OR REPLACE TRIGGER "update_course_lesson_data_trigger" AFTER INSERT ON "public"."lessons" FOR EACH ROW EXECUTE FUNCTION "public"."update_course_lesson_data"();
 
 ALTER TABLE ONLY "public"."bookmarks"
     ADD CONSTRAINT "bookmarks_lesson_id_fkey" FOREIGN KEY ("lesson_id") REFERENCES "public"."lessons"("id") ON UPDATE CASCADE ON DELETE CASCADE;
@@ -193,20 +224,45 @@ ALTER TABLE ONLY "public"."lessons"
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
 
+CREATE POLICY "Public bookmarks can be created by authenticated users." ON "public"."bookmarks" FOR INSERT TO "authenticated" WITH CHECK (true);
+
+CREATE POLICY "Public bookmarks can be updated by authenticated users." ON "public"."bookmarks" FOR UPDATE TO "authenticated" USING (true);
+
+CREATE POLICY "Public courses are viewable by everyone." ON "public"."courses" FOR SELECT USING (true);
+
+CREATE POLICY "Public courses can be created by authenticated users." ON "public"."courses" FOR INSERT TO "authenticated" WITH CHECK (true);
+
+CREATE POLICY "Public courses can be updated by authenticated users." ON "public"."courses" FOR UPDATE TO "authenticated" USING (true);
+
+CREATE POLICY "Public lesson blocks can be created by authenticated users." ON "public"."lesson_blocks" FOR INSERT TO "authenticated" WITH CHECK (true);
+
+CREATE POLICY "Public lesson blocks can be deleted by authenticated users." ON "public"."lesson_blocks" FOR DELETE TO "authenticated" USING (true);
+
+CREATE POLICY "Public lesson blocks can be updated by authenticated users." ON "public"."lesson_blocks" FOR UPDATE TO "authenticated" USING (true);
+
+CREATE POLICY "Public lesson_blocks are viewable by everyone." ON "public"."lesson_blocks" FOR SELECT USING (true);
+
+CREATE POLICY "Public lessons are viewable by everyone." ON "public"."lessons" FOR SELECT USING (true);
+
+CREATE POLICY "Public lessons can be created by authenticated users." ON "public"."lessons" FOR INSERT TO "authenticated" WITH CHECK (true);
+
+CREATE POLICY "Public lessons can be updated by authenticated users." ON "public"."lessons" FOR UPDATE TO "authenticated" USING (true);
+
 CREATE POLICY "Public profiles are viewable by everyone." ON "public"."profiles" FOR SELECT USING (true);
 
 CREATE POLICY "Users can insert their own profile." ON "public"."profiles" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "id"));
 
 CREATE POLICY "Users can update own profile." ON "public"."profiles" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "id"));
 
-CREATE POLICY "Public courses are viewable by everyone." ON "public"."courses" FOR SELECT USING (true);
-CREATE POLICY "Public lessons are viewable by everyone." ON "public"."lessons" FOR SELECT USING (true);
+ALTER TABLE "public"."bookmarks" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."courses" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."lesson_blocks" ENABLE ROW LEVEL SECURITY;
+
+ALTER TABLE "public"."lessons" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "public"."courses" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "public"."lessons" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "public"."lesson_blocks" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "public"."bookmarks" ENABLE ROW LEVEL SECURITY;
 
 ALTER PUBLICATION "supabase_realtime" OWNER TO "postgres";
 
@@ -218,6 +274,10 @@ GRANT USAGE ON SCHEMA "public" TO "service_role";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "anon";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "service_role";
+
+GRANT ALL ON FUNCTION "public"."update_course_lesson_data"() TO "anon";
+GRANT ALL ON FUNCTION "public"."update_course_lesson_data"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."update_course_lesson_data"() TO "service_role";
 
 GRANT ALL ON TABLE "public"."bookmarks" TO "anon";
 GRANT ALL ON TABLE "public"."bookmarks" TO "authenticated";
@@ -265,4 +325,6 @@ CREATE OR REPLACE TRIGGER "on_auth_user_created" AFTER INSERT ON "auth"."users" 
 CREATE POLICY "Anyone can upload an avatar." ON "storage"."objects" FOR INSERT WITH CHECK (("bucket_id" = 'avatars'::"text"));
 
 CREATE POLICY "Avatar images are publicly accessible." ON "storage"."objects" FOR SELECT USING (("bucket_id" = 'avatars'::"text"));
+
+CREATE POLICY "Only authenticated users can upload web assets" ON "storage"."objects" FOR INSERT TO "authenticated" WITH CHECK (("bucket_id" = 'web'::"text"));
 
