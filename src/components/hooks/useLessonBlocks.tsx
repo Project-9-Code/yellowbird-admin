@@ -1,4 +1,5 @@
 "use client";
+
 import useUrlParam from "./useUrlParam";
 import { useCallback, useEffect } from "react";
 import { capitalizeFirstLetter, insertAtIndex } from "@/utils/common";
@@ -14,7 +15,7 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
       try {
         return JSON.parse(block) as LessonBlock
       } catch (e) {
-        return { id: uuid(),  type: "TEXT", screenContent: "Could not load block content" } as unknown as LessonBlock;
+        return { id: uuid(),  type: "TEXT", screen_content: "Could not load block content" } as unknown as LessonBlock;
       }
     });
 

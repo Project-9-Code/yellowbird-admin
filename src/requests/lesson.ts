@@ -4,10 +4,11 @@ import { cache } from "react";
 import { Course } from "./course";
 import { User } from "./user";
 
-export type Lesson = Tables<"lessons">;
 export type LessonBlock = Tables<"lesson_blocks">;
 export type LessonBlockTypes = Enums<"block_types">;
-export interface LessonWithRelationships extends Omit<Lesson, "course" | "author" | "created_by"> {
+export type LessonInput = Partial<Tables<"lessons">>;
+export type LessonBlockInput = Partial<Tables<"lesson_blocks">>;
+export interface Lesson extends Omit<Tables<"lessons">, "course" | "author" | "created_by"> {
   course: Course;
   lesson_blocks: LessonBlock[];
   author: User;
@@ -19,9 +20,8 @@ export const fetchLesson = cache(async function fetchLessonApi(id: string) {
   const query = await superbase.from("lessons")
     .select("*, author(id, full_name, organization), course(id, title), lesson_blocks(id, lesson, block_type, media_url, screen_content, question, points, answers, answer_options)")
     .eq("id", id)
-    .single<LessonWithRelationships>();
+    .single<Lesson>();
 
   if (query.error) throw query.error;
-  console.log(query.data);
   return query.data;
 });

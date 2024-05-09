@@ -9,7 +9,7 @@ import { LessonBlock } from "@/requests/lesson";
 
 export default function TextBlock({ block }: { block: LessonBlock }) {
   const { updateBlock } = useLessonBlocks(block);
-  const updateBlockText = updateBlock("screenContent");
+  const updateBlockText = updateBlock("screen_content");
 
   return (
     <BlockContainer
@@ -22,7 +22,7 @@ export default function TextBlock({ block }: { block: LessonBlock }) {
           <div className="flex flex-col">
             <h6 className="text-[12px] text-bodyText mb-1">Screen Content</h6>
             <MarkdownEditor
-              name={generateLessonBlockName(block, "screenContent")}
+              name={generateLessonBlockName(block, "screen_content")}
               value={block.screen_content as string}
               onChange={updateBlockText}
             />

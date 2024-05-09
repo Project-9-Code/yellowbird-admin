@@ -92,6 +92,7 @@ export type Database = {
           created_by: string | null
           draft_lessons: number
           id: string
+          status: string
           title: string | null
           updated_at: string
           updated_by: string | null
@@ -105,6 +106,7 @@ export type Database = {
           created_by?: string | null
           draft_lessons?: number
           id?: string
+          status?: string
           title?: string | null
           updated_at?: string
           updated_by?: string | null
@@ -118,6 +120,7 @@ export type Database = {
           created_by?: string | null
           draft_lessons?: number
           id?: string
+          status?: string
           title?: string | null
           updated_at?: string
           updated_by?: string | null
@@ -153,6 +156,7 @@ export type Database = {
           points: number | null
           question: string | null
           screen_content: string | null
+          status: string
           updated_at: string
           updated_by: string | null
         }
@@ -169,6 +173,7 @@ export type Database = {
           points?: number | null
           question?: string | null
           screen_content?: string | null
+          status?: string
           updated_at?: string
           updated_by?: string | null
         }
@@ -185,6 +190,7 @@ export type Database = {
           points?: number | null
           question?: string | null
           screen_content?: string | null
+          status?: string
           updated_at?: string
           updated_by?: string | null
         }
@@ -222,6 +228,7 @@ export type Database = {
           lesson_description: string | null
           lesson_order: number
           recap: string | null
+          status: string
           tags: string[] | null
           title: string | null
           updated_at: string
@@ -236,6 +243,7 @@ export type Database = {
           lesson_description?: string | null
           lesson_order?: number
           recap?: string | null
+          status?: string
           tags?: string[] | null
           title?: string | null
           updated_at?: string
@@ -250,6 +258,7 @@ export type Database = {
           lesson_description?: string | null
           lesson_order?: number
           recap?: string | null
+          status?: string
           tags?: string[] | null
           title?: string | null
           updated_at?: string

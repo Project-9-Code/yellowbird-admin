@@ -3,12 +3,12 @@ import LessonIntro from "./Intro";
 import LessonRecap from "./Recap";
 import ViewLessonBlocks from "./ViewLessonBlocks";
 import LessonFormContainer from "./LessonFormContainer";
-import { LessonWithRelationships, fetchLesson } from "@/requests/lesson";
+import { Lesson, fetchLesson } from "@/requests/lesson";
 import { getUser } from "@/requests/user";
 
 export default async function AddLessonForm(
   { lessonId, lesson, edit }:
-  { lessonId?: string, lesson?: LessonWithRelationships, edit?: boolean }
+  { lessonId?: string, lesson?: Lesson, edit?: boolean }
 ) {
 
   const lessonData = (lessonId) ? await fetchLesson(lessonId) : lesson;

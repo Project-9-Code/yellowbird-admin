@@ -13,7 +13,7 @@ import { LessonBlock } from "@/requests/lesson";
 type KeyLessonBlock = LessonBlock & { [key: string]: any };
 
 export default function MediaBlock(
-  { block, urlKey="mediaUrl", textKey="screenContent" }:
+  { block, urlKey="media_url", textKey="screen_content" }:
   { block: KeyLessonBlock; inputLabel?: string; key?: string, urlKey?: string, textKey?: string }
 ) {
   const { updateBlock } = useLessonBlocks(block);
@@ -29,13 +29,13 @@ export default function MediaBlock(
   return (
     <BlockContainer
       block={block}
-      isEmpty={(!block.screenContent || block.screenContent === "") && !block[urlKey]}
+      isEmpty={(!block.screen_content || block.screen_content === "") && !block[urlKey]}
       focusedContent={(
         <>
           <BlockHeader block={block} />
           <div className="flex flex-col">
             <ImageInput
-              id={generateLessonBlockName(block, "mediaUrl")}
+              id={generateLessonBlockName(block, "media_url")}
               ref={imageInputRef}
               src={imageStr}
               width={500}
@@ -49,7 +49,7 @@ export default function MediaBlock(
             <MarkdownEditor
               value={block[textKey] as string}
               onChange={onTextChange}
-              name={generateLessonBlockName(block, "screenContent")}
+              name={generateLessonBlockName(block, "screen_content")}
             />
           </div>
         </>

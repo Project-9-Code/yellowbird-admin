@@ -22,7 +22,7 @@ export default async function AddCourse() {
 
           <div className="flex flex-col grow">
             <InputField
-              id="name"
+              id="title"
               label="Course Name"
               placeholder="What should we call this course?"
               containerClass="mb-5"

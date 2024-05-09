@@ -33,6 +33,7 @@ const main = async () => {
     title: "Intro to Yellowbird",
     course_description: "You will learn the difference between a credit card and a debit card. They look the same, but have different purposes.",
     created_by: introUserId,
+    status: "published",
     active_lessons: 0,
     archived_lessons: 0,
     draft_lessons: 0,
@@ -42,6 +43,7 @@ const main = async () => {
       lesson_description: "You will learn the difference between a credit card and a debit card. They look the same, but have different purposes.",
       author: introUserId,
       lesson_order: 0,
+      status: "published",
       tags: ["intro"],
       lesson_blocks: [{
         block_order: 0,

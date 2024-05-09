@@ -7,12 +7,12 @@ import Title from "../Title";
 import useUrlParam from "../hooks/useUrlParam";
 import useFocusParam from "../hooks/useFocusParam";
 import clsx from "clsx";
-import { LessonWithRelationships } from "@/requests/lesson";
+import { Lesson } from "@/requests/lesson";
 
-export default function LessonIntro({ lesson }: { lesson?: LessonWithRelationships }) {
+export default function LessonIntro({ lesson }: { lesson?: Lesson }) {
   const { isFocused, enableFocus } = useFocusParam("intro", "intro");
   const { value: title, setValueOnChange: setTitle } = useUrlParam("title", lesson?.title || "");
-  const { value: description, setValueOnChange: setDescription } = useUrlParam("description", lesson?.lesson_description || "");
+  const { value: description, setValueOnChange: setDescription } = useUrlParam("lesson_description", lesson?.lesson_description || "");
   const { value: tags, setValueOnChange: setTags } = useUrlParam("tags", lesson?.tags?.join("") || "");
 
   return (
@@ -41,7 +41,7 @@ export default function LessonIntro({ lesson }: { lesson?: LessonWithRelationshi
         </div>
 
         <TextAreaField
-          id="description"
+          id="lesson_description"
           label="Description*"
           containerClass="w-full mb-[16px]"
           defaultValue={description}

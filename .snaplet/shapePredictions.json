@@ -112,7 +112,7 @@
       {
         "input": "public lessons recap",
         "column": "recap",
-        "shape": "DATABASE_COLUMN",
+        "shape": "POST_TITLE",
         "confidence": 0.3282661736011505,
         "context": "GENERAL",
         "confidenceContext": 0

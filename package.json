@@ -8,11 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "db:reset": "pnpm db:seed:generate && npx supabase db reset",
-    "db:seed:generate": "pnpm db:seed:sync && npx env-cmd -f ./.env.local npx tsx seed.ts > supabase/seed.sql",
+    "db:seed:generate": "rm -f ./supabase/seed.sql && pnpm db:seed:sync && npx env-cmd -f ./.env.local npx tsx seed.ts > supabase/seed.sql",
     "db:seed:sync": "npx env-cmd -f ./.env.local npx @snaplet/seed sync",
     "backend:start": "npx supabase start",
     "backend:stop": "npx supabase stop",
-    "backend:rebuild": "npx supabase stop --no-backup && rm -f ./supabase/seed.sql && pnpm backend:start && pnpm db:reset",
+    "backend:rebuild": "npx supabase stop --no-backup && pnpm backend:start && pnpm db:reset",
     "generate:types": "npx supabase gen types typescript --linked > src/database.types.ts",
     "generate:types:local": "npx supabase gen types typescript --local > src/database.types.ts"
   },

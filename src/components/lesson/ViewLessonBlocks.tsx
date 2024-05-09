@@ -9,9 +9,9 @@ import AddLessonBlock from "./AddLessonBlock";
 import LessonBlockView from "./LessonBlock";
 import { useCallback, useMemo, useState } from "react";
 import useLessonBlocks from "../hooks/useLessonBlocks";
-import { LessonBlock, LessonWithRelationships } from "@/requests/lesson";
+import { LessonBlock, Lesson } from "@/requests/lesson";
 
-export default function ViewLessonBlocks(props: { lesson?: LessonWithRelationships }) {
+export default function ViewLessonBlocks(props: { lesson?: Lesson }) {
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const { lessonBlocks, setLessonBlocks } = useLessonBlocks(undefined, props.lesson?.lesson_blocks);
   const blockIds = useMemo(() => lessonBlocks.map((block) => block.id), [lessonBlocks]);

@@ -299,24 +299,6 @@
     "examples": []
   },
   {
-    "shape": "DATABASE_COLUMN",
-    "examples": [
-      "id",
-      "createdAt",
-      "token",
-      "name",
-      "category",
-      "phone",
-      "group",
-      "comment",
-      "status",
-      "email",
-      "password",
-      "avatar",
-      "updatedAt"
-    ]
-  },
-  {
     "shape": "COMMERCE_PRODUCT_NAME",
     "examples": [
       "Ergonomic Fresh Hat",

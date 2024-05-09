@@ -10,15 +10,15 @@ import useLessonBlocks from "./hooks/useLessonBlocks";
 import { useFormStatus } from "react-dom";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import { LessonBlock, LessonWithRelationships } from "@/requests/lesson";
+import { LessonBlock, Lesson } from "@/requests/lesson";
 
-export default function LessonHeader({ lesson }: { lesson?: LessonWithRelationships }) {
+export default function LessonHeader({ lesson }: { lesson?: Lesson }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const courseId = lesson?.course?.id ?? searchParams.get("courseId");
   const lessonTitle = lesson?.title ?? searchParams.get("title") ?? "";
   const lastUpdated = lesson?.updated_at ?? searchParams.get("lastUpdated");
-  const { lessonBlocks } = useLessonBlocks(undefined, lesson?.blocks);
+  const { lessonBlocks } = useLessonBlocks(undefined, lesson?.lesson_blocks);
   const { pending, data } = useFormStatus();
   const onClose = useCallback(() => router.push(`/course/${courseId}`), [courseId, router]);
 
@@ -55,7 +55,7 @@ export default function LessonHeader({ lesson }: { lesson?: LessonWithRelationsh
             title: lessonTitle,
             blocks: lessonBlocks as unknown as LessonBlock[],
             updated_at: lastUpdated ?? "",
-          } as unknown as LessonWithRelationships}
+          } as unknown as Lesson}
         />
         <Button
           label="Submit Lesson"

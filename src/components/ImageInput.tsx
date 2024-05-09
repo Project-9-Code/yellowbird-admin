@@ -39,7 +39,7 @@ export default forwardRef(function ImageInput(props: ImageInputProps, ref) {
       className={clsx(containerClass, "flex flex-col justify-center items-center w-56 h-56 rounded-lg border-[1px] border-[#DDD] cursor-pointer")}
     >
       {(image) ? (
-        <Image src={image} alt="Picture of course" width={width} height={height} className={clsx(imageClass, "rounded-lg")} />
+        <Image src={image} alt="Picture of course" width={width} height={height} className={clsx(imageClass, "rounded-xl")} />
       ) : (
         <>
           <Image src={UploadImage} alt="Upload Image" className="mb-2.5" />

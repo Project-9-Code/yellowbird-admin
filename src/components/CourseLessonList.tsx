@@ -14,10 +14,10 @@ import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import Link from "next/link";
 import { DropdownMenu } from "@radix-ui/themes";
 import { archiveLesson } from "@/actions/lesson";
-import { LessonWithRelationships } from "@/requests/lesson";
+import { Lesson } from "@/requests/lesson";
 
 interface CourseLessonListProps {
-  lessons?: LessonWithRelationships[];
+  lessons?: Lesson[];
   courseId?: string;
 }
 
@@ -25,7 +25,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   const isDev = process.env.NODE_ENV === "development";
   const { lessons=[] } = props;
   const { toggleAllIds, isAllSelected } = useSelectedIds("selectedLessons");
-  const columnHelper = createColumnHelper<LessonWithRelationships>();
+  const columnHelper = createColumnHelper<Lesson>();
   const lessonIds = lessons.map((lesson) => lesson?.id).filter((id) => id !== undefined && id !== null) as string[];
   const allLessonsSelected = isAllSelected(lessonIds);
   const toggleAllLessons = useCallback(() => toggleAllIds(lessonIds), [lessonIds, toggleAllIds]);
@@ -33,7 +33,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
     await archiveLesson(lessonId, props.courseId);
   }, [props.courseId]);
 
-  const columns: ColumnDef<LessonWithRelationships, any>[] = useMemo(() => [
+  const columns: ColumnDef<Lesson, any>[] = useMemo(() => [
     columnHelper.accessor("created_at", {
       cell: RowHandleCell,
       header: () => null,
@@ -60,7 +60,6 @@ export default function CourseLessonList(props: CourseLessonListProps) {
     columnHelper.accessor("updated_at", {
       cell: (info) => {
         const date = info.getValue() ?? info.row.getValue("updated_at");
-        console.log("date", info.row.original);
         return <span>{date ? 
           `${new Date(parseInt(date)).toLocaleTimeString()}` : 
           "Unknown"}</span>;
@@ -149,7 +148,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   );
 }
 
-function RowHandleCell({ row }: { row: Row<Partial<LessonWithRelationships>> }) {
+function RowHandleCell({ row }: { row: Row<Partial<Lesson>> }) {
   const { attributes, listeners } = useSortable({ id: row.id });
   return (
     <div className="flex w-full h-full">
@@ -160,7 +159,7 @@ function RowHandleCell({ row }: { row: Row<Partial<LessonWithRelationships>> }) 
   )
 }
 
-function TableRow({ row }: { row: Row<Partial<LessonWithRelationships>>}) {
+function TableRow({ row }: { row: Row<Partial<Lesson>>}) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
     id: row.original.id ?? "",
   });
@@ -184,7 +183,7 @@ function TableRow({ row }: { row: Row<Partial<LessonWithRelationships>>}) {
   );
 }
 
-function SelectCell({ row }: { row: Row<Partial<LessonWithRelationships>>}) {
+function SelectCell({ row }: { row: Row<Partial<Lesson>>}) {
   const { selectedIds, toggleId } = useSelectedIds("selectedLessons");
   return (
     <input

@@ -1,1 +1,0 @@
-CREATE POLICY "Public lesson_blocks are viewable by everyone." ON "public"."lesson_blocks" FOR SELECT USING (true);
