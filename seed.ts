@@ -1,6 +1,6 @@
 /**
  * ! Executing this script will delete all data in database and seed it with intro lesson.
- * Use any TypeScript runner to run this script, for example: `npx tsx seed.ts`
+ * Use any TypeScripts runner to run this script, for example: `npx tsx seed.ts`
  * Learn more about the Seed Client by following guide: https://docs.snaplet.dev/seed/getting-started
  */
 import "./envConfig";
