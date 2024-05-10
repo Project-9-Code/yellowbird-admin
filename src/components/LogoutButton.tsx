@@ -4,12 +4,14 @@ import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
+
 export default function LogoutButton() {
   const router = useRouter();
   const signOut = useCallback(async () => {
     const superbase = createClient();
-    await superbase.auth.signOut();
-    router.refresh();
+    const { error } = await superbase.auth.signOut();
+    if (!error) return router.refresh();
+    else console.error(error);
   }, [router]);
 
   return (

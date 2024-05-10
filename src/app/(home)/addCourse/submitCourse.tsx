@@ -13,7 +13,7 @@ export default function SubmitCourseButton() {
   useEffect(() => {
     if (data) {
       toast.success("Course created successfully", { icon: () => null });
-      router.push("/");
+      router.push("/course");
     }
   }, [data, router]);
 

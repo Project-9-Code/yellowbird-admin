@@ -9,9 +9,14 @@ export interface Course extends Omit<Tables<"courses">, "created_by" | "lessons"
   };
   lessons?: Lesson[];
 };
+
 export const fetchCourses = cache(async function fetchCoursesAPI() {
   const supabase = createClient();
-  const { data, error } = await supabase.from("courses").select("*, created_by(full_name)").order("title", { ascending: true }).returns<Course[]>();
+  const { data, error } = await supabase.from("courses")
+    .select("*, created_by(full_name)")
+    .neq("status", "archived")
+    .order("title", { ascending: true })
+    .returns<Course[]>();
 
   if (error) throw error;
 

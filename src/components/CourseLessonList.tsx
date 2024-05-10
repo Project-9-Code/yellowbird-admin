@@ -15,6 +15,7 @@ import Link from "next/link";
 import { DropdownMenu } from "@radix-ui/themes";
 import { archiveLesson } from "@/actions/lesson";
 import { Lesson } from "@/requests/lesson";
+import { useRouter } from "next/navigation";
 
 interface CourseLessonListProps {
   lessons?: Lesson[];
@@ -22,6 +23,7 @@ interface CourseLessonListProps {
 }
 
 export default function CourseLessonList(props: CourseLessonListProps) {
+  const router = useRouter();
   const isDev = process.env.NODE_ENV === "development";
   const { lessons=[] } = props;
   const { toggleAllIds, isAllSelected } = useSelectedIds("selectedLessons");
@@ -31,7 +33,8 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   const toggleAllLessons = useCallback(() => toggleAllIds(lessonIds), [lessonIds, toggleAllIds]);
   const onArchive = useCallback((lessonId: string) => async () => {
     await archiveLesson(lessonId);
-  }, [props.courseId]);
+    router.refresh();
+  }, [router]);
 
   const columns: ColumnDef<Lesson, any>[] = useMemo(() => [
     columnHelper.accessor("created_at", {

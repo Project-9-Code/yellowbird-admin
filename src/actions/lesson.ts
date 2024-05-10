@@ -25,14 +25,16 @@ export async function addLesson(lessonData: FormData) {
   }
 
   // Revalidate paths
-  revalidatePath(`/course/${lesson.course}`);
-  revalidatePath(`/lesson/${lesson.id}`);
+  revalidatePath(`/(home)/course/[id]`, "page");
+  revalidatePath(`/lesson/[lessonId]`, "page");
 };
 
 export async function archiveLesson(lessonId: string) {
   const supabase = createClient();
   await supabase.from("lessons").update({ status: "archived" }).eq("id", lessonId);
-  revalidatePath(`/lesson/${lessonId}`);
+  
+  revalidatePath(`/(home)/course/[id]`, "page");
+  revalidatePath(`/lesson/[lessonId]`, "page");
 }
 
 export async function updateLesson(lessonData: FormData) {
@@ -48,16 +50,10 @@ export async function updateLesson(lessonData: FormData) {
   const { error: blockError } = await supabase.from("lesson_blocks").upsert(blocks as LessonBlock[]);
   if (blockError) throw blockError;
 
-  revalidatePath(`/lesson/${lesson.id}`);
-  revalidatePath(`/course/${lesson.course}`);
+  revalidatePath(`/(home)/course/[id]`, "page");
+  revalidatePath(`/lesson/[lessonId]`, "page");
   return updateLesson;
 };
-
-export async function deleteLesson(lessonId: string) {
-  const supabase = createClient();
-  await supabase.from("lessons").delete().eq("id", lessonId);
-  revalidatePath(`/lesson/${lessonId}`);
-}
 
 function shouldParse(key: string) {
   return key === "answers" || key === "answer_options" || key === "points";

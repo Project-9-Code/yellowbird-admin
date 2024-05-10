@@ -38,6 +38,7 @@ const main = async () => {
     active_lessons: 1,
     archived_lessons: 0,
     draft_lessons: 0,
+    is_intro: true,
     lessons: [{
       id: introLessonId,
       title: "Intro to Yellowbird",

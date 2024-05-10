@@ -8,6 +8,7 @@ import { useCallback, useTransition } from "react";
 import useSelectedCourseIds from "./hooks/useSelectedIds";
 import { archiveCourses } from "@/actions/course";
 import { Course } from "@/requests/course";
+import { useRouter } from "next/navigation";
 
 interface ListToolbarProps {
   onCopy?: () => void;
@@ -19,11 +20,10 @@ interface ListToolbarProps {
 }
 
 export default function ListToolbar(props: ListToolbarProps) {
+  const router = useRouter();
   const { setSelectedIds, selectedIds } = useSelectedCourseIds();
   const visible = selectedIds.length > 0;
   const allSelected = selectedIds.length > 0 && props.courses?.length === selectedIds.length;
-  const archiveCoursesWithIds = archiveCourses.bind(null, selectedIds);
-  const [isPending, startTransition] = useTransition();
 
   const selectAll = useCallback(() => {
     const courses = (allSelected) ? [] : props.courses?.map((course) => course.id) ?? [];
@@ -31,9 +31,10 @@ export default function ListToolbar(props: ListToolbarProps) {
   }, [props.courses, allSelected, setSelectedIds]);
 
   const onArchive = useCallback(async () => {
-   startTransition(archiveCoursesWithIds);
-   setSelectedIds(selectedIds.filter((id) => !selectedIds.includes(id)));
-  }, [archiveCoursesWithIds, selectedIds, setSelectedIds]);
+   await archiveCourses(selectedIds);
+   setSelectedIds([]);
+   router.refresh();
+  }, [selectedIds, router, setSelectedIds]);
 
   return (
     <div className={clsx("absolute top-5 left-0 w-full flex items-center justify-center", !visible && "hidden")}>
