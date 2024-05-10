@@ -1,6 +1,8 @@
 import Button from "@/components/Button";
 import CourseCardList from "@/components/CourseCardList";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   return (
     <div className="max-w-[1032px] mx-auto w-full mb-7 flex flex-col grow relative">

@@ -7,11 +7,13 @@ import { v4 as uuid } from "uuid";
 export const addCourse = async function addCourseAPI(course: FormData) {
   const supabase = createClient();
 
+
   let cover_photo_url;
   const courseID = uuid();
-  if (course.get("coverPhoto")) {
+  const coverPhoto = course.get("coverPhoto");
+  if (coverPhoto instanceof File && coverPhoto.size > 0) {
     const coverPhotoKey = `courseCoverPhotos/${courseID}`;
-    await supabase.storage.from("web").upload(coverPhotoKey, course.get("coverPhoto") as File);
+    await supabase.storage.from("web").upload(coverPhotoKey, coverPhoto);
     cover_photo_url = supabase.storage.from("web").getPublicUrl(coverPhotoKey).data?.publicUrl;
   }
 
@@ -24,16 +26,18 @@ export const addCourse = async function addCourseAPI(course: FormData) {
 
   if (error) throw error;
   
-  revalidatePath("/");
-  revalidatePath("/course");
+  revalidatePath('/(home)/course', 'page');
+  revalidatePath('/(home)/course/[id]', 'page');
 };
 
 export const archiveCourses = async function archiveCoursesAPI(courseIds: string[]) {
   const supabase = createClient();
-  const { error } = await supabase.from("courses").delete().in("id", courseIds);
+  const { error } = await supabase.from("courses")
+    .update({ status: "archived" })
+    .in("id", courseIds);
 
   if (error) throw error;
 
-  revalidatePath("/");
-  revalidatePath("/course");
+  revalidatePath('/(home)/course', 'page');
+  revalidatePath('/(home)/course/[id]', 'page');
 }

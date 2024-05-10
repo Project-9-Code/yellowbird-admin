@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import useSelectedCourseIds from "./hooks/useSelectedIds";
-import { Tables } from "@/database.types";
+import { Course } from "@/requests/course";
 
 interface CourseCardProps {
-  course: Tables<"courses">;
+  course: Course;
   selected?: boolean;
   showCheckbox?: boolean;
   onSelect?: (selected: boolean) => void;
@@ -22,6 +22,7 @@ export default function CourseCard(props: CourseCardProps) {
   const selected = selectedIds.includes(props.course.id);
   const showCheckbox = selectedIds.length > 0 || props.selected || isHovered;
   const href = `/course/${props.course.id}`;
+  console.log("cover", props.course.cover_photo_url)
 
   const onCourseSelect = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.checked;

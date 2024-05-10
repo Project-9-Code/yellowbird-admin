@@ -92,6 +92,7 @@ export type Database = {
           created_by: string | null
           draft_lessons: number
           id: string
+          is_intro: boolean | null
           status: string
           title: string | null
           updated_at: string
@@ -106,6 +107,7 @@ export type Database = {
           created_by?: string | null
           draft_lessons?: number
           id?: string
+          is_intro?: boolean | null
           status?: string
           title?: string | null
           updated_at?: string
@@ -120,6 +122,7 @@ export type Database = {
           created_by?: string | null
           draft_lessons?: number
           id?: string
+          is_intro?: boolean | null
           status?: string
           title?: string | null
           updated_at?: string

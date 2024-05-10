@@ -1,0 +1,1 @@
+create trigger "upsert_course_lesson_data_trigger" after update on "public"."lessons" for each row execute function "public"."update_course_lesson_data"();

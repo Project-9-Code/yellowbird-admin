@@ -21,7 +21,7 @@ export async function signIn(formData: FormData) {
     return error.message;
   };
 
-  revalidatePath('/course');
+  revalidatePath('/(home)/course', 'page');
   redirect('/course');
 }
 
