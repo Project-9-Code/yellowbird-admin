@@ -4,12 +4,21 @@ import { signup } from "@/actions/auth";
 import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import StyledLink from "@/components/Link";
+import { FormEvent } from "react";
 import { useFormStatus } from "react-dom";
+import { toast } from "react-toastify";
 
 export default function CreateAccountForm() {
   const { pending } = useFormStatus();
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const result = await signup(new FormData(e.currentTarget));
+    if (result) {
+      toast.error(result, { position: "bottom-center" });
+    }
+  }
   return (
-    <form action={signup}>
+    <form onSubmit={onSubmit}>
       <InputField
         id="name"
         label="Name"
