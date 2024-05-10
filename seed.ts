@@ -3,6 +3,7 @@
  * Use any TypeScript runner to run this script, for example: `npx tsx seed.ts`
  * Learn more about the Seed Client by following guide: https://docs.snaplet.dev/seed/getting-started
  */
+import "./envConfig";
 import { createSeedClient } from "@snaplet/seed";
 import { v4 as uuid } from "uuid";
 
