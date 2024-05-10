@@ -61,7 +61,7 @@ If you wish to just develop locally and not deploy to Vercel, [follow the steps 
 
    ```bash
    cd name-of-new-app
-   ```
+   ``` 
 
 4. Rename `.env.local.example` to `.env.local` and update the following:
 
