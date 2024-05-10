@@ -44,7 +44,7 @@ export async function signup(formData: FormData) {
 
   if (error) {
     console.error(error.message);
-    throw new Error(error.message);
+    return error.message;
   };
 
 
