@@ -3,7 +3,7 @@
  * Use any TypeScripts runner to run this script, for example: `npx tsx seed.ts` 
  * Learn more about the Seed Client by following guide: https://docs.snaplet.dev/seed/getting-started
  */
-import "./envConfig";
+/*import "./envConfig";
 import { createSeedClient } from "@snaplet/seed";
 import { v4 as uuid } from "uuid";
 
@@ -21,6 +21,7 @@ const main = async () => {
   await seed.users([{
     id: introUserId,
     email: "samantha@yellowbird.com",
+    encrypted_password: "passwordEncrypted",
     raw_user_meta_data: {
       full_name: "Samantha Taylor",
       organization: "Yellowbird",
@@ -73,4 +74,4 @@ const main = async () => {
   process.exit();
 };
 
-main();
+main();*/
