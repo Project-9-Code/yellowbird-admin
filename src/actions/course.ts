@@ -20,7 +20,7 @@ export const addCourse = async function addCourseAPI(course: FormData) {
   const { error } = await supabase.from("courses").insert([{
     id: courseID,
     title: course.get("title") as string,
-    course_description: course.get("description") as string,
+    description: course.get("description") as string,
     cover_photo_url
   }]);
 
