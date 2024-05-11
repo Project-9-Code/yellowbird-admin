@@ -2067,6 +2067,20 @@
           "maxLength": null
         },
         {
+          "id": "public.lesson_blocks.order",
+          "name": "order",
+          "columnName": "order",
+          "type": "int8",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "id": "public.lesson_blocks.created_at",
           "name": "created_at",
           "columnName": "created_at",
@@ -3491,6 +3505,20 @@
           "id": "public.profiles.organization",
           "name": "organization",
           "columnName": "organization",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.profiles.bio",
+          "name": "bio",
+          "columnName": "bio",
           "type": "text",
           "isRequired": false,
           "kind": "scalar",

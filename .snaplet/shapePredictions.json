@@ -148,6 +148,14 @@
         "confidenceContext": 0
       },
       {
+        "input": "public profiles bio",
+        "column": "bio",
+        "shape": "PERSON_BIO",
+        "confidence": 0.7,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public profiles email",
         "column": "email",
         "shape": "EMAIL",
