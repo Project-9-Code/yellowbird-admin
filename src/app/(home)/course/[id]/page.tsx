@@ -77,7 +77,7 @@ async function CourseContent(props: { courseId: string; }) {
           </div>
 
           <span className="font-[14px] mb-7">
-            {course?.course_description}
+            {course?.description}
           </span>
 
           <div className="flex flex-row items-center justify-between mb-4">

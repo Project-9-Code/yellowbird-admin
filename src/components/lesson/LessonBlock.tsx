@@ -6,7 +6,8 @@ import { LessonBlock } from "@/requests/lesson";
 
 export default function LessonBlockView(props: { block: LessonBlock }) {
   const { block } = props;
-  switch (block.block_type) {
+
+  switch (block.type) {
     case "TEXT":
       return <TextBlock block={props.block} />;
     case "MEDIA":

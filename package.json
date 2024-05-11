@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:reset": "pnpm db:seed:generate && npx supabase db reset",
+    "db:reset": "pnpm db:seed:generate && npx supabase db reset && pnpm generate:types:local",
     "db:seed:generate": "rm -f ./supabase/seed.sql && pnpm db:seed:sync && npx tsx seed.ts > supabase/seed.sql",
     "db:seed:sync": "npx @snaplet/seed sync",
     "backend:start": "npx supabase start",

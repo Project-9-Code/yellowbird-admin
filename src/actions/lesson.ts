@@ -31,7 +31,7 @@ export async function addLesson(lessonData: FormData) {
 
 export async function archiveLesson(lessonId: string) {
   const supabase = createClient();
-  await supabase.from("lessons").update({ status: "archived" }).eq("id", lessonId);
+  await supabase.from("lessons").update({ status: "ARCHIVED" }).eq("id", lessonId);
   
   revalidatePath(`/(home)/course/[id]`, "page");
   revalidatePath(`/lesson/[lessonId]`, "page");
@@ -66,7 +66,7 @@ async function cleanLessonData(lesson: FormData, author?: string) {
   lesson.forEach((value, key) => {
     if (key === "id") lessonData.id = value as string;
     if (key === "title") lessonData.title = value as string;
-    if (key === "lesson_description") lessonData.lesson_description = value as string;
+    if (key === "lesson_description") lessonData.description = value as string;
     // if (key === "tags") lessonData.tags = value as string;
     if (key === "course") lessonData.course = value as string;
     if (key === "recap") lessonData.recap = value as string;
@@ -81,7 +81,7 @@ async function cleanLessonData(lesson: FormData, author?: string) {
       } else {
         lessonBlocks?.push({
           id: blockId,
-          block_type: blockType,
+          type: blockType,
           lesson: lessonData.id,
           [blockKey]: (shouldParse(blockKey)) ? JSON.parse(value as string) : value,
         } as LessonBlock);
@@ -92,7 +92,7 @@ async function cleanLessonData(lesson: FormData, author?: string) {
   
   const supabase = createClient();
   const imageUploads = await Promise.all((lessonBlocks.filter(
-    (block) => (block?.block_type === "MEDIA" || block?.block_type === "VIDEO") && (block?.media_url as any) instanceof File
+    (block) => (block?.type === "MEDIA" || block?.type === "VIDEO") && (block?.media_url as any) instanceof File
   ) as LessonBlock[]).map(async (block) => {
     const imageKey = `lessonMedia/${block.id}`;
     await supabase.storage.from("web").upload(imageKey, block.media_url as unknown as File);

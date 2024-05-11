@@ -1,1 +1,0 @@
-alter table courses add column is_intro boolean default false;

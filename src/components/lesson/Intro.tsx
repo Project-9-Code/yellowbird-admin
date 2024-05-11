@@ -12,7 +12,7 @@ import { Lesson } from "@/requests/lesson";
 export default function LessonIntro({ lesson }: { lesson?: Lesson }) {
   const { isFocused, enableFocus } = useFocusParam("intro", "intro");
   const { value: title, setValueOnChange: setTitle } = useUrlParam("title", lesson?.title || "");
-  const { value: description, setValueOnChange: setDescription } = useUrlParam("lesson_description", lesson?.lesson_description || "");
+  const { value: description, setValueOnChange: setDescription } = useUrlParam("lesson_description", lesson?.description || "");
   const { value: tags, setValueOnChange: setTags } = useUrlParam("tags", lesson?.tags?.join("") || "");
 
   return (

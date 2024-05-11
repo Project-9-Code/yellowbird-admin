@@ -38,8 +38,8 @@ export default function SelectLessonType(
   { block: LessonBlock, onSelect?: (value: any) => void }
 ) {
   const { updateBlock } = useLessonBlocks(block);
-  const selected = options.find((option) => option.options.some((o) => o.value === block.block_type))?.options.find((o) => o.value === block.block_type) ?? options[0].options[0];
-  const updateBlockType = updateBlock("block_type");
+  const selected = options.find((option) => option.options.some((o) => o.value === block.type))?.options.find((o) => o.value === block.type) ?? options[0].options[0];
+  const updateBlockType = updateBlock("type");
   const onChange = useCallback((type: any) => {
     updateBlockType(type.value);
     onSelect?.(type.value);

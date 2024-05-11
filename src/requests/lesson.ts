@@ -5,7 +5,7 @@ import { Course } from "./course";
 import { User } from "./user";
 
 export type LessonBlock = Tables<"lesson_blocks">;
-export type LessonBlockTypes = Enums<"block_types">;
+export type LessonBlockTypes = Enums<"block_type">;
 export type LessonInput = Partial<Tables<"lessons">>;
 export type LessonBlockInput = Partial<Tables<"lesson_blocks">>;
 export interface Lesson extends Omit<Tables<"lessons">, "course" | "author" | "created_by"> {
@@ -18,7 +18,7 @@ export interface Lesson extends Omit<Tables<"lessons">, "course" | "author" | "c
 export const fetchLesson = cache(async function fetchLessonApi(id: string) {
   const superbase = createClient();
   const query = await superbase.from("lessons")
-    .select("*, author(id, full_name, organization), course(id, title), lesson_blocks(id, lesson, block_type, media_url, screen_content, question, points, answers, answer_options)")
+    .select("*, author(id, full_name, organization), course(id, title), lesson_blocks(id, lesson, type, media_url, screen_content, question, points, answers, answer_options)")
     .eq("id", id)
     .single<Lesson>();
 

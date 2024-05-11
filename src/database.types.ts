@@ -36,45 +36,48 @@ export type Database = {
     Tables: {
       bookmarks: {
         Row: {
-          attempts: number
-          completed: boolean
+          attempts: number | null
+          completed: boolean | null
           completed_at: string | null
-          created_at: string
+          created_at: string | null
+          id: string
           lesson_id: string
-          points: number
-          updated_at: string
-          user_id: string
+          points: number | null
+          updated_at: string | null
+          user_id: string | null
         }
         Insert: {
-          attempts?: number
-          completed?: boolean
+          attempts?: number | null
+          completed?: boolean | null
           completed_at?: string | null
-          created_at?: string
+          created_at?: string | null
+          id?: string
           lesson_id: string
-          points?: number
-          updated_at?: string
-          user_id: string
+          points?: number | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Update: {
-          attempts?: number
-          completed?: boolean
+          attempts?: number | null
+          completed?: boolean | null
           completed_at?: string | null
-          created_at?: string
+          created_at?: string | null
+          id?: string
           lesson_id?: string
-          points?: number
-          updated_at?: string
-          user_id?: string
+          points?: number | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "bookmarks_lesson_id_fkey"
+            foreignKeyName: "public_Bookmarks_lesson_id_fkey"
             columns: ["lesson_id"]
             isOneToOne: false
             referencedRelation: "lessons"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "bookmarks_user_id_fkey"
+            foreignKeyName: "public_Bookmarks_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -84,60 +87,60 @@ export type Database = {
       }
       courses: {
         Row: {
-          active_lessons: number
-          archived_lessons: number
-          course_description: string | null
+          active_lessons: number | null
+          archived_lessons: number | null
           cover_photo_url: string | null
           created_at: string
           created_by: string | null
-          draft_lessons: number
+          description: string | null
+          draft_lessons: number | null
           id: string
           is_intro: boolean | null
-          status: string
+          status: Database["public"]["Enums"]["status"] | null
           title: string | null
-          updated_at: string
+          updated_at: string | null
           updated_by: string | null
         }
         Insert: {
-          active_lessons?: number
-          archived_lessons?: number
-          course_description?: string | null
+          active_lessons?: number | null
+          archived_lessons?: number | null
           cover_photo_url?: string | null
           created_at?: string
           created_by?: string | null
-          draft_lessons?: number
+          description?: string | null
+          draft_lessons?: number | null
           id?: string
           is_intro?: boolean | null
-          status?: string
+          status?: Database["public"]["Enums"]["status"] | null
           title?: string | null
-          updated_at?: string
+          updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
-          active_lessons?: number
-          archived_lessons?: number
-          course_description?: string | null
+          active_lessons?: number | null
+          archived_lessons?: number | null
           cover_photo_url?: string | null
           created_at?: string
           created_by?: string | null
-          draft_lessons?: number
+          description?: string | null
+          draft_lessons?: number | null
           id?: string
           is_intro?: boolean | null
-          status?: string
+          status?: Database["public"]["Enums"]["status"] | null
           title?: string | null
-          updated_at?: string
+          updated_at?: string | null
           updated_by?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "courses_created_by_fkey"
+            foreignKeyName: "public_courses_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "courses_updated_by_fkey"
+            foreignKeyName: "public_courses_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -149,71 +152,71 @@ export type Database = {
         Row: {
           answer_options: string[] | null
           answers: string[] | null
-          block_order: number
-          block_type: Database["public"]["Enums"]["block_types"]
           created_at: string
           created_by: string | null
           id: string
-          lesson: string
+          lesson: string | null
           media_url: string | null
+          order: number | null
           points: number | null
           question: string | null
           screen_content: string | null
-          status: string
-          updated_at: string
+          status: Database["public"]["Enums"]["status"] | null
+          type: Database["public"]["Enums"]["block_type"] | null
+          updated_at: string | null
           updated_by: string | null
         }
         Insert: {
           answer_options?: string[] | null
           answers?: string[] | null
-          block_order?: number
-          block_type: Database["public"]["Enums"]["block_types"]
           created_at?: string
           created_by?: string | null
           id?: string
-          lesson: string
+          lesson?: string | null
           media_url?: string | null
+          order?: number | null
           points?: number | null
           question?: string | null
           screen_content?: string | null
-          status?: string
-          updated_at?: string
+          status?: Database["public"]["Enums"]["status"] | null
+          type?: Database["public"]["Enums"]["block_type"] | null
+          updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
           answer_options?: string[] | null
           answers?: string[] | null
-          block_order?: number
-          block_type?: Database["public"]["Enums"]["block_types"]
           created_at?: string
           created_by?: string | null
           id?: string
-          lesson?: string
+          lesson?: string | null
           media_url?: string | null
+          order?: number | null
           points?: number | null
           question?: string | null
           screen_content?: string | null
-          status?: string
-          updated_at?: string
+          status?: Database["public"]["Enums"]["status"] | null
+          type?: Database["public"]["Enums"]["block_type"] | null
+          updated_at?: string | null
           updated_by?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "lesson_blocks_created_by_fkey"
+            foreignKeyName: "public_lesson_blocks_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "lesson_blocks_lesson_fkey"
+            foreignKeyName: "public_lesson_blocks_lesson_fkey"
             columns: ["lesson"]
             isOneToOne: false
             referencedRelation: "lessons"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "lesson_blocks_updated_by_fkey"
+            foreignKeyName: "public_lesson_blocks_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -227,14 +230,14 @@ export type Database = {
           course: string | null
           created_at: string
           created_by: string | null
+          description: string | null
           id: string
-          lesson_description: string | null
-          lesson_order: number
+          order: number | null
           recap: string | null
-          status: string
+          status: Database["public"]["Enums"]["status"] | null
           tags: string[] | null
           title: string | null
-          updated_at: string
+          updated_at: string | null
           updated_by: string | null
         }
         Insert: {
@@ -242,14 +245,14 @@ export type Database = {
           course?: string | null
           created_at?: string
           created_by?: string | null
+          description?: string | null
           id?: string
-          lesson_description?: string | null
-          lesson_order?: number
+          order?: number | null
           recap?: string | null
-          status?: string
+          status?: Database["public"]["Enums"]["status"] | null
           tags?: string[] | null
           title?: string | null
-          updated_at?: string
+          updated_at?: string | null
           updated_by?: string | null
         }
         Update: {
@@ -257,40 +260,40 @@ export type Database = {
           course?: string | null
           created_at?: string
           created_by?: string | null
+          description?: string | null
           id?: string
-          lesson_description?: string | null
-          lesson_order?: number
+          order?: number | null
           recap?: string | null
-          status?: string
+          status?: Database["public"]["Enums"]["status"] | null
           tags?: string[] | null
           title?: string | null
-          updated_at?: string
+          updated_at?: string | null
           updated_by?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "lessons_author_fkey"
+            foreignKeyName: "public_lessons_author_fkey"
             columns: ["author"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "lessons_course_fkey"
+            foreignKeyName: "public_lessons_course_fkey"
             columns: ["course"]
             isOneToOne: false
             referencedRelation: "courses"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "lessons_created_by_fkey"
+            foreignKeyName: "public_lessons_created_by_fkey"
             columns: ["created_by"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "lessons_updated_by_fkey"
+            foreignKeyName: "public_lessons_updated_by_fkey"
             columns: ["updated_by"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -301,40 +304,40 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          created_at: string
           email: string | null
           full_name: string | null
           id: string
           organization: string | null
           phone: string | null
           updated_at: string | null
-          username: string | null
           website: string | null
         }
         Insert: {
           avatar_url?: string | null
-          email?: string | null
-          full_name?: string | null
-          id: string
-          organization?: string | null
-          phone?: string | null
-          updated_at?: string | null
-          username?: string | null
-          website?: string | null
-        }
-        Update: {
-          avatar_url?: string | null
+          created_at?: string
           email?: string | null
           full_name?: string | null
           id?: string
           organization?: string | null
           phone?: string | null
           updated_at?: string | null
-          username?: string | null
+          website?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          organization?: string | null
+          phone?: string | null
+          updated_at?: string | null
           website?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
+            foreignKeyName: "public_profiles_id_fkey"
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "users"
@@ -350,13 +353,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      block_types:
+      block_type:
         | "TEXT"
         | "MEDIA"
         | "VIDEO"
         | "CHOICE"
         | "MULTI_CHOICE"
         | "MULTI_SELECT"
+        | "FILL_IN_BLANK"
+      status: "PUBLISHED" | "DRAFT" | "ARCHIVED"
     }
     CompositeTypes: {
       [_ in never]: never

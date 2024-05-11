@@ -32,10 +32,10 @@ const main = async () => {
   await seed.courses([{
     id: introCourseId,
     title: "Intro to Yellowbird",
-    course_description: "You will learn the difference between a credit card and a debit card. They look the same, but have different purposes.",
+    description: "You will learn the difference between a credit card and a debit card. They look the same, but have different purposes.",
     cover_photo_url: "https://loremflickr.com/640/480/creditcard",
     created_by: introUserId,
-    status: "published",
+    status: "PUBLISHED",
     active_lessons: 1,
     archived_lessons: 0,
     draft_lessons: 0,
@@ -43,23 +43,25 @@ const main = async () => {
     lessons: [{
       id: introLessonId,
       title: "Intro to Yellowbird",
-      lesson_description: "You will learn the difference between a credit card and a debit card. They look the same, but have different purposes.",
+      description: "You will learn the difference between a credit card and a debit card. They look the same, but have different purposes.",
       author: introUserId,
-      lesson_order: 0,
-      status: "published",
+      order: 0,
+      status: "PUBLISHED",
       tags: ["intro"],
       lesson_blocks: [{
-        block_order: 0,
-        block_type: "TEXT",
+        question: null,
+        order: 0,
+        type: "TEXT",
         screen_content: "Underwriting is an evaluation done by the insurance company to see if it’s worth the risk of providing insurance coverage. In other words, can the insurance company make money from the policy?"
       }, {
-        block_type: "MEDIA",
-        block_order: 1,
+        question: null,
+        type: "MEDIA",
+        order: 1,
         media_url: "https://loremflickr.com/640/480/creditcard",
         screen_content: "Some screens will have new words. User can tap the highlighted word to reveal a card overlay."
       }, {
-        block_type: "CHOICE",
-        block_order: 2,
+        type: "CHOICE",
+        order: 2,
         question: "A bear market is when the market is showing a steady decline over a period of 30-days?",
         answer_options: ["True", "False"],
         answers: ["True"],

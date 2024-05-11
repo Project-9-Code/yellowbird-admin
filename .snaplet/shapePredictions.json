@@ -4,18 +4,18 @@
     "tableName": "courses",
     "predictions": [
       {
-        "input": "public courses course_description",
-        "column": "course_description",
-        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
-        "confidence": 0.7293632626533508,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
         "input": "public courses cover_photo_url",
         "column": "cover_photo_url",
         "shape": "IMAGE_URL",
         "confidence": 0.9825857877731323,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public courses description",
+        "column": "description",
+        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
+        "confidence": 0.5718593597412109,
         "context": "GENERAL",
         "confidenceContext": 0
       },
@@ -102,10 +102,10 @@
     "tableName": "lessons",
     "predictions": [
       {
-        "input": "public lessons lesson_description",
-        "column": "lesson_description",
-        "shape": "POST_TITLE",
-        "confidence": 0.4567529261112213,
+        "input": "public lessons description",
+        "column": "description",
+        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
+        "confidence": 0.7380769848823547,
         "context": "GENERAL",
         "confidenceContext": 0
       },
@@ -176,14 +176,6 @@
         "column": "phone",
         "shape": "PHONE_NUMBER",
         "confidence": 0.9602307081222534,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public profiles username",
-        "column": "username",
-        "shape": "USERNAME",
-        "confidence": 0.9713683724403381,
         "context": "GENERAL",
         "confidenceContext": 0
       },

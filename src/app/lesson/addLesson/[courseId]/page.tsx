@@ -1,5 +1,5 @@
 import AddLessonForm from "@/components/lesson/AddLessonForm";
-import { Course, fetchCourseMeta } from "@/requests/course";
+import { fetchCourseMeta } from "@/requests/course";
 import { Lesson } from "@/requests/lesson";
 
 export default async function AddCourseLesson({ params }: { params: { courseId: string } }) {

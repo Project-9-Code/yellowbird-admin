@@ -59,8 +59,8 @@ function InfoItem({ label, value }: { label?: string; value?: ReactNode }) {
 
 function isQuestionBlock(block: LessonBlock): boolean {
   return (
-    block.block_type === "CHOICE" ||
-    block.block_type === "MULTI_CHOICE" ||
-    block.block_type === "MULTI_SELECT"
+    block.type === "CHOICE" ||
+    block.type === "MULTI_CHOICE" ||
+    block.type === "MULTI_SELECT"
   );
 }

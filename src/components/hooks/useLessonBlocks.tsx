@@ -48,7 +48,7 @@ export default function useLessonBlocks(block?: LessonBlock, defaultBlocks?: Les
     if (lessonBlocks.find((b) => b.id === block.id)) {
       setLessonBlocks(lessonBlocks.filter((b) => b.id !== block.id));
       toast.error(
-        `${capitalizeFirstLetter(block.block_type.toLowerCase())} was removed.`,
+        `${capitalizeFirstLetter(block?.type?.toLowerCase() ?? "TEXT")} was removed.`,
         { toastId: block.id, icon: () => null }
       );
     }

@@ -17,7 +17,7 @@ export default function AddLessonBlock({ index, lesson }: { index?: number, less
   const onClick = useCallback(() => {
     addLessonBlock({
       id: uuid(),
-      block_type: "TEXT",
+      type: "TEXT",
       screen_content: "",
     } as unknown as LessonBlock, index, true);
   }, [addLessonBlock, index]);

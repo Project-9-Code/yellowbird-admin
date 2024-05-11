@@ -450,10 +450,6 @@
     "examples": []
   },
   {
-    "shape": "USERNAME",
-    "examples": []
-  },
-  {
     "shape": "UUID",
     "examples": []
   },

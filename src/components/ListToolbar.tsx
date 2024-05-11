@@ -4,7 +4,7 @@ import CopyIcon from "@/svgs/copy.svg";
 import ArchiveIcon from "@/svgs/archive.svg";
 import Image from "next/image";
 import clsx from "clsx";
-import { useCallback, useTransition } from "react";
+import { useCallback } from "react";
 import useSelectedCourseIds from "./hooks/useSelectedIds";
 import { archiveCourses } from "@/actions/course";
 import { Course } from "@/requests/course";

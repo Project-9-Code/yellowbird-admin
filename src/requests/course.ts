@@ -14,7 +14,7 @@ export const fetchCourses = cache(async function fetchCoursesAPI() {
   const supabase = createClient();
   const { data, error } = await supabase.from("courses")
     .select("*, created_by(full_name)")
-    .neq("status", "archived")
+    .neq("status", "ARCHIVED")
     .order("title", { ascending: true })
     .returns<Course[]>();
 
@@ -26,7 +26,7 @@ export const fetchCourses = cache(async function fetchCoursesAPI() {
 export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
   const supabase = createClient();
   const { data, error } = await supabase.from("courses")
-    .select("*, lessons(id, title, lesson_order, updated_at, author(id, full_name))")
+    .select("*, lessons(id, title, order, updated_at, author(id, full_name))")
     .eq("id", id)
     .single<Course>();
   

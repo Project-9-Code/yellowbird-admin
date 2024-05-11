@@ -33,7 +33,7 @@ export const addCourse = async function addCourseAPI(course: FormData) {
 export const archiveCourses = async function archiveCoursesAPI(courseIds: string[]) {
   const supabase = createClient();
   const { error } = await supabase.from("courses")
-    .update({ status: "archived" })
+    .update({ status: "ARCHIVED" })
     .in("id", courseIds);
 
   if (error) throw error;
