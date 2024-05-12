@@ -13,7 +13,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-whitney)"],
-        ginto: ["var(--font-ginto)"]
+        mono: ["var(--font-ginto)"]
       },
       colors: {
         brand: "#FEE57E",
