@@ -1,6 +1,5 @@
 import "./globals.css";
 import 'react-toastify/dist/ReactToastify.css';
-import '@radix-ui/themes/styles.css';
 
 import type { Metadata } from "next";
 import clsx from "clsx";

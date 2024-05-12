@@ -12,7 +12,6 @@ import { CSSProperties, useCallback, useMemo } from "react";
 import { DndContext, DragEndEvent, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import Link from "next/link";
-import { DropdownMenu } from "@radix-ui/themes";
 import { archiveLesson } from "@/actions/lesson";
 import { Lesson } from "@/requests/lesson";
 import { useRouter } from "next/navigation";
@@ -76,7 +75,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
             <Image src={Info} alt="Info Handle" className="mr-5"/>
           </button>
           
-          <DropdownMenu.Root>
+          {/*<DropdownMenu.Root>
             <DropdownMenu.Trigger>
               <Image src={Ellipses} alt="More Options" />
             </DropdownMenu.Trigger>
@@ -91,7 +90,7 @@ export default function CourseLessonList(props: CourseLessonListProps) {
                 </button>
               </DropdownMenu.Item>
             </DropdownMenu.Content>
-          </DropdownMenu.Root>
+      </DropdownMenu.Root>*/}
         </div>
       ),
       header: () => null,

@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 import Image from "next/image";
 import Info from "@/svgs/grey-info.svg";
 import { useSearchParams } from "next/navigation";
-import { Popover } from "@radix-ui/themes";
 import { LessonBlock, Lesson } from "@/requests/lesson";
 
 export default function LessonInfoOverlay({ lesson }: { lesson?: Lesson }) {
-  return (
+  return null;
+  /* return (
     <Popover.Root>
       <Popover.Trigger>
         <button type="button" className="flex flex-row items-center justify-center !w-[87px] !h-[40px] bg-white px-1 py-2 border border-bordeerBg rounded-[6px] mr-[12px]">
@@ -18,7 +18,7 @@ export default function LessonInfoOverlay({ lesson }: { lesson?: Lesson }) {
         <LessonInfo lesson={lesson} />
       </Popover.Content>
     </Popover.Root>
-  );
+  ); */
 }
 
 function LessonInfo({ lesson }: { lesson?: Lesson }) {
