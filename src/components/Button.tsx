@@ -1,10 +1,11 @@
 "use client";
 
-import clsx from "clsx";
+import { cn } from "@/utils/common";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MouseEvent, MouseEventHandler, PropsWithChildren, ReactNode, forwardRef, useCallback } from "react";
 import { ClockLoader } from "react-spinners";
+import { Button } from "./ui/button";
 
 interface ButtonProps {
   label?: ReactNode;
@@ -20,7 +21,7 @@ interface ButtonProps {
   onClick?: (MouseEventHandler<HTMLButtonElement>);
 }
 
-export default forwardRef<any, PropsWithChildren<ButtonProps>>(function Button(props, ref) {
+export default forwardRef<any, PropsWithChildren<ButtonProps>>(function AppButton(props, ref) {
   const router = useRouter();
   const { showLoader=true, loading=false, isLink=false, href="", preventDefault=true, goBack, onClick } = props;
   const isLoading = showLoader && loading;
@@ -39,27 +40,27 @@ export default forwardRef<any, PropsWithChildren<ButtonProps>>(function Button(p
       <Link
         ref={ref}
         href={href}
-        className={clsx(props.buttonClassName, `flex flex-row p-3 justify-center items-center bg-success w-full rounded`)}
+        className={cn(props.buttonClassName, `flex flex-row p-3 justify-center items-center bg-success w-full rounded`)}
       >
-        <span className={clsx("text-white text-base font-medium", props.textClassName)}>
+        <span className={cn("text-white text-base font-medium", props.textClassName)}>
           {props.label}
         </span>
         {props.children}
       </Link>
     ) : (
-      <button
+      <Button
         ref={ref}
         disabled={isLoading}
-        className={clsx(`flex flex-row p-3 justify-center items-center bg-success w-full rounded`, props.buttonClassName)}
+        className={cn(`flex flex-row p-3 justify-center items-center bg-success w-full rounded`, props.buttonClassName)}
         type={props.type}
         onClick={handleClick}
       >
         {isLoading && <ClockLoader size={16} color="white" loading className="mr-[4px]" />}
-        <span className={clsx("text-white text-base font-medium", props.textClassName)}>
+        <span className={cn("text-white text-base font-medium", props.textClassName)}>
           {props.label}
         </span>
         {props.children}
-      </button>
+      </Button>
     )
   );
 });

@@ -1,15 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.w-md-editor-text {
-  height: 100%;
-}
-
-.radix-themes {
-  --default-font-family: var(--font-whitney);
-}
-
-:root {
-  --toastify-toast-width: 360px;
-}
+  
