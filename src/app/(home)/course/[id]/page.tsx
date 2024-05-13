@@ -16,7 +16,6 @@ export default async function CourseDetail(props: CourseDetailProps) {
       <div className="mt-12 flex flex-row items-center justify-between mb-7">
         <Button
           buttonClassName="!w-[160px] bg-white border-[1px] py-2 px-3 flex flex-row items-center justify-between rounded-[6px]"
-          textClassName="!text-black"
           isLink
           href="/"
           label={(
@@ -72,7 +71,7 @@ async function CourseContent(props: { courseId: string; }) {
               isLink 
               label="Edit" 
               buttonClassName="!w-[55px] h-[28px] rounded-[24px] bg-white border border-grey" 
-              textClassName="!text-black !text-[12px]" 
+              textClassName="!text-[12px]" 
             />
           </div>
 
