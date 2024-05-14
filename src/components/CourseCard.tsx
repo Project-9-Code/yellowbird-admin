@@ -30,6 +30,8 @@ export default function CourseCard(props: CourseCardProps) {
       setSelectedIds(selectedIds.filter((id) => id !== props.course.id));
   }, [props.course.id, selectedIds, setSelectedIds]);
 
+  console.log(props.course)
+
   return (
     <div className="w-[234px] h-[252px] flex flex-col relative">
       <Link
@@ -39,14 +41,16 @@ export default function CourseCard(props: CourseCardProps) {
         onMouseEnter={onHover}
         onMouseLeave={onHoverOut}
       >
-        <input
-          id={props.course.id}
-          type="checkbox"
-          className={clsx("absolute top-4 right-4 w-4 h-4 cursor-pointer", !showCheckbox && "hidden")}
-          checked={selected}
-          onChange={onCourseSelect}
-          disabled={!showCheckbox}
-        />
+        {!props.course.is_intro && (
+          <input
+            id={props.course.id}
+            type="checkbox"
+            className={clsx("absolute top-4 right-4 w-4 h-4 cursor-pointer", !showCheckbox && "hidden")}
+            checked={selected}
+            onChange={onCourseSelect}
+            disabled={!showCheckbox}
+          />
+        )}
         {props.course.cover_photo_url && props.course.cover_photo_url.length > 0 && (
           <Image
             src={props.course.cover_photo_url}

@@ -11,10 +11,11 @@ import { CSS } from '@dnd-kit/utilities';
 import { CSSProperties, useCallback, useMemo } from "react";
 import { DndContext, DragEndEvent, KeyboardSensor, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import Link from "next/link";
 import { archiveLesson } from "@/actions/lesson";
 import { Lesson } from "@/requests/lesson";
 import { useRouter } from "next/navigation";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import Link from "next/link";
 
 interface CourseLessonListProps {
   lessons?: Lesson[];
@@ -22,7 +23,6 @@ interface CourseLessonListProps {
 }
 
 export default function CourseLessonList(props: CourseLessonListProps) {
-  const router = useRouter();
   const isDev = process.env.NODE_ENV === "development";
   const { lessons=[] } = props;
   const { toggleAllIds, isAllSelected } = useSelectedIds("selectedLessons");
@@ -30,10 +30,6 @@ export default function CourseLessonList(props: CourseLessonListProps) {
   const lessonIds = lessons.map((lesson) => lesson?.id).filter((id) => id !== undefined && id !== null) as string[];
   const allLessonsSelected = isAllSelected(lessonIds);
   const toggleAllLessons = useCallback(() => toggleAllIds(lessonIds), [lessonIds, toggleAllIds]);
-  const onArchive = useCallback((lessonId: string) => async () => {
-    await archiveLesson(lessonId);
-    router.refresh();
-  }, [router]);
 
   const columns: ColumnDef<Lesson, any>[] = useMemo(() => [
     columnHelper.accessor("created_at", {
@@ -75,27 +71,12 @@ export default function CourseLessonList(props: CourseLessonListProps) {
             <Image src={Info} alt="Info Handle" className="mr-5"/>
           </button>
           
-          {/*<DropdownMenu.Root>
-            <DropdownMenu.Trigger>
-              <Image src={Ellipses} alt="More Options" />
-            </DropdownMenu.Trigger>
-
-            <DropdownMenu.Content>
-              <DropdownMenu.Item>
-                <Link href={`/lesson/${info.row.getValue("id")}`}>Edit lesson</Link>
-              </DropdownMenu.Item>
-              <DropdownMenu.Item>
-                <button type="button" onClick={onArchive(info.row.getValue("id"))}>
-                  Archive lesson
-                </button>
-              </DropdownMenu.Item>
-            </DropdownMenu.Content>
-      </DropdownMenu.Root>*/}
+          <CourseDropdownMenu courseId={info.row.getValue("id")} />
         </div>
       ),
       header: () => null,
     }),
-  ], [allLessonsSelected, columnHelper, toggleAllLessons, onArchive]);
+  ], [allLessonsSelected, columnHelper, toggleAllLessons]);
 
   const table = useReactTable({
     data: lessons,
@@ -193,5 +174,32 @@ function SelectCell({ row }: { row: Row<Partial<Lesson>>}) {
       checked={selectedIds.includes(row.id)}
       onChange={() => toggleId(row.id)}
     />
+  );
+}
+
+function CourseDropdownMenu({ courseId }: { courseId: string }) {
+  const router = useRouter();
+  const onArchive = useCallback((lessonId: string) => async () => {
+    await archiveLesson(lessonId);
+    router.refresh();
+  }, [router]);
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Image src={Ellipses} alt="More Options" />
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent>
+        <DropdownMenuItem>
+          <Link href={`/lesson/${courseId}`}>Edit lesson</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <button type="button" onClick={onArchive(courseId)}>
+            Archive lesson
+          </button>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
