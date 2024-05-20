@@ -28,7 +28,7 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
   const { data, error } = await supabase.from("courses")
     .select("*, lessons(id, title, order, course, updated_at, author(id, full_name))")
     .eq("id", id)
-    .single<Course>();
+    .maybeSingle<Course>();
   
   if (error) throw error;
 
@@ -37,9 +37,9 @@ export const fetchCourse = cache(async function fetchCourseAPI(id: string) {
 
 export const fetchCourseMeta = cache(async function fetchCourseMetaAPI(id: string) {
   const supabase = createClient();
-  const { data, error } = await supabase.from("courses").select("id, title").eq("id", id).single<Course>();
+  const { data, error } = await supabase.from("courses").select("id, title").eq("id", id).maybeSingle<Course>();
   
   if (error) throw error;
 
-  return data;
+  return data ?? undefined;
 });

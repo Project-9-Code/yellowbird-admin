@@ -20,8 +20,8 @@ export const fetchLesson = cache(async function fetchLessonApi(id: string) {
   const query = await superbase.from("lessons")
     .select("*, author(id, full_name, organization), course(id, title), lesson_blocks(id, lesson, type, media_url, screen_content, question, points, answers, answer_options)")
     .eq("id", id)
-    .single<Lesson>();
+    .maybeSingle<Lesson>();
 
   if (query.error) throw query.error;
-  return query.data;
+  return query.data ?? undefined;
 });
