@@ -40,7 +40,7 @@ export default forwardRef<any, PropsWithChildren<ButtonProps>>(function AppButto
       <Link
         ref={ref}
         href={href}
-        className={cn(props.buttonClassName, `flex flex-row p-3 justify-center items-center bg-success w-full rounded`)}
+        className={cn(`flex flex-row p-3 justify-center items-center bg-success w-full rounded`, props.buttonClassName)}
       >
         <span className={cn("text-white text-base font-medium", props.textClassName)}>
           {props.label}

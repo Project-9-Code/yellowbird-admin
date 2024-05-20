@@ -16,6 +16,7 @@ import { Lesson } from "@/requests/lesson";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import Link from "next/link";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 interface CourseLessonListProps {
   lessons?: Lesson[];
@@ -66,12 +67,9 @@ export default function CourseLessonList(props: CourseLessonListProps) {
     }),
     columnHelper.accessor("course", {
       cell: (info) => (
-        <div className="flex flex-row">
-          <button>
-            <Image src={Info} alt="Info Handle" className="mr-5"/>
-          </button>
-          
-          <CourseDropdownMenu courseId={info.row.getValue("id")} />
+        <div className="flex flex-row" onClick={() => console.log(info.row.getAllCells())}>
+          <LessonDialog lesson={info.row.original} />
+          <CourseDropdownMenu courseId={info.row.getValue("course")} />
         </div>
       ),
       header: () => null,
@@ -201,5 +199,23 @@ function CourseDropdownMenu({ courseId }: { courseId: string }) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function LessonDialog({ lesson }: { lesson: Lesson }) {
+  return (
+    <Dialog>
+      <DialogTrigger>
+        <Image src={Info} alt="Info Handle" className="mr-5"/>
+      </DialogTrigger>
+      <DialogContent className="w-[550px] h-[323px]">
+        <DialogHeader>
+          <DialogTitle className="font-ginto text-headlineText text-[30px] tracking-[-0.3px] leading-9">
+            Create Lesson
+          </DialogTitle>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+
   );
 }

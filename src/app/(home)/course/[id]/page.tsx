@@ -18,6 +18,7 @@ export default async function CourseDetail(props: CourseDetailProps) {
           buttonClassName="!w-[160px] bg-white border-[1px] py-2 px-3 flex flex-row items-center justify-between rounded-[6px]"
           isLink
           href="/"
+          textClassName="text-textBody"
           label={(
             <div className="flex flex-row py-1 items-center justify-between">
               <Image src={BackSvg} alt="Go Back" className="mr-2" />
@@ -71,7 +72,7 @@ async function CourseContent(props: { courseId: string; }) {
               isLink 
               label="Edit" 
               buttonClassName="!w-[55px] h-[28px] rounded-[24px] bg-white border border-grey" 
-              textClassName="!text-[12px]" 
+              textClassName="text-[12px] text-textBody" 
             />
           </div>
 
