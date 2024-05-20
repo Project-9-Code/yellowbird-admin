@@ -13,6 +13,7 @@ export default async function AddLessonForm(
 
   const lessonData = (lessonId) ? await fetchLesson(lessonId) : lesson;
   const user = await getUser();
+  console.log(lessonData, lessonId);
 
   return (
     <LessonFormContainer user={user} lesson={lessonData} edit={edit}>

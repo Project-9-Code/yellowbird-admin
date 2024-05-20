@@ -67,9 +67,9 @@ export default function CourseLessonList(props: CourseLessonListProps) {
     }),
     columnHelper.accessor("course", {
       cell: (info) => (
-        <div className="flex flex-row" onClick={() => console.log(info.row.getAllCells())}>
+        <div className="flex flex-row">
           <LessonDialog lesson={info.row.original} />
-          <CourseDropdownMenu courseId={info.row.getValue("course")} />
+          <CourseDropdownMenu lessonId={info.row.getValue("id")} />
         </div>
       ),
       header: () => null,
@@ -175,7 +175,7 @@ function SelectCell({ row }: { row: Row<Partial<Lesson>>}) {
   );
 }
 
-function CourseDropdownMenu({ courseId }: { courseId: string }) {
+function CourseDropdownMenu({ lessonId }: { lessonId: string }) {
   const router = useRouter();
   const onArchive = useCallback((lessonId: string) => async () => {
     await archiveLesson(lessonId);
@@ -190,10 +190,10 @@ function CourseDropdownMenu({ courseId }: { courseId: string }) {
 
       <DropdownMenuContent>
         <DropdownMenuItem>
-          <Link href={`/lesson/${courseId}`}>Edit lesson</Link>
+          <Link href={`/lesson/${lessonId}`}>Edit lesson</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <button type="button" onClick={onArchive(courseId)}>
+          <button type="button" onClick={onArchive(lessonId)}>
             Archive lesson
           </button>
         </DropdownMenuItem>
